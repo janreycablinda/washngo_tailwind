@@ -1,0 +1,385 @@
+Performed SchedulePerformed SchedulePerformed SchedulePerformed SchedulePerformed Schedule[{"id":2,"branch_id":1,"item_id":27,"available_qty":1010,"notifier":2,"deleted_at":null,"created_at":"2022-07-18T12:11:13.000000Z","updated_at":"2022-08-18T11:48:22.000000Z"},{"id":3,"branch_id":1,"item_id":28,"available_qty":33,"notifier":100,"deleted_at":null,"created_at":"2022-07-18T12:11:13.000000Z","updated_at":"2022-08-18T18:20:26.000000Z"},{"id":5,"branch_id":1,"item_id":30,"available_qty":7,"notifier":100,"deleted_at":null,"created_at":"2022-07-20T13:19:32.000000Z","updated_at":"2022-08-18T18:21:45.000000Z"},{"id":6,"branch_id":1,"item_id":29,"available_qty":2,"notifier":100,"deleted_at":null,"created_at":"2022-08-03T11:31:15.000000Z","updated_at":"2022-08-18T18:23:24.000000Z"}]testtest[{"id":3,"branch_id":1,"item_id":28,"available_qty":33,"notifier":100,"deleted_at":null,"created_at":"2022-07-18T12:11:13.000000Z","updated_at":"2022-08-18T18:20:26.000000Z"},{"id":5,"branch_id":1,"item_id":30,"available_qty":7,"notifier":100,"deleted_at":null,"created_at":"2022-07-20T13:19:32.000000Z","updated_at":"2022-08-18T18:21:45.000000Z"},{"id":6,"branch_id":1,"item_id":29,"available_qty":2,"notifier":100,"deleted_at":null,"created_at":"2022-08-03T11:31:15.000000Z","updated_at":"2022-08-18T18:23:24.000000Z"}]
+   Illuminate\Database\QueryException 
+
+  SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+ (SQL: select * from `operation_inventories` where notifier > available_qty)
+
+  at D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Connection.php:692
+    688▕         // If an exception occurs when attempting to run a query, we'll format the error
+    689▕         // message to include the bindings with SQL, which will make this exception a
+    690▕         // lot more helpful to the developer instead of just the database's errors.
+    691▕         catch (Exception $e) {
+  ➜ 692▕             throw new QueryException(
+    693▕                 $query, $this->prepareBindings($bindings), $e
+    694▕             );
+    695▕         }
+    696▕
+
+  1   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Connectors\Connector.php:70
+      PDOException::("SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+")
+
+  2   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Connectors\Connector.php:70
+      PDO::__construct("mysql:host=127.0.0.1;port=3306;dbname=washngo_manila", "root", "", [])
+
+   Illuminate\Database\QueryException 
+
+  SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+ (SQL: select * from `operation_inventories` where notifier > available_qty)
+
+  at D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Connection.php:692
+    688▕         // If an exception occurs when attempting to run a query, we'll format the error
+    689▕         // message to include the bindings with SQL, which will make this exception a
+    690▕         // lot more helpful to the developer instead of just the database's errors.
+    691▕         catch (Exception $e) {
+  ➜ 692▕             throw new QueryException(
+    693▕                 $query, $this->prepareBindings($bindings), $e
+    694▕             );
+    695▕         }
+    696▕
+
+  1   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Connectors\Connector.php:70
+      PDOException::("SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+")
+
+  2   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Connectors\Connector.php:70
+      PDO::__construct("mysql:host=127.0.0.1;port=3306;dbname=washngo_manila", "root", "", [])
+
+   Illuminate\Database\QueryException 
+
+  SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+ (SQL: select * from `operation_inventories` where notifier > available_qty)
+
+  at D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Connection.php:692
+    688▕         // If an exception occurs when attempting to run a query, we'll format the error
+    689▕         // message to include the bindings with SQL, which will make this exception a
+    690▕         // lot more helpful to the developer instead of just the database's errors.
+    691▕         catch (Exception $e) {
+  ➜ 692▕             throw new QueryException(
+    693▕                 $query, $this->prepareBindings($bindings), $e
+    694▕             );
+    695▕         }
+    696▕
+
+  1   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Connectors\Connector.php:70
+      PDOException::("SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+")
+
+  2   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Connectors\Connector.php:70
+      PDO::__construct("mysql:host=127.0.0.1;port=3306;dbname=washngo_manila", "root", "", [])
+[{"id":3,"branch_id":1,"item_id":28,"available_qty":33,"notifier":100,"deleted_at":null,"created_at":"2022-07-18T12:11:13.000000Z","updated_at":"2022-08-18T18:20:26.000000Z"},{"id":5,"branch_id":1,"item_id":30,"available_qty":7,"notifier":100,"deleted_at":null,"created_at":"2022-07-20T13:19:32.000000Z","updated_at":"2022-08-18T18:21:45.000000Z"},{"id":6,"branch_id":1,"item_id":29,"available_qty":2,"notifier":100,"deleted_at":null,"created_at":"2022-08-03T11:31:15.000000Z","updated_at":"2022-08-18T18:23:24.000000Z"}]test[{"id":3,"branch_id":1,"item_id":28,"available_qty":33,"notifier":100,"deleted_at":null,"created_at":"2022-07-18T12:11:13.000000Z","updated_at":"2022-08-18T18:20:26.000000Z"},{"id":5,"branch_id":1,"item_id":30,"available_qty":7,"notifier":100,"deleted_at":null,"created_at":"2022-07-20T13:19:32.000000Z","updated_at":"2022-08-18T18:21:45.000000Z"},{"id":6,"branch_id":1,"item_id":29,"available_qty":2,"notifier":100,"deleted_at":null,"created_at":"2022-08-03T11:31:15.000000Z","updated_at":"2022-08-18T18:23:24.000000Z"}]{"id":3,"branch_id":1,"item_id":28,"available_qty":33,"notifier":100,"deleted_at":null,"created_at":"2022-07-18T12:11:13.000000Z","updated_at":"2022-08-18T18:20:26.000000Z"}{"id":5,"branch_id":1,"item_id":30,"available_qty":7,"notifier":100,"deleted_at":null,"created_at":"2022-07-20T13:19:32.000000Z","updated_at":"2022-08-18T18:21:45.000000Z"}{"id":6,"branch_id":1,"item_id":29,"available_qty":2,"notifier":100,"deleted_at":null,"created_at":"2022-08-03T11:31:15.000000Z","updated_at":"2022-08-18T18:23:24.000000Z"}
+   TypeError 
+
+  Argument 1 passed to App\Console\Commands\CheckStock::App\Console\Commands\{closure}() must be an instance of App\Console\Commands\Builder, instance of Illuminate\Database\Eloquent\Builder given, called in D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php on line 1205
+
+  at D:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:46
+     42▕     {
+     43▕         $get = OperationInventory::whereRaw('notifier >= available_qty')->get();
+     44▕ 
+     45▕         foreach($get as $inventory){
+  ➜  46▕             $find_user = User::whereHas('role.permissions', function (Builder $query) {
+     47▕                 $query->where('permission_id', 269);
+     48▕             })->where('branch_id', $inventory['branch_id'])->get();
+     49▕             echo $find_user;
+     50▕         }
+
+  1   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:1205
+      App\Console\Commands\CheckStock::App\Console\Commands\{closure}(Object(Illuminate\Database\Eloquent\Builder))
+
+  2   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Concerns\QueriesRelationships.php:56
+      Illuminate\Database\Eloquent\Builder::callScope(Object(Closure))
+
+   TypeError 
+
+  Argument 1 passed to App\Console\Commands\CheckStock::App\Console\Commands\{closure}() must be an instance of App\Console\Commands\Builder, instance of Illuminate\Database\Eloquent\Builder given, called in D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php on line 1205
+
+  at D:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:46
+     42▕     {
+     43▕         $get = OperationInventory::whereRaw('notifier >= available_qty')->get();
+     44▕ 
+     45▕         foreach($get as $inventory){
+  ➜  46▕             $find_user = User::whereHas('role.permissions', function (Builder $query) {
+     47▕                 $query->where('permission_id', 269);
+     48▕             })->where('branch_id', $inventory['branch_id'])->get();
+     49▕             echo $find_user;
+     50▕         }
+
+  1   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:1205
+      App\Console\Commands\CheckStock::App\Console\Commands\{closure}(Object(Illuminate\Database\Eloquent\Builder))
+
+  2   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Concerns\QueriesRelationships.php:56
+      Illuminate\Database\Eloquent\Builder::callScope(Object(Closure))
+
+   TypeError 
+
+  Argument 1 passed to App\Console\Commands\CheckStock::App\Console\Commands\{closure}() must be an instance of App\Console\Commands\Builder, instance of Illuminate\Database\Eloquent\Builder given, called in D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php on line 1205
+
+  at D:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:46
+     42▕     {
+     43▕         $get = OperationInventory::whereRaw('notifier >= available_qty')->get();
+     44▕ 
+     45▕         foreach($get as $inventory){
+  ➜  46▕             $find_user = User::whereHas('role.permissions', function (Builder $query) {
+     47▕                 $query->where('permission_id', 269);
+     48▕             })->get();
+     49▕             echo $find_user;
+     50▕         }
+
+  1   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:1205
+      App\Console\Commands\CheckStock::App\Console\Commands\{closure}(Object(Illuminate\Database\Eloquent\Builder))
+
+  2   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Concerns\QueriesRelationships.php:56
+      Illuminate\Database\Eloquent\Builder::callScope(Object(Closure))
+[{"id":29,"name":"Janrey A. Cablinda","email":"janreycablinda@gmail.com","username":"admin","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":"1660823416.ico","verification_code":"659872","created_at":null,"updated_at":"2022-08-18T11:50:16.000000Z","deleted_at":null},{"id":30,"name":"james","email":"james@gmail.com","username":"james","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":null,"verification_code":null,"created_at":"2022-04-18T05:20:58.000000Z","updated_at":"2022-06-24T03:29:45.000000Z","deleted_at":null}][{"id":29,"name":"Janrey A. Cablinda","email":"janreycablinda@gmail.com","username":"admin","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":"1660823416.ico","verification_code":"659872","created_at":null,"updated_at":"2022-08-18T11:50:16.000000Z","deleted_at":null},{"id":30,"name":"james","email":"james@gmail.com","username":"james","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":null,"verification_code":null,"created_at":"2022-04-18T05:20:58.000000Z","updated_at":"2022-06-24T03:29:45.000000Z","deleted_at":null}][{"id":29,"name":"Janrey A. Cablinda","email":"janreycablinda@gmail.com","username":"admin","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":"1660823416.ico","verification_code":"659872","created_at":null,"updated_at":"2022-08-18T11:50:16.000000Z","deleted_at":null},{"id":30,"name":"james","email":"james@gmail.com","username":"james","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":null,"verification_code":null,"created_at":"2022-04-18T05:20:58.000000Z","updated_at":"2022-06-24T03:29:45.000000Z","deleted_at":null}][{"id":29,"name":"Janrey A. Cablinda","email":"janreycablinda@gmail.com","username":"admin","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":"1660823416.ico","verification_code":"659872","created_at":null,"updated_at":"2022-08-18T11:50:16.000000Z","deleted_at":null},{"id":30,"name":"james","email":"james@gmail.com","username":"james","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":null,"verification_code":null,"created_at":"2022-04-18T05:20:58.000000Z","updated_at":"2022-06-24T03:29:45.000000Z","deleted_at":null}][{"id":29,"name":"Janrey A. Cablinda","email":"janreycablinda@gmail.com","username":"admin","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":"1660823416.ico","verification_code":"659872","created_at":null,"updated_at":"2022-08-18T11:50:16.000000Z","deleted_at":null},{"id":30,"name":"james","email":"james@gmail.com","username":"james","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":null,"verification_code":null,"created_at":"2022-04-18T05:20:58.000000Z","updated_at":"2022-06-24T03:29:45.000000Z","deleted_at":null}][{"id":29,"name":"Janrey A. Cablinda","email":"janreycablinda@gmail.com","username":"admin","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":"1660823416.ico","verification_code":"659872","created_at":null,"updated_at":"2022-08-18T11:50:16.000000Z","deleted_at":null},{"id":30,"name":"james","email":"james@gmail.com","username":"james","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":null,"verification_code":null,"created_at":"2022-04-18T05:20:58.000000Z","updated_at":"2022-06-24T03:29:45.000000Z","deleted_at":null}]l-------l[{"id":29,"name":"Janrey A. Cablinda","email":"janreycablinda@gmail.com","username":"admin","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":"1660823416.ico","verification_code":"659872","created_at":null,"updated_at":"2022-08-18T11:50:16.000000Z","deleted_at":null},{"id":30,"name":"james","email":"james@gmail.com","username":"james","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":null,"verification_code":null,"created_at":"2022-04-18T05:20:58.000000Z","updated_at":"2022-06-24T03:29:45.000000Z","deleted_at":null}]l-------l[{"id":29,"name":"Janrey A. Cablinda","email":"janreycablinda@gmail.com","username":"admin","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":"1660823416.ico","verification_code":"659872","created_at":null,"updated_at":"2022-08-18T11:50:16.000000Z","deleted_at":null},{"id":30,"name":"james","email":"james@gmail.com","username":"james","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":null,"verification_code":null,"created_at":"2022-04-18T05:20:58.000000Z","updated_at":"2022-06-24T03:29:45.000000Z","deleted_at":null}]l-------l[{"id":29,"name":"Janrey A. Cablinda","email":"janreycablinda@gmail.com","username":"admin","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":"1660823416.ico","verification_code":"659872","created_at":null,"updated_at":"2022-08-18T11:50:16.000000Z","deleted_at":null},{"id":30,"name":"james","email":"james@gmail.com","username":"james","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":null,"verification_code":null,"created_at":"2022-04-18T05:20:58.000000Z","updated_at":"2022-06-24T03:29:45.000000Z","deleted_at":null}]
+   Error 
+
+  Call to a member function isEmpty() on null
+
+  at D:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:55
+     51▕ 
+     52▕             foreach($find_user as $user){
+     53▕                 $ifexist = Notification::where('user_id', $user['id'])->whereDate('created_at', Carbon::today())->first();
+     54▕                 echo $ifexist;
+  ➜  55▕                 if($ifexist->isEmpty()){
+     56▕                     $new_notif = new Notification;
+     57▕                     $new_notif->message = $key . 'test';
+     58▕                     $new_notif->link = '#';
+     59▕                     $new_notif->icon = 'cil-pencil';
+
+  1   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:36
+      App\Console\Commands\CheckStock::handle()
+
+  2   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Container\Util.php:40
+      Illuminate\Container\BoundMethod::Illuminate\Container\{closure}()
+user{"id":29,"name":"Janrey A. Cablinda","email":"janreycablinda@gmail.com","username":"admin","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":"1660823416.ico","verification_code":"659872","created_at":null,"updated_at":"2022-08-18T11:50:16.000000Z","deleted_at":null}
+   Error 
+
+  Call to a member function isEmpty() on null
+
+  at D:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:55
+     51▕ 
+     52▕             foreach($find_user as $user){
+     53▕                 $ifexist = Notification::where('user_id', $user['id'])->whereDate('created_at', Carbon::today())->first();
+     54▕                 echo 'user' .$user;
+  ➜  55▕                 if($ifexist->isEmpty()){
+     56▕                     $new_notif = new Notification;
+     57▕                     $new_notif->message = $key . 'test';
+     58▕                     $new_notif->link = '#';
+     59▕                     $new_notif->icon = 'cil-pencil';
+
+  1   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:36
+      App\Console\Commands\CheckStock::handle()
+
+  2   D:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Container\Util.php:40
+      Illuminate\Container\BoundMethod::Illuminate\Container\{closure}()
+resultresultresultresultresultresultresultssssresultssssresultssssresultssssresultssssresultssssresultssss1resultssss1resultssss1resultssss1resultssss1resultssss1resultssss1resultssss1resultssss1resultssss1resultssss1resultssss1resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss2resultssss3resultssss3resultssss3resultssss3resultssss3resultssss3resultssss3resultssss3resultssss3resultssss3resultssss3resultssss3resultssss4{"id":29,"name":"Janrey A. Cablinda","email":"janreycablinda@gmail.com","username":"admin","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":"1660823416.ico","verification_code":"659872","created_at":null,"updated_at":"2022-08-18T11:50:16.000000Z","deleted_at":null}resultssss4{"id":30,"name":"james","email":"james@gmail.com","username":"james","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":null,"verification_code":null,"created_at":"2022-04-18T05:20:58.000000Z","updated_at":"2022-06-24T03:29:45.000000Z","deleted_at":null}resultssss4{"id":29,"name":"Janrey A. Cablinda","email":"janreycablinda@gmail.com","username":"admin","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":"1660823416.ico","verification_code":"659872","created_at":null,"updated_at":"2022-08-18T11:50:16.000000Z","deleted_at":null}resultssss4{"id":30,"name":"james","email":"james@gmail.com","username":"james","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":null,"verification_code":null,"created_at":"2022-04-18T05:20:58.000000Z","updated_at":"2022-06-24T03:29:45.000000Z","deleted_at":null}resultssss4{"id":29,"name":"Janrey A. Cablinda","email":"janreycablinda@gmail.com","username":"admin","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":"1660823416.ico","verification_code":"659872","created_at":null,"updated_at":"2022-08-18T11:50:16.000000Z","deleted_at":null}resultssss4{"id":30,"name":"james","email":"james@gmail.com","username":"james","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":null,"verification_code":null,"created_at":"2022-04-18T05:20:58.000000Z","updated_at":"2022-06-24T03:29:45.000000Z","deleted_at":null}resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5
+   TypeError 
+
+  array_column(): Argument #1 ($array) must be of type array, Illuminate\Database\Eloquent\Collection given
+
+  at C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:47
+     43▕     public function handle()
+     44▕     {
+     45▕         $get = OperationInventory::whereRaw('notifier >= available_qty')->get();
+     46▕ 
+  ➜  47▕         $branch_ids = array_column($get, 'branch_id');
+     48▕         $result = array_filter($branch_ids);
+     49▕ 
+     50▕         echo $result;
+     51▕         // foreach($get as $key => $inventory){
+
+  1   C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:47
+      array_column(Object(Illuminate\Database\Eloquent\Collection), "branch_id")
+
+  2   C:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:36
+      App\Console\Commands\CheckStock::handle()
+[{"id":3,"branch_id":1,"item_id":28,"available_qty":33,"notifier":100,"deleted_at":null,"created_at":"2022-07-18T11:11:13.000000Z","updated_at":"2022-08-18T17:20:26.000000Z"},{"id":5,"branch_id":1,"item_id":30,"available_qty":7,"notifier":100,"deleted_at":null,"created_at":"2022-07-20T12:19:32.000000Z","updated_at":"2022-08-18T17:21:45.000000Z"},{"id":6,"branch_id":1,"item_id":29,"available_qty":2,"notifier":100,"deleted_at":null,"created_at":"2022-08-03T10:31:15.000000Z","updated_at":"2022-08-18T17:23:24.000000Z"}]
+   TypeError 
+
+  array_column(): Argument #1 ($array) must be of type array, Illuminate\Database\Eloquent\Collection given
+
+  at C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:47
+     43▕     public function handle()
+     44▕     {
+     45▕         $get = OperationInventory::whereRaw('notifier >= available_qty')->get();
+     46▕ 
+  ➜  47▕         $branch_ids = array_column($get, 'branch_id');
+     48▕         $result = array_filter($branch_ids);
+     49▕ 
+     50▕         echo $result;
+     51▕         // foreach($get as $key => $inventory){
+
+  1   C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:47
+      array_column(Object(Illuminate\Database\Eloquent\Collection), "branch_id")
+
+  2   C:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:36
+      App\Console\Commands\CheckStock::handle()
+
+   TypeError 
+
+  array_column(): Argument #1 ($array) must be of type array, Illuminate\Database\Eloquent\Collection given
+
+  at C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:47
+     43▕     public function handle()
+     44▕     {
+     45▕         $get = OperationInventory::whereRaw('notifier >= available_qty')->get();
+     46▕ 
+  ➜  47▕         $branch_ids = array_column($get, 'id');
+     48▕         $result = array_filter($branch_ids);
+     49▕ 
+     50▕         echo $result;
+     51▕         // foreach($get as $key => $inventory){
+
+  1   C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:47
+      array_column(Object(Illuminate\Database\Eloquent\Collection), "id")
+
+  2   C:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:36
+      App\Console\Commands\CheckStock::handle()
+
+   TypeError 
+
+  array_column(): Argument #1 ($array) must be of type array, Illuminate\Database\Eloquent\Collection given
+
+  at C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:47
+     43▕     public function handle()
+     44▕     {
+     45▕         $get = OperationInventory::whereRaw('notifier >= available_qty')->get();
+     46▕ 
+  ➜  47▕         $branch_ids = array_column($get, 'id');
+     48▕         $result = array_filter($branch_ids);
+     49▕ 
+     50▕         echo $result;
+     51▕
+
+  1   C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:47
+      array_column(Object(Illuminate\Database\Eloquent\Collection), "id")
+
+  2   C:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:36
+      App\Console\Commands\CheckStock::handle()
+
+   TypeError 
+
+  array_map(): Argument #2 ($array) must be of type array, Illuminate\Database\Eloquent\Collection given
+
+  at C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:49
+     45▕         $get = OperationInventory::whereRaw('notifier >= available_qty')->get();
+     46▕ 
+     47▕         // $branch_ids = array_column($get, 'id');
+     48▕         // $result = array_filter($branch_ids);
+  ➜  49▕         $ids = array_map(function($e) {
+     50▕             return $e->id;
+     51▕         }, $get);
+     52▕ 
+     53▕         echo $ids;
+
+  1   C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:49
+      array_map(Object(Closure), Object(Illuminate\Database\Eloquent\Collection))
+
+  2   C:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:36
+      App\Console\Commands\CheckStock::handle()
+Array
+   ErrorException 
+
+  Array to string conversion
+
+  at C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:50
+     46▕ 
+     47▕         $branch_ids = array_column($get, 'id');
+     48▕         $result = array_filter($branch_ids);
+     49▕ 
+  ➜  50▕         echo $branch_ids;
+     51▕         // foreach($get as $key => $inventory){
+     52▕         //     $find_user = User::whereHas('role.permissions', function (Builder $query) {
+     53▕         //         $query->where('permission_id', 269);
+     54▕         //     })->where('branch_id', $inventory['branch_id'])->get();
+
+  1   C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:50
+      Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Array to string conversion", "C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php")
+
+  2   C:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:36
+      App\Console\Commands\CheckStock::handle()
+Array
+   ErrorException 
+
+  Array to string conversion
+
+  at C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:50
+     46▕ 
+     47▕         // $branch_ids = array_column($get, 'id');
+     48▕         // $result = array_filter($branch_ids);
+     49▕ 
+  ➜  50▕         echo $get;
+     51▕         // foreach($get as $key => $inventory){
+     52▕         //     $find_user = User::whereHas('role.permissions', function (Builder $query) {
+     53▕         //         $query->where('permission_id', 269);
+     54▕         //     })->where('branch_id', $inventory['branch_id'])->get();
+
+  1   C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:50
+      Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Array to string conversion", "C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php")
+
+  2   C:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:36
+      App\Console\Commands\CheckStock::handle()
+[{"branch_id":1},{"branch_id":1},{"branch_id":1}]
+   TypeError 
+
+  array_column(): Argument #1 ($array) must be of type array, Illuminate\Database\Eloquent\Collection given
+
+  at C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:47
+     43▕     public function handle()
+     44▕     {
+     45▕         $get = OperationInventory::whereRaw('notifier >= available_qty')->get('branch_id');
+     46▕ 
+  ➜  47▕         $branch_ids = array_column($get, 'branch_id');
+     48▕         $result = array_filter($branch_ids);
+     49▕ 
+     50▕         echo $result;
+     51▕         // foreach($get as $key => $inventory){
+
+  1   C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:47
+      array_column(Object(Illuminate\Database\Eloquent\Collection), "branch_id")
+
+  2   C:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:36
+      App\Console\Commands\CheckStock::handle()
+[1,1,1]
+   TypeError 
+
+  array_unique(): Argument #1 ($array) must be of type array, Illuminate\Support\Collection given
+
+  at C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:49
+     45▕         $get = OperationInventory::whereRaw('notifier >= available_qty')->get();
+     46▕ 
+     47▕         $plucked = $get->pluck('branch_id');
+     48▕ 
+  ➜  49▕         echo array_unique($plucked);
+     50▕         // foreach($get as $key => $inventory){
+     51▕         //     $find_user = User::whereHas('role.permissions', function (Builder $query) {
+     52▕         //         $query->where('permission_id', 269);
+     53▕         //     })->where('branch_id', $inventory['branch_id'])->get();
+
+  1   C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:49
+      array_unique(Object(Illuminate\Support\Collection))
+
+  2   C:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:36
+      App\Console\Commands\CheckStock::handle()
+Array
+   ErrorException 
+
+  Array to string conversion
+
+  at C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:49
+     45▕         $get = OperationInventory::whereRaw('notifier >= available_qty')->get();
+     46▕ 
+     47▕         $plucked = $get->pluck('branch_id');
+     48▕ 
+  ➜  49▕         echo array_unique(array($plucked));
+     50▕         // foreach($get as $key => $inventory){
+     51▕         //     $find_user = User::whereHas('role.permissions', function (Builder $query) {
+     52▕         //         $query->where('permission_id', 269);
+     53▕         //     })->where('branch_id', $inventory['branch_id'])->get();
+
+  1   C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php:49
+      Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Array to string conversion", "C:\xampp\htdocs\washngo_update\backend\app\Console\Commands\CheckStock.php")
+
+  2   C:\xampp\htdocs\washngo_update\backend\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:36
+      App\Console\Commands\CheckStock::handle()
+[1][{"id":29,"name":"Janrey A. Cablinda","email":"janreycablinda@gmail.com","username":"admin","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":"1660823416.ico","verification_code":"659872","created_at":null,"updated_at":"2022-08-18T10:50:16.000000Z","deleted_at":null},{"id":30,"name":"james","email":"james@gmail.com","username":"james","email_verified_at":null,"status":"active","role_id":1,"branch_id":1,"profile_pic":null,"verification_code":null,"created_at":"2022-04-18T04:20:58.000000Z","updated_at":"2022-06-24T02:29:45.000000Z","deleted_at":null}]resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss5resultssss52022-08-21 00:00:002022-08-21 00:00:002022-08-21 00:00:002022-08-21 00:00:002022-08-21 00:00:002022-08-21 00:00:002022-08-21 00:00:00[]2022-08-21 00:00:00[]2022-08-21 00:00:00[]2022-08-21 00:00:00[]2022-08-21 00:00:00[]2022-08-21 00:00:00[]293029302930293029302930293029302930293029302930
