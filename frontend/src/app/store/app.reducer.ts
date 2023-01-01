@@ -12,5 +12,5 @@ export interface AppState {
 export const appReducer: ActionReducerMap<AppState> = {
   auth: fromAuth.AuthReducer,
   notification: fromNotification.NotificationReducer,
-  chart: fromChart.reducer
+  chart: fromChart.chartReducer
 };

@@ -1,23 +1,23 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import * as ChartActions from './chart.actions';
+import { ChartOptions } from 'app/models/chart-options';
 
 export const chartFeatureKey = 'chart';
 
 export interface State {
-  chart: Object[]
+    chartSalesSeries: Object[],
 }
 
 export const initialState: State = {
-  chart: []
+    chartSalesSeries: [],
 };
 
-export const reducer = createReducer(
-  initialState,
-  on(ChartActions.loadChartSucceededAction, (state: State, { payload }) =>
-  {
-    return {
-      ...state,
-      chart: payload
-    }
-  }),
+export const chartReducer = createReducer(
+    initialState,
+    on(ChartActions.loadChartSucceededAction, (state: State, { payload }) => {
+        return {
+            ...state,
+            chartSalesSeries: payload
+        }
+    }),
 );

@@ -4,14 +4,14 @@ import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ChartStoreService {
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-  getChart(year: any): Observable<any> {
-    const chartUrl = `/api/action/get_chart/${year}`;
-    return this.http.get<any>(environment.backend_url + chartUrl);
-  }
+    getChart(year: any): Observable<any> {
+        const chartUrl = `/api/action/get_chart/${year}`;
+        return this.http.get<any>(environment.backend_url + chartUrl);
+    }
 }

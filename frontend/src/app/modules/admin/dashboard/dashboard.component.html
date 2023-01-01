@@ -1,71 +1,100 @@
 <div
     class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto"
-    cdkScrollable>
+    cdkScrollable
+>
     <!-- Main -->
     <div class="flex-auto p-6 sm:p-10">
         <!-- CONTENT GOES HERE -->
-        <div class=" flex flex-row">
+        <div class="flex flex-row">
             <fuse-card class="basis-3/4">
-                
-                <div class="w-full m-5" id="chart">
-                    <div class="flex  flex-col sm:flex-row items-start justify-between">
-                        <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                            
-                        </div>
+                <div class="w-full m-5" id="chart" *ngIf="salesChart">
+                    <div
+                        class="flex flex-col sm:flex-row items-start justify-between"
+                    >
+                        <div
+                            class="text-lg font-medium tracking-tight leading-6 truncate"
+                        >
+                    </div>
                         <div class="mt-3 sm:mt-0 sm:ml-2">
                             <button
                                 class="fuse-mat-button-small w-full"
                                 mat-flat-button
-                                [color]="'primary'">
-                                <mat-icon class="icon-size-5" svgIcon="mat_outline:settings"></mat-icon>
-                                <span>
-                                    SETUP TARGET
-                                </span>
+                                [color]="'primary'"
+                            >
+                                <mat-icon
+                                    class="icon-size-5"
+                                    svgIcon="mat_outline:settings"
+                                ></mat-icon>
+                                <span> SETUP TARGET </span>
                             </button>
                         </div>
                     </div>
                     <apx-chart
-                      [series]="chartOptions.series"
-                      [chart]="chartOptions.chart"
-                      [dataLabels]="chartOptions.dataLabels"
-                      [plotOptions]="chartOptions.plotOptions"
-                      [yaxis]="chartOptions.yaxis"
-                      [legend]="chartOptions.legend"
-                      [fill]="chartOptions.fill"
-                      [stroke]="chartOptions.stroke"
-                      [tooltip]="chartOptions.tooltip"
-                      [xaxis]="chartOptions.xaxis"
+                        [series]="salesChart.series"
+                        [chart]="salesChart.chart"
+                        [dataLabels]="salesChart.dataLabels"
+                        [plotOptions]="salesChart.plotOptions"
+                        [yaxis]="salesChart.yaxis"
+                        [legend]="salesChart.legend"
+                        [fill]="salesChart.fill"
+                        [stroke]="salesChart.stroke"
+                        [tooltip]="salesChart.tooltip"
+                        [xaxis]="salesChart.xaxis"
                     ></apx-chart>
                 </div>
             </fuse-card>
             <fuse-card class="basis-1/4 ml-2">
-                <div class="sm:col-span-2 md:col-span-4 lg:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
-                    <div class="flex flex-col sm:flex-row items-start justify-between">
-                        <div class="text-lg font-medium tracking-tight leading-6 truncate">Note</div>
+                <div
+                    class="sm:col-span-2 md:col-span-4 lg:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
+                >
+                    <div
+                        class="flex flex-col sm:flex-row items-start justify-between"
+                    >
+                        <div
+                            class="text-lg font-medium tracking-tight leading-6 truncate"
+                        >
+                            Note
+                        </div>
                         <div class="mt-3 sm:mt-0 sm:ml-2">
                             <button
                                 class="fuse-mat-button-small w-full"
                                 mat-flat-button
-                                [color]="'primary'">
-                                <mat-icon class="icon-size-5" svgIcon="mat_outline:add"></mat-icon>
-                                <span>
-                                    ADD
-                                </span>
+                                [color]="'primary'"
+                            >
+                                <mat-icon
+                                    class="icon-size-5"
+                                    svgIcon="mat_outline:add"
+                                ></mat-icon>
+                                <span> ADD </span>
                             </button>
                         </div>
                     </div>
-                    <div class="flex flex-col mt-2 divide-y overflow-y-auto max-h-80 h-80" cdkScrollable>
+                    <div
+                        class="flex flex-col mt-2 divide-y overflow-y-auto max-h-80 h-80"
+                        cdkScrollable
+                    >
                         <ng-container>
-                            <div class="flex flex-row items-center justify-between py-1 px-0.5 border-b">
+                            <div
+                                class="flex flex-row items-center justify-between py-1 px-0.5 border-b"
+                            >
                                 <div class="flex flex-col">
                                     <div class="font-medium">TITLE</div>
-                                    <div class="flex flex-col sm:flex-row sm:items-center -ml-0.5 mt-2 sm:mt-1 space-y-1 sm:space-y-0 sm:space-x-3">
+                                    <div
+                                        class="flex flex-col sm:flex-row sm:items-center -ml-0.5 mt-2 sm:mt-1 space-y-1 sm:space-y-0 sm:space-x-3"
+                                    >
                                         <ng-container>
                                             <div class="flex items-center">
                                                 <mat-icon
                                                     class="icon-size-5 text-hint"
-                                                    [svgIcon]="'heroicons_solid:clock'"></mat-icon>
-                                                <div class="ml-1.5 text-md text-secondary">1:00</div>
+                                                    [svgIcon]="
+                                                        'heroicons_solid:clock'
+                                                    "
+                                                ></mat-icon>
+                                                <div
+                                                    class="ml-1.5 text-md text-secondary"
+                                                >
+                                                    1:00
+                                                </div>
                                             </div>
                                         </ng-container>
                                         <!-- <ng-container>
@@ -79,11 +108,12 @@
                                     </div>
                                 </div>
                                 <button mat-icon-button>
-                                    <mat-icon svgIcon="heroicons_outline:dots-vertical"></mat-icon>
+                                    <mat-icon
+                                        svgIcon="heroicons_outline:dots-vertical"
+                                    ></mat-icon>
                                 </button>
                             </div>
                         </ng-container>
-                        
                     </div>
                 </div>
             </fuse-card>

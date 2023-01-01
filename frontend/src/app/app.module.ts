@@ -17,9 +17,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/auth/auth.effects';
 import * as fromApp from './store/app.reducer'
 import { AppEffects } from './store/app.effects';
+import { environment } from 'environments/environment';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 const routerConfig: ExtraOptions = {
-    preloadingStrategy       : PreloadAllModules,
+    preloadingStrategy: PreloadAllModules,
     scrollPositionRestoration: 'enabled'
 };
 
@@ -27,7 +29,7 @@ const routerConfig: ExtraOptions = {
     declarations: [
         AppComponent
     ],
-    imports     : [
+    imports: [
         BrowserModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes, routerConfig),
@@ -47,13 +49,13 @@ const routerConfig: ExtraOptions = {
         MarkdownModule.forRoot({}),
 
         StoreModule.forRoot(fromApp.appReducer),
-
         EffectsModule.forRoot(AppEffects),
+        !environment.production ? StoreDevtoolsModule.instrument() : [],
     ],
-    bootstrap   : [
+
+    bootstrap: [
         AppComponent
     ]
 })
-export class AppModule
-{
+export class AppModule {
 }
