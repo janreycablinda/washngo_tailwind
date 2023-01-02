@@ -6,28 +6,31 @@ import { NgApexchartsModule } from "ng-apexcharts";
 import { FuseCardModule } from '@fuse/components/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 import { StoreModule } from '@ngrx/store';
+
 import { chartFeatureKey, chartReducer } from './store/chart/chart.reducer';
 
 const dashboardRoutes: Route[] = [
-  {
-      path     : '',
-      component: DashboardComponent
-  }
+    {
+        path: '',
+        component: DashboardComponent
+    }
 ];
 
 @NgModule({
-  declarations: [
-    DashboardComponent
-  ],
-  imports: [
-    CommonModule,
-    NgApexchartsModule,
-    MatIconModule,
-    MatButtonModule,
-    FuseCardModule,
-    RouterModule.forChild(dashboardRoutes),
-    StoreModule.forFeature(chartFeatureKey, chartReducer),
-  ]
+    declarations: [
+        DashboardComponent
+    ],
+    imports: [
+        CommonModule,
+        NgApexchartsModule,
+        MatIconModule,
+        MatButtonModule,
+        MatMenuModule,
+        FuseCardModule,
+        RouterModule.forChild(dashboardRoutes),
+        StoreModule.forFeature(chartFeatureKey, chartReducer),
+    ]
 })
 export class DashboardModule { }

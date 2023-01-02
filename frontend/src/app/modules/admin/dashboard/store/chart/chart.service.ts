@@ -11,18 +11,18 @@ import { BehaviorSubject } from 'rxjs';
 export class ChartService {
 
     months: string[] = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
+        "January",
+        "February",
+        "March",
+        "April",
         "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
     ]
 
     salesChart: Partial<ChartOptions> = {
@@ -30,7 +30,8 @@ export class ChartService {
             {
                 name: "Target",
                 color: '#7f7f7f',
-                data: []
+                // data: [200000, 200000, 200000, 200000, 200000, 200000, 200000, 200000, 200000, 200000, 200000, 200000]
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             },
             {
                 name: "Sales",
@@ -80,9 +81,19 @@ export class ChartService {
     salesChart$: BehaviorSubject<Partial<ChartOptions>> = new BehaviorSubject(undefined);
 
     getSalesChart(chartState: State): void {
-        this.salesChart.series[1].data = chartState.chartSalesSeries.map((item) => {
-            return parseInt(item['data']);
+        this.salesChart.series[1].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+        this.salesChart.series[1].data.forEach((_month, i) => {
+            chartState.chartSalesSeries.forEach((item) => {
+
+                if (parseInt(item['month']) - 1 === i) {
+                    this.salesChart.series[1].data[i] = parseInt(item['data']);
+                }
+            });
         });
+
+
+
         this.salesChart$.next(this.salesChart)
     }
 

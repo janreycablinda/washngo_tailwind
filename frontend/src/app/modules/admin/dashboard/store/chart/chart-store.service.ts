@@ -10,7 +10,7 @@ export class ChartStoreService {
 
     constructor(private http: HttpClient) { }
 
-    getChart(year: any): Observable<any> {
+    getSalesChart(year: any): Observable<any> {
         const chartUrl = `/api/action/get_chart/${year}`;
         return this.http.get<any>(environment.backend_url + chartUrl);
     }

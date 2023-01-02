@@ -6,10 +6,12 @@ export const chartFeatureKey = 'chart';
 
 export interface State {
     chartSalesSeries: Object[],
+    chartTargetSeries: Object[],
 }
 
 export const initialState: State = {
     chartSalesSeries: [],
+    chartTargetSeries: [],
 };
 
 export const chartReducer = createReducer(

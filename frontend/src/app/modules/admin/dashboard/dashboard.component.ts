@@ -5,6 +5,8 @@ import { ChartComponent } from "ng-apexcharts";
 import { ChartOptions } from 'app/models/chart-options';
 import { State } from './store/chart/chart.reducer';
 import { ChartService } from './store/chart/chart.service';
+import * as ChartActions from './store/chart/chart.actions';
+import { cloneDeep } from 'lodash';
 
 @Component({
     selector: 'app-dashboard',
@@ -15,45 +17,40 @@ export class DashboardComponent implements OnInit {
     @ViewChild("chart", { static: false }) chart: ChartComponent;
 
     salesChart: Partial<ChartOptions>;
+    yearsList: number[] = [2020, 2021, 2022, 2023, 2024, 2025];
+    // selectd year is previous year
+    yearSelected: number = new Date().getFullYear() - 1;
+
 
     constructor(
         private store: Store<fromApp.AppState>,
         private chartService: ChartService
     ) {
+        console.log("this.yearSelected", this.yearSelected)
     }
 
     ngOnInit(): void {
-        // this.wedgit$ = this.store.select('chart').subscribe((data) => {
-        //   const chartData:number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0];
-        //   data.chart.forEach((item) => {
-        //     const getIndexByMonth = item['month']-1;
-        //     chartData[getIndexByMonth] = parseInt(item['data']);
-        //   })
-        //   console.log(chartData);
-        //   console.log(this.chartOptions.series[0].data);
-        //   this.chartOptions.series[0].data = chartData;
-
-        //   console.log(this.chartOptions);
-        //   this.chart.render();
-        // });
 
         this.store.select("chart").subscribe((chartState: State) => {
+            console.log("chartState", chartState);
             this.chartService.getSalesChart(chartState)
         });
 
         this.chartService.salesChart$.subscribe((salesChart: Partial<ChartOptions>) => {
-            this.salesChart = salesChart;
+            this.salesChart = cloneDeep(salesChart);
             console.log("this.salesChart", this.salesChart);
         });
 
+    }
 
-
-
-
-
-
-
-
+    onYearSelected(year: number) {
+        this.yearSelected = year;
+        this.store.dispatch(ChartActions.loadChartRequestedAction({ year: this.yearSelected }));
+        // update chart series only
+        // this.salesChart.series = [{
+        //     data: [23, 44, 1, 22]
+        // }];
+        // this.salesChart.series = [...this.salesChart.series];
     }
 
 }

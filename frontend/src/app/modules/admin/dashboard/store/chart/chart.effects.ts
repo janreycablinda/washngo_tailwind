@@ -14,8 +14,9 @@ export class ChartEffects {
     loadChartEffect$: Observable<Action> = createEffect(() => this.actions$.pipe(
         ofType(ChartActions.loadChartRequestedAction),
         mergeMap((payload) => {
-            return this.chartStoreService.getChart(payload.year).pipe(
+            return this.chartStoreService.getSalesChart(payload.year).pipe(
                 switchMap((data: any) => {
+                    console.log("effect data", data)
                     return [
                         ChartActions.loadChartSucceededAction({ payload: data })
                     ]

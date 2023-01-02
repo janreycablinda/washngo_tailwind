@@ -8,16 +8,35 @@
         <div class="flex flex-row">
             <fuse-card class="basis-3/4">
                 <div class="w-full m-5" id="chart" *ngIf="salesChart">
+
                     <div
                         class="flex flex-col sm:flex-row items-start justify-between"
                     >
-                        <div
-                            class="text-lg font-medium tracking-tight leading-6 truncate"
-                        >
-                    </div>
-                        <div class="mt-3 sm:mt-0 sm:ml-2">
+                        <div class="my-3 sm:mt-0 sm:ml-2">
                             <button
-                                class="fuse-mat-button-small w-full"
+                                class="h-6 min-h-6 px-2 py-4 rounded-full bg-hover"
+                                mat-button
+                                [matMenuTriggerFor]="yearsMenu">
+                                <span class="text-secondary">YEAR: {{ yearSelected }}</span>
+                                <mat-icon
+                                    class="icon-size-5"
+                                    svgIcon="mat_outline:arrow_drop_down"
+                                ></mat-icon>
+                            </button>
+                            <mat-menu #yearsMenu="matMenu">
+                                <button
+                                    mat-menu-item
+                                    *ngFor="let year of yearsList"
+                                    (click)="onYearSelected(year)"
+                                >
+                                    {{ year }}
+                                </button>
+                            </mat-menu>
+                        </div>
+
+                        <div class="my-3 sm:mt-0 sm:ml-2">
+                            <button
+                                class="fuse-mat-button-small w-full py-4"
                                 mat-flat-button
                                 [color]="'primary'"
                             >
@@ -25,7 +44,7 @@
                                     class="icon-size-5"
                                     svgIcon="mat_outline:settings"
                                 ></mat-icon>
-                                <span> SETUP TARGET </span>
+                                <span>SETUP TARGET</span>
                             </button>
                         </div>
                     </div>
