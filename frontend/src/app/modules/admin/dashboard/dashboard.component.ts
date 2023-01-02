@@ -14,43 +14,90 @@ import { cloneDeep } from 'lodash';
     styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-    @ViewChild("chart", { static: false }) chart: ChartComponent;
-
-    salesChart: Partial<ChartOptions>;
-    yearsList: number[] = [2020, 2021, 2022, 2023, 2024, 2025];
-    // selectd year is previous year
-    yearSelected: number = new Date().getFullYear() - 1;
-
-
-    constructor(
-        private store: Store<fromApp.AppState>,
-        private chartService: ChartService
-    ) {
-        console.log("this.yearSelected", this.yearSelected)
+    @ViewChild("chart") chart: ChartComponent;
+    wedgit$: Subscription;
+    public chartOptions: Partial<ChartOptions>;
+    constructor(private store: Store<fromApp.AppState>) {
+        this.chartOptions = {
+            series: [
+                {
+                    name: "Sales",
+                    color: '#DB520B',
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                },
+                {
+                    name: "Expenses",
+                    color: '#DB2777',
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 660]
+                },
+            ],
+            chart: {
+                type: "bar",
+                height: 350
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: "55%",
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ["transparent"]
+            },
+            xaxis: {
+                categories: [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec"
+                ]
+            },
+            yaxis: {
+                title: {
+                    text: "Yearly Sales"
+                }
+            },
+            fill: {
+                opacity: 1,
+                colors: ['#DB520B', '#DB2777']
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return "₱ " + val;
+                    }
+                }
+            }
+        };
     }
 
     ngOnInit(): void {
+        this.wedgit$ = this.store.select('chart').subscribe((data) => {
+            const chartData: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            data.chart.forEach((item) => {
+                const getIndexByMonth = item['month'] - 1;
+                chartData[getIndexByMonth] = parseInt(item['data']);
+            })
+            console.log(chartData);
+            console.log(this.chartOptions.series[0].data);
+            this.chartOptions.series[0].data = chartData;
 
-        this.store.select("chart").subscribe((chartState: State) => {
-            console.log("chartState", chartState);
-            this.chartService.getSalesChart(chartState)
+            console.log(this.chartOptions);
+            this.chart.render();
         });
-
-        this.chartService.salesChart$.subscribe((salesChart: Partial<ChartOptions>) => {
-            this.salesChart = cloneDeep(salesChart);
-            console.log("this.salesChart", this.salesChart);
-        });
-
-    }
-
-    onYearSelected(year: number) {
-        this.yearSelected = year;
-        this.store.dispatch(ChartActions.loadChartRequestedAction({ year: this.yearSelected }));
-        // update chart series only
-        // this.salesChart.series = [{
-        //     data: [23, 44, 1, 22]
-        // }];
-        // this.salesChart.series = [...this.salesChart.series];
     }
 
 }

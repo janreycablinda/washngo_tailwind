@@ -83,7 +83,15 @@ export const appRoutes: Route[] = [
                 // }
                 resolve: [ChartResolverService]
             },
+<<<<<<< HEAD
 
+=======
+            {
+                path: 'transactions/sales',
+                loadChildren: () => import('app/modules/admin/transactions/sales/sales.module').then(m => m.SalesModule)
+            },
+
+>>>>>>> feature/transaction-sales
         ]
     }
 ];
