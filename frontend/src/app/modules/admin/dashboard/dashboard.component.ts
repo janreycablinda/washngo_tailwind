@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
         {
           name: "Sales",
           color: '#DB520B',
-          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1000]
         },
         {
           name: "Expenses",

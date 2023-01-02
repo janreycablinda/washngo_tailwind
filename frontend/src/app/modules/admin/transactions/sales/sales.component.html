@@ -1,0 +1,38 @@
+<div
+    class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto"
+    cdkScrollable>
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-6">
+        <!-- CONTENT GOES HERE -->
+        <div class="flex flex-row">
+            <fuse-card class="basis-1/4 block h-screen rounded-sm">
+                <div class="flex justify-between py-2 px-4">
+                    <div class="text-lg font-medium tracking-tight leading-6 truncate">WAITING LIST</div>
+                    <div class="mt-1 sm:ml-2">
+                        <button
+                            class="fuse-mat-button-small w-full"
+                            mat-flat-button
+                            (click)="addTransaction()"
+                            [color]="'primary'">
+                            <mat-icon class="icon-size-5" svgIcon="mat_outline:add"></mat-icon>
+                            <span>
+                                ADD
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <app-customer-card dataType="waiting"></app-customer-card>
+                </div>
+            </fuse-card>
+            <fuse-card class="basis-3/4 block h-screen ml-2 rounded-sm">
+                <div class="flex justify-between py-2 px-4">
+                    <div class="text-lg font-medium tracking-tight leading-6 truncate">ONPROGRESS</div>
+                </div>
+                <div class="mt-2">
+                    <app-customer-card dataType="onprogress"></app-customer-card>
+                </div>
+            </fuse-card>
+        </div>
+    </div>
+</div>

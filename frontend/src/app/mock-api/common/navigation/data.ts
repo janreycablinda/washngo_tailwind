@@ -10,17 +10,17 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : '/dashboard'
     },
     {
-        id   : 'transaction',
-        title: 'Transaction',
+        id   : 'transactions',
+        title: 'Transactions',
         type : 'collapsable',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/transaction',
+        icon : 'heroicons_outline:switch-horizontal',
+        link : '/transactions',
         children: [
             {
                 id   : 'transaction.sales',
                 title: 'Sales',
                 type : 'basic',
-                link : '/transaction/sales'
+                link : '/transactions/sales'
             },
             {
                 id   : 'transaction.sales',
@@ -44,7 +44,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'transaction.sales',
-                title: 'Employee',
+                title: 'Employees',
                 type : 'basic',
                 link : '/transaction/sales'
             }
@@ -52,23 +52,31 @@ export const defaultNavigation: FuseNavigationItem[] = [
     },
     {
         id   : 'example',
-        title: 'Branches',
-        type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
+        title: 'Organization',
+        type : 'collapsable',
+        icon : 'heroicons_outline:office-building',
         link : '/example',
+        children: [
+            {
+                id   : 'example',
+                title: 'Franchisees',
+                type : 'basic',
+                link : '/example',
+            },
+            {
+                id   : 'transaction.sales',
+                title: 'Branches',
+                type : 'basic',
+                link : '/transaction/sales'
+            }
+        ]
     },
-    {
-        id   : 'example',
-        title: 'Franchise',
-        type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/example',
-    },
+    
     {
         id   : 'example',
         title: 'User Management',
         type : 'collapsable',
-        icon : 'heroicons_outline:chart-pie',
+        icon : 'heroicons_outline:users',
         children: [
             {
                 id   : 'transaction.sales',
@@ -88,21 +96,21 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id   : 'example',
         title: 'Reports',
         type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
+        icon : 'mat_outline:book',
         link : '/example',
     },
     {
         id   : 'example',
         title: 'Customize',
         type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
+        icon : 'mat_outline:settings',
         link : '/example',
     },
     {
         id   : 'example',
         title: 'Activity Logs',
         type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
+        icon : 'mat_outline:av_timer',
         link : '/example',
     },
 ];

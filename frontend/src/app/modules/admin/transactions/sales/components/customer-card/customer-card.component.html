@@ -1,0 +1,114 @@
+<fuse-card matBadge="1" [matBadgeHidden]="dataType != 'waiting'" matBadgePosition="before" matBadgeColor="primary" class="bg-gray-700 mx-4 p-2 block rounded-sm">
+    <div class="flex justify-between" *ngIf="dataType == 'waiting'">
+        <span class="text-white text-lg">
+            <mat-icon class="icon-size-5 icon-align-middle" matTooltip="Customer Name" matTooltipPosition="above" svgIcon="heroicons_outline:user"></mat-icon>
+            Joyce lim
+        </span>
+        <button
+        class="fuse-mat-button-small"
+        mat-icon-button
+        [matMenuTriggerFor]="listCard01Menu">
+        <mat-icon
+            class="icon-size-5 text-white"
+            [svgIcon]="'heroicons_solid:dots-vertical'"></mat-icon>
+        </button>
+        <mat-menu #listCard01Menu="matMenu" class="py-0 my-0">
+            <button mat-menu-item>
+                <mat-icon svgIcon="mat_outline:local_car_wash"></mat-icon>
+                Start Wash
+            </button>
+            <button mat-menu-item>
+                <mat-icon svgIcon="mat_outline:credit_card"></mat-icon>
+                Payment
+            </button>
+            <button mat-menu-item>
+                <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                Edit
+            </button>
+            <button mat-menu-item>
+                <mat-icon svgIcon="heroicons_outline:trash"></mat-icon>
+                Delete
+            </button>
+        </mat-menu>
+    </div>
+    <div *ngIf="dataType == 'waiting'">
+        
+        <span class="text-white block">
+            <mat-icon class="icon-size-5 icon-align-middle" matTooltip="Vehicle" matTooltipPosition="above" svgIcon="mat_outline:directions_car"></mat-icon>
+            MOBILIO (HONDA)
+        </span>
+        <span class="text-white text-sm leading-3">
+            <mat-icon class="icon-size-5 icon-align-middle" matTooltip="Time Waiting" matTooltipPosition="above" svgIcon="mat_outline:timelapse"></mat-icon>
+            {{ '10:00' }}
+        </span>
+    </div>
+    <div *ngIf="dataType == 'onprogress'" class="flex flex-row text-white">
+        <div class="basis-1/2">
+            <span class="block">
+                <b>Customer Name:</b>
+                Joyce lim
+            </span>
+            <span class="block">
+                <b>Vehicle:</b>
+                MOBILIO (HONDA)
+            </span>
+            <span class="block">
+                <b>Plate No.:</b>
+                aal8114
+            </span>
+            <span class="text-sm">
+                <b>Membership:</b>
+                Member
+            </span>
+        </div>
+        <div class="basis-1/2">
+            <span class="block">
+                <b>Washboy:</b>
+                Harold James
+            </span>
+            <span class="block">
+                <b>Time Consumed:</b>
+                24 hrs 19 mins 44 secs
+            </span>
+            <div class="flex">
+                <button
+                    mat-flat-button
+                    [color]="'primary'">
+                    <span>
+                        PAYMENT
+                    </span>
+                </button>
+                <button
+                    class="ml-1"
+                    mat-flat-button
+                    [color]="'primary'">
+                    <span>
+                        EDIT
+                    </span>
+                </button>
+                <button
+                    class="ml-1"
+                    mat-flat-button
+                    [color]="'primary'">
+                    <span>
+                        DELETE
+                    </span>
+                </button>
+                <button
+                    class="ml-1"
+                    mat-flat-button
+                    [color]="'primary'">
+                    <span>
+                        COMPLETE
+                    </span>
+                </button>
+            </div>
+            <!-- <div class="absolute top-0 right-0 bg-green-500 px-2 shadow-sm">
+                PAID
+            </div> -->
+            <div class="absolute top-0 right-0 bg-red-500 px-2 shadow-sm">
+                UNPAID
+            </div>
+        </div>
+    </div>
+</fuse-card>
