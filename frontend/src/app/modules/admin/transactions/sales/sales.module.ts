@@ -16,6 +16,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
 import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectFilterModule } from 'mat-select-filter';
+import { MatSelectModule } from '@angular/material/select';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 const salesRoutes: Route[] = [
   {
@@ -38,10 +42,14 @@ const salesRoutes: Route[] = [
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectFilterModule,
     MatDatepickerModule,
+    MatSelectModule,
     MatLuxonDateModule,
     MatMenuModule,
     MatBadgeModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
     MatTooltipModule,
     MatDialogModule,
     RouterModule.forChild(salesRoutes)

@@ -17,14 +17,25 @@ export class TransactionDialogComponent implements OnInit {
     private dialog: MatDialogRef<TransactionDialogComponent>
   ) { }
 
+  public variables = [{ id: 0, name: 'One' }, { id: 1, name: 'Two' }];
+  public filteredVariables = this.variables.slice();
+
   ngOnInit(): void {
     this.dialogForm = this.formBuilder.group({
       id: [''],
-      transaction_date: ['']
-    })
+      name: ['', Validators.required],
+      transaction_date: ['', Validators.required],
+      work_order: ['', Validators.required]
+    });
+
+    this.dialogForm.controls['transaction_date'].setValue(new Date());
   }
 
   submitForm(){
+
+  }
+
+  setMember(value){
 
   }
 

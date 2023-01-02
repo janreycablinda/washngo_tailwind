@@ -1,7 +1,7 @@
 <fuse-card matBadge="1" [matBadgeHidden]="dataType != 'waiting'" matBadgePosition="before" matBadgeColor="primary" class="bg-gray-700 mx-4 p-2 block rounded-sm">
     <div class="flex justify-between" *ngIf="dataType == 'waiting'">
         <span class="text-white text-lg">
-            <mat-icon class="icon-size-5 icon-align-middle" matTooltip="Customer Name" matTooltipPosition="above" svgIcon="heroicons_outline:user"></mat-icon>
+            <mat-icon class="icon-size-5 text-orange-500 icon-align-middle" matTooltip="Customer Name" matTooltipPosition="above" svgIcon="heroicons_outline:user"></mat-icon>
             Joyce lim
         </span>
         <button
@@ -34,11 +34,11 @@
     <div *ngIf="dataType == 'waiting'">
         
         <span class="text-white block">
-            <mat-icon class="icon-size-5 icon-align-middle" matTooltip="Vehicle" matTooltipPosition="above" svgIcon="mat_outline:directions_car"></mat-icon>
+            <mat-icon class="icon-size-5 text-orange-500 icon-align-middle" matTooltip="Vehicle" matTooltipPosition="above" svgIcon="mat_outline:directions_car"></mat-icon>
             MOBILIO (HONDA)
         </span>
         <span class="text-white text-sm leading-3">
-            <mat-icon class="icon-size-5 icon-align-middle" matTooltip="Time Waiting" matTooltipPosition="above" svgIcon="mat_outline:timelapse"></mat-icon>
+            <mat-icon class="icon-size-5 text-orange-500 icon-align-middle" matTooltip="Time Waiting" matTooltipPosition="above" svgIcon="mat_outline:timelapse"></mat-icon>
             {{ '10:00' }}
         </span>
     </div>
