@@ -27,7 +27,6 @@ export class DashboardComponent implements OnInit {
     ];
     yearSelected: number = new Date().getFullYear();
 
-
     constructor(
         private store: Store<fromApp.AppState>,
         private chartService: ChartService,

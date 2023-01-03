@@ -14,4 +14,10 @@ export class ChartStoreService {
         const chartUrl = `/api/action/get_chart/${year}`;
         return this.http.get<any>(environment.backend_url + chartUrl);
     }
+
+    getTargetChart(branchId: any): Observable<any> {
+        const targetChartUrl = `//api/action/get_target/${branchId}`;
+        return this.http.get<any>(environment.backend_url + targetChartUrl);
+    }
+
 }

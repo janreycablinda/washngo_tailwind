@@ -36,8 +36,7 @@ export class AuthInterceptor implements HttpInterceptor {
                         });
                     this._unsubscribeAll.next(null);
                     this._unsubscribeAll.complete();
-
-                    console.log('intercepted', authState);
+                    // console.log('intercepted', authState);
                 }
                 return next.handle(req);
             })

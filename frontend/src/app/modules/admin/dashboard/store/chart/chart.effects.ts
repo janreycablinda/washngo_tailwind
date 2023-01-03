@@ -16,7 +16,7 @@ export class ChartEffects {
         mergeMap((payload) => {
             return this.chartStoreService.getSalesChart(payload.year).pipe(
                 switchMap((data: any) => {
-                    console.log("effect data", data)
+                    console.log("getSalesChart data", data)
                     return [
                         ChartActions.loadChartSucceededAction({ payload: data })
                     ]

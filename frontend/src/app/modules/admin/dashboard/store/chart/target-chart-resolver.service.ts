@@ -8,7 +8,7 @@ import { Actions, ofType } from '@ngrx/effects';
 @Injectable({
     providedIn: 'root'
 })
-export class SalesChartResolverService {
+export class TargetChartResolverService {
 
     constructor(
         private store: Store<fromApp.AppState>,
@@ -19,14 +19,15 @@ export class SalesChartResolverService {
         return this.store.select('chart').pipe(
             take(1),
             switchMap(chartState => {
-                if (chartState.chartSalesSeries.length === 0) {
+                if (chartState.chartTargetSeries.length === 0) {
                     this.store.dispatch(ChartActions.loadChartRequestedAction({ year: 2023 }));
+                    console.log('TargetChartResolverService', chartState.chartTargetSeries);
                     return this.actions$.pipe(
                         ofType(ChartActions.loadChartSucceededAction),
                         take(1)
                     );
                 } else {
-                    return chartState.chartSalesSeries;
+                    return chartState.chartTargetSeries;
                 }
             })
         )

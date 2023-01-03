@@ -10,7 +10,18 @@ export const loadChartSucceededAction = createAction(
   props<{ payload: any }>()
 );
 
-export const chartChartsFailure = createAction(
-  '[Chart] Chart Charts Failure',
-  props<{ error: any }>()
+// export const chartChartsFailure = createAction(
+//   '[Chart] Chart Charts Failure',
+//   props<{ error: any }>()
+// );
+
+export const loadTargetChartRequestedAction = createAction(
+  '[Chart] Load Target Chart Requested Action',
+  props<{ branchId : any }>()
 );
+
+export const loadTargetChartSucceededAction = createAction(
+  '[Chart] Load Target Chart Succeeded Action',
+  props<{ branchId : any }>()
+);
+
