@@ -51,7 +51,8 @@ export class TransactionDialogComponent implements OnInit {
       work_order: ['', Validators.required],
       member: [true],
       member_id: ['', Validators.required],
-      property_id: ['', Validators.required]
+      property_id: ['', Validators.required],
+      add_as_member: [false, Validators.required],
     });
   }
 
@@ -88,12 +89,13 @@ export class TransactionDialogComponent implements OnInit {
       vehicle_id: ['', Validators.required],
       plate_no: ['', Validators.required],
       odo: ['', Validators.required],
+      add_as_member: [false, Validators.required],
     });
   }
 
   submitForm(){
     if(this.dialogForm.valid){
-      
+
     }
   }
 
