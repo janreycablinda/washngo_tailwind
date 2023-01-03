@@ -78,9 +78,6 @@ export const appRoutes: Route[] = [
             {
                 path: 'dashboard',
                 loadChildren: () => import('app/modules/admin/dashboard/dashboard.module').then(m => m.DashboardModule),
-                // resolve    : {
-                //     chartData: ChartResolverService,
-                // }
                 resolve: [ChartResolverService]
             },
             {

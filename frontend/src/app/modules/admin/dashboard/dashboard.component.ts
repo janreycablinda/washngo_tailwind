@@ -17,16 +17,21 @@ export class DashboardComponent implements OnInit {
     @ViewChild("chart", { static: false }) chart: ChartComponent;
 
     salesChart: Partial<ChartOptions>;
-    yearsList: number[] = [2020, 2021, 2022, 2023, 2024, 2025];
-    // selectd year is previous year
-    yearSelected: number = new Date().getFullYear() - 1;
+    yearsList: number[] = [
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+    ];
+    yearSelected: number = new Date().getFullYear();
 
 
     constructor(
         private store: Store<fromApp.AppState>,
-        private chartService: ChartService
+        private chartService: ChartService,
     ) {
-        console.log("this.yearSelected", this.yearSelected)
     }
 
     ngOnInit(): void {
@@ -46,11 +51,5 @@ export class DashboardComponent implements OnInit {
     onYearSelected(year: number) {
         this.yearSelected = year;
         this.store.dispatch(ChartActions.loadChartRequestedAction({ year: this.yearSelected }));
-        // update chart series only
-        // this.salesChart.series = [{
-        //     data: [23, 44, 1, 22]
-        // }];
-        // this.salesChart.series = [...this.salesChart.series];
     }
-
 }

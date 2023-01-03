@@ -20,7 +20,7 @@ export class ChartResolverService {
             take(1),
             switchMap(chartState => {
                 if (chartState.chartSalesSeries.length === 0) {
-                    this.store.dispatch(ChartActions.loadChartRequestedAction({ year: 2022 }));
+                    this.store.dispatch(ChartActions.loadChartRequestedAction({ year: 2023 }));
                     return this.actions$.pipe(
                         ofType(ChartActions.loadChartSucceededAction),
                         take(1)
