@@ -200,7 +200,8 @@
             </div>
         </div>
         <hr class="w-full border-orange-500 border-t mb-0">
-            <h1>SERVICES</h1>
+            <h1 class="text-lg">SERVICES</h1>
+            <app-datatable class="w-full" mat-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-datatable>
     </div>
     <div mat-dialog-actions [align]="'end'" class="m-b-5">
         <button mat-flat-button color="warn" mat-dialog-close>Close</button>
