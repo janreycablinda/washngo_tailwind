@@ -1,13 +1,13 @@
 import { createAction, props } from '@ngrx/store';
 
 export const loadChartRequestedAction = createAction(
-  '[Chart] Load Chart Requested Action',
-  props<{ year: number }>()
+    '[Chart] Load Chart Requested Action',
+    props<{ year: number }>()
 );
 
 export const loadChartSucceededAction = createAction(
-  '[Chart] Load Chart Succeeded Action',
-  props<{ payload: any }>()
+    '[Chart] Load Chart Succeeded Action',
+    props<{ payload: any }>()
 );
 
 // export const chartChartsFailure = createAction(
@@ -16,12 +16,12 @@ export const loadChartSucceededAction = createAction(
 // );
 
 export const loadTargetChartRequestedAction = createAction(
-  '[Chart] Load Target Chart Requested Action',
-  props<{ branchId : any }>()
+    '[Chart] Load Target Chart Requested Action',
+    props<{ branchId: any }>()
 );
 
 export const loadTargetChartSucceededAction = createAction(
-  '[Chart] Load Target Chart Succeeded Action',
-  props<{ branchId : any }>()
+    '[Chart] Load Target Chart Succeeded Action',
+    props<{ payload: any }>()
 );
 

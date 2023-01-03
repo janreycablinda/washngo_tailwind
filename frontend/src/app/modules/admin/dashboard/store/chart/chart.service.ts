@@ -30,8 +30,8 @@ export class ChartService {
             {
                 name: "Target",
                 color: '#7f7f7f',
-                data: [200000, 200000, 200000, 200000, 200000, 200000, 200000, 200000, 200000, 200000, 200000, 200000]
-                // data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                // data: [200000, 200000, 200000, 200000, 200000, 200000, 200000, 200000, 200000, 200000, 200000, 200000]
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             },
             {
                 name: "Sales",
@@ -95,6 +95,30 @@ export class ChartService {
 
 
         this.salesChart$.next(this.salesChart)
+    }
+
+    getTargetChart(chartState: State): void {
+
+        console.log("chartState.chartTargetSeries", chartState.chartTargetSeries);
+
+        // convert chartState.chartTargetSeries object to array
+        // let targetSeries = Object.keys(chartState.chartTargetSeries).map((key) => {
+        Object.keys(chartState.chartTargetSeries).map((key) => {
+            // console.log("key", key);
+
+            // filter throught each this.months
+            this.months.forEach((month, i) => {
+                if (month.toLowerCase() === key) {
+                    // console.log("month", month);
+                    this.salesChart.series[0].data[i] = parseInt(chartState.chartTargetSeries[key]);
+                }
+            });
+
+            // return chartState.chartTargetSeries[key];
+
+        });
+        // console.log("targetSeries", targetSeries);
+
     }
 
     constructor(

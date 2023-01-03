@@ -38,6 +38,7 @@ export class DashboardComponent implements OnInit {
         this.store.select("chart").subscribe((chartState: State) => {
             console.log("chartState", chartState);
             this.chartService.getSalesChart(chartState)
+            this.chartService.getTargetChart(chartState)
         });
 
         this.chartService.salesChart$.subscribe((salesChart: Partial<ChartOptions>) => {

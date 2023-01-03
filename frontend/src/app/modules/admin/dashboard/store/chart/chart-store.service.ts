@@ -16,7 +16,7 @@ export class ChartStoreService {
     }
 
     getTargetChart(branchId: any): Observable<any> {
-        const targetChartUrl = `//api/action/get_target/${branchId}`;
+        const targetChartUrl = `/api/action/get_target/${branchId}`;
         return this.http.get<any>(environment.backend_url + targetChartUrl);
     }
 

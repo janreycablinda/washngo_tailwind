@@ -30,4 +30,23 @@ export class ChartEffects {
         )
     ));
 
+    loadTargetChartEffect$: Observable<Action> = createEffect(() => this.actions$.pipe(
+        ofType(ChartActions.loadTargetChartRequestedAction),
+        mergeMap((payload) => {
+            return this.chartStoreService.getTargetChart(payload.branchId).pipe(
+                switchMap((data: any) => {
+                    console.log("getTargetChart data", data)
+                    return [
+                        ChartActions.loadTargetChartSucceededAction({ payload: data })
+                    ]
+                }),
+                catchError((error: Error) => {
+                    // this.authService.handleAuthError(error);
+                    return of(NotificationAction.notificationResponse({ payload: { type: 'chartError', message: 'Chart API Error!' } }));
+                })
+            )
+        }
+        )
+    ));
+
 }

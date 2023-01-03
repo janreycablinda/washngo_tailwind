@@ -22,4 +22,10 @@ export const chartReducer = createReducer(
             chartSalesSeries: payload
         }
     }),
+    on(ChartActions.loadTargetChartSucceededAction, (state: State, { payload }) => {
+        return {
+            ...state,
+            chartTargetSeries: payload
+        }
+    }),
 );
