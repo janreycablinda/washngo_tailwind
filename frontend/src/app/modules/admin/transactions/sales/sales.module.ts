@@ -20,6 +20,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectFilterModule } from 'mat-select-filter';
 import { MatSelectModule } from '@angular/material/select';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const salesRoutes: Route[] = [
   {
@@ -52,7 +53,8 @@ const salesRoutes: Route[] = [
     MatSlideToggleModule,
     MatTooltipModule,
     MatDialogModule,
-    RouterModule.forChild(salesRoutes)
+    RouterModule.forChild(salesRoutes),
+    FlexLayoutModule
   ]
 })
 export class SalesModule { }

@@ -17,6 +17,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/auth/auth.effects';
 import * as fromApp from './store/app.reducer'
 import { AppEffects } from './store/app.effects';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -31,12 +32,11 @@ const routerConfig: ExtraOptions = {
         BrowserModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes, routerConfig),
-
         // Fuse, FuseConfig & FuseMockAPI
         FuseModule,
         FuseConfigModule.forRoot(appConfig),
         FuseMockApiModule.forRoot(mockApiServices),
-
+        FlexLayoutModule,
         // Core module of your application
         CoreModule,
 
