@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { User } from 'app/core/user/user.types';
 import { UserService } from 'app/core/user/user.service';
 import * as AuthActions from './auth.actions';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
     constructor(
         private store: Store<any>,
-        private _userService: UserService
+        private _userService: UserService,
+        private router: Router
     ) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler) {
@@ -26,7 +28,13 @@ export class AuthInterceptor implements HttpInterceptor {
         return this.store.select("auth").pipe(
             take(1),
             exhaustMap((authState: AppState["auth"]) => {
-                if (!authState.user) {
+                console.log("AuthInterceptor authState", authState);
+                console.log("AuthInterceptor this.router.url", this.router.url); // /dashboard
+
+                if (
+                    this.router.url === "/dashboard" &&
+                    !authState.user
+                ) {
                     this._userService.user$
                         .pipe(takeUntil(this._unsubscribeAll))
                         .subscribe((user: User) => {

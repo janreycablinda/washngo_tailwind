@@ -31,11 +31,12 @@ export class TargetChartResolverService {
                         .pipe(takeUntil(this._unsubscribeAll))
                         .subscribe((user: User) => {
                             this.user = user;
+                            console.log("this.user", this.user)
                         });
                     this._unsubscribeAll.next(null);
                     this._unsubscribeAll.complete();
 
-                    this.store.dispatch(ChartActions.loadTargetChartRequestedAction({ branchId: parseInt(this.user["branch"]["id"]) }));
+                    this.store.dispatch(ChartActions.loadTargetChartRequestedAction({ branchId: parseInt(this.user["branch_id"]) }));
 
                     // console.log('TargetChartResolverService', chartState.chartTargetSeries);
 
