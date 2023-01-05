@@ -1,36 +1,35 @@
 <h2 mat-dialog-title>UPDATE TARGET</h2>
-<mat-dialog-content class="mat-typography">
-    <!-- loop through data if length greater than 0 -->
-
-
-    <form
-        class="flex flex-col bg-card"
-        [formGroup]="salesTargetsForm"
-        (ngSubmit)="onSubmit()"
-    >
-      <mat-form-field
-        [ngClass]="formFieldHelpers"
-        *ngFor="let month of data"
-        class="w-full">
-            <mat-label
-                [for]="month.name"
-            >
-                {{ month.name }}
-            </mat-label>
-        <input
-            [id]="month.name.toLowerCase()"
-            matInput
-            [value]="month.target"
-            type="number"
-            [formControlName]="month.name.toLowerCase()"
+<form
+    [formGroup]="salesTargetsForm"
+    (ngSubmit)="onSubmit()"
+>
+    <mat-dialog-content class="mat-typography">
+        <!-- loop through data if length greater than 0 -->
+        <div
+            class="flex flex-col bg-card"
         >
-      </mat-form-field>
-
-      <button mat-button mat-dialog-close type="submit">Cancel</button>
-
-    </form>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close type="submit">Cancel</button>
-  <button mat-button  cdkFocusInitial>Update</button>
-</mat-dialog-actions>
+            <mat-form-field
+                [ngClass]="formFieldHelpers"
+                *ngFor="let salesTargetCtrl of salesTargetsControls; let i = index"
+                class="w-full"
+                >
+                    {{ index }}
+                    <mat-label
+                        [for]="salesTargetCtrl.month"
+                    >
+                        {{ salesTargetCtrl.month }}
+                    </mat-label>
+                <input
+                    [id]="salesTargetCtrl.month"
+                    matInput
+                    [value]="salesTargetCtrl.target"
+                    type="number"
+                >
+            </mat-form-field>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="submit">Cancel</button>
+    <button mat-button  cdkFocusInitial>Update</button>
+    </mat-dialog-actions>
+</form>

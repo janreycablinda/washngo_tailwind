@@ -8,12 +8,7 @@ import { ChartService } from './store/chart/chart.service';
 import * as ChartActions from './store/chart/chart.actions';
 import { cloneDeep } from 'lodash';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormControl, FormGroup } from '@angular/forms';
-
-
-export interface DialogData {
-  "data": any,
-}
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-dashboard',
@@ -68,45 +63,83 @@ export class DashboardComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
+            console.log(`Dialog result: ${result}`);
         });
     }
 }
 
 @Component({
-  selector: 'dialog-content-update-target',
-  templateUrl: './dialog-content-update-target.html',
+    selector: 'dialog-content-update-target',
+    templateUrl: './dialog-content-update-target.html',
 })
 export class DialogContentUpdateTarget {
     formFieldHelpers: string[] = [''];
 
-    salesTargetsForm : FormGroup = new FormGroup({
-        "january": new FormControl(''),
-        "february": new FormControl(''),
-        "march": new FormControl(''),
-        "april": new FormControl(''),
-        "may": new FormControl(''),
-        "june": new FormControl(''),
-        "july": new FormControl(''),
-        "august": new FormControl(''),
-        "september": new FormControl(''),
-        "october": new FormControl(''),
-        "november": new FormControl(''),
-        "december": new FormControl(''),
-    });
+    salesTargetsForm: FormGroup;
 
     constructor(
         private store: Store<fromApp.AppState>,
         private chartService: ChartService,
         public dialogRef: MatDialogRef<DialogContentUpdateTarget>,
-        @Inject(MAT_DIALOG_DATA) public data: DialogData,
+        // @Inject(MAT_DIALOG_DATA) public data: DialogData,
+        @Inject(MAT_DIALOG_DATA) public data: object[],
     ) {
 
         console.log("DialogContentUpdateTarget data", data);
+        this.initForm();
+    }
+
+    private initForm() {
+
+        let salesTargets: FormArray = new FormArray([]);
+        console.log("this.data", this.data)
+
+
+        if (this.data.length > 0) {
+            this.data.forEach((item) => {
+                salesTargets.push(
+                    new FormGroup({
+                        'month': new FormControl(item['name']),
+                        'target': new FormControl(item['target'], [Validators.required])
+                    })
+                );
+            });
+        }
+
+        console.log("salesTargets", salesTargets)
+
+        this.salesTargetsForm = new FormGroup({
+            'salesTargets': salesTargets
+        });
+
+        console.log("salesTargetsControls", this.salesTargetsControls)
+
+        // this.salesTargetssForm = new FormGroup({
+        //     january: new FormControl(this.data[0]['target']),
+        //     february: new FormControl(this.data[1]['target']),
+        //     march: new FormControl(this.data[2]['target']),
+        //     april: new FormControl(this.data[3]['target']),
+        //     may: new FormControl(this.data[4]['target']),
+        //     june: new FormControl(this.data[5]['target']),
+        //     july: new FormControl(this.data[6]['target']),
+        //     august: new FormControl(this.data[7]['target']),
+        //     september: new FormControl(this.data[8]['target']),
+        //     october: new FormControl(this.data[9]['target']),
+        //     november: new FormControl(this.data[10]['target']),
+        //     december: new FormControl(this.data[11]['target']),
+        // });
+        // console.log("initForm salesTargetsForm", this.salesTargetsForm)
+
+        //
     }
 
     onSubmit() {
         console.log("this.salesTargetsForm.value", this.salesTargetsForm.value);
         this.dialogRef.close();
+    }
+
+    get salesTargetsControls() {
+        // console.log("salesTargetsControls", (this.salesTargetsForm.get("salesTargets") as FormArray).controls)
+        return (this.salesTargetsForm.get("salesTargets") as FormArray).controls;
     }
 }
