@@ -79,6 +79,7 @@ export class ChartService {
         }
     };
     salesChart$: BehaviorSubject<Partial<ChartOptions>> = new BehaviorSubject(undefined);
+    targetChart$: BehaviorSubject<Partial<ChartOptions>> = new BehaviorSubject(undefined);
 
     getSalesChart(chartState: State): void {
         this.salesChart.series[1].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -97,10 +98,11 @@ export class ChartService {
         this.salesChart$.next(this.salesChart)
     }
 
-    getTargetChart(chartState: State): void {
+    getTargetChart(chartState: State): object[] {
 
-        console.log("chartState.chartTargetSeries", chartState.chartTargetSeries);
+        // console.log("chartState.chartTargetSeries", chartState.chartTargetSeries);
 
+        let targetSeriesData : object[] = [];
         // convert chartState.chartTargetSeries object to array
         // let targetSeries = Object.keys(chartState.chartTargetSeries).map((key) => {
         Object.keys(chartState.chartTargetSeries).map((key) => {
@@ -110,7 +112,14 @@ export class ChartService {
             this.months.forEach((month, i) => {
                 if (month.toLowerCase() === key) {
                     // console.log("month", month);
+
+                    targetSeriesData = [...targetSeriesData, {
+                        "name" : month,
+                        "target" : parseInt(chartState.chartTargetSeries[key]),
+                    }];
+
                     this.salesChart.series[0].data[i] = parseInt(chartState.chartTargetSeries[key]);
+                    // console.log("this.salesChart.series[0]", this.salesChart.series[0])
                 }
             });
 
@@ -118,6 +127,8 @@ export class ChartService {
 
         });
         // console.log("targetSeries", targetSeries);
+        console.log("targetSeriesData", targetSeriesData);
+        return targetSeriesData;
 
     }
 

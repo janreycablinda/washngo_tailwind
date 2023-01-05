@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>UPDATE TARGET</h2>
+<mat-dialog-content class="mat-typography">
+    <!-- loop through data if length greater than 0 -->
+
+
+    <form
+        class="flex flex-col bg-card"
+        [formGroup]="salesTargetsForm"
+        (ngSubmit)="onSubmit()"
+    >
+      <mat-form-field
+        [ngClass]="formFieldHelpers"
+        *ngFor="let month of data"
+        class="w-full">
+            <mat-label
+                [for]="month.name"
+            >
+                {{ month.name }}
+            </mat-label>
+        <input
+            [id]="month.name.toLowerCase()"
+            matInput
+            [value]="month.target"
+            type="number"
+            [formControlName]="month.name.toLowerCase()"
+        >
+      </mat-form-field>
+
+      <button mat-button mat-dialog-close type="submit">Cancel</button>
+
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close type="submit">Cancel</button>
+  <button mat-button  cdkFocusInitial>Update</button>
+</mat-dialog-actions>

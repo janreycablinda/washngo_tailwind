@@ -28,8 +28,8 @@ export class AuthInterceptor implements HttpInterceptor {
         return this.store.select("auth").pipe(
             take(1),
             exhaustMap((authState: AppState["auth"]) => {
-                console.log("AuthInterceptor authState", authState);
-                console.log("AuthInterceptor this.router.url", this.router.url); // /dashboard
+                // console.log("AuthInterceptor authState", authState);
+                // console.log("AuthInterceptor this.router.url", this.router.url); // /dashboard
 
                 if (
                     this.router.url === "/dashboard" &&

@@ -20,6 +20,7 @@ import { AppEffects } from './store/app.effects';
 import { environment } from 'environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
     scrollPositionRestoration: 'enabled'
@@ -51,6 +52,8 @@ const routerConfig: ExtraOptions = {
         StoreModule.forRoot(fromApp.appReducer),
         EffectsModule.forRoot(AppEffects),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
+
+        // MatDialogModule
     ],
 
     bootstrap: [
