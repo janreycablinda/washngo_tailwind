@@ -54,16 +54,12 @@ export class ChartEffects {
         ofType(ChartActions.updateTargetChartRequestedAction),
         mergeMap((payload) => {
 
-            console.log("updateTargetChartEffect$ payload", payload)
-
             return this.chartStoreService.updateTargetChart(payload["payload"]).pipe(
                 switchMap((data: any) => {
-                    tap(() => {
-                        NotificationAction.notificationResponse({ payload: { type: 'chartSuccess', message: 'Chart Targets Upated' } })
-                    })
                     console.log("updateTargetChart data", data)
 
                     return [
+                        NotificationAction.notificationResponse({ payload: { type: 'success', message: 'Target Sales Updated Successfully!' } }),
                         ChartActions.updateTargetChartSucceededAction({ payload: data })
                     ]
                 }),
