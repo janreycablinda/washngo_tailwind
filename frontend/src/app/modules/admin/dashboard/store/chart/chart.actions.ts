@@ -25,3 +25,12 @@ export const loadTargetChartSucceededAction = createAction(
     props<{ payload: any }>()
 );
 
+export const updateTargetChartRequestedAction = createAction(
+    '[Chart] Update Target Chart Requested Action',
+    props<{ payload: any }>()
+);
+
+export const updateTargetChartSucceededAction = createAction(
+    '[Chart] Update Target Chart Succeeded Action',
+    props<{ payload: any }>()
+);

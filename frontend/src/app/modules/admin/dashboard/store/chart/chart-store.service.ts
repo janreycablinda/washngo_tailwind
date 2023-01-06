@@ -20,4 +20,9 @@ export class ChartStoreService {
         return this.http.get<any>(environment.backend_url + targetChartUrl);
     }
 
+    updateTargetChart(payload: any): Observable<any> {
+        const targetChartUrl = `/api/action/update_target`;
+        return this.http.post<any>(environment.backend_url + targetChartUrl, payload);
+    }
+
 }

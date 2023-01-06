@@ -114,6 +114,7 @@ export class ChartService {
                     // console.log("month", month);
 
                     targetSeriesData = [...targetSeriesData, {
+                        // "name" : month.toLowerCase(),
                         "name" : month,
                         "target" : parseInt(chartState.chartTargetSeries[key]),
                     }];

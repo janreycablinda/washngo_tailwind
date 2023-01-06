@@ -8,24 +8,23 @@
         <div
             class="flex flex-col bg-card"
         >
+
             <mat-form-field
                 [ngClass]="formFieldHelpers"
-                *ngFor="let salesTargetCtrl of salesTargetsControls; let i = index"
+                *ngFor="let month of data; let i = index"
                 class="w-full"
-                >
-                    {{ index }}
-                    <mat-label
-                        [for]="salesTargetCtrl.month"
-                    >
-                        {{ salesTargetCtrl.month }}
-                    </mat-label>
+            >
+                <mat-label>
+                    {{ month["name"] }}
+                </mat-label>
                 <input
-                    [id]="salesTargetCtrl.month"
                     matInput
-                    [value]="salesTargetCtrl.target"
                     type="number"
+                    [value]="month['target']"
+                    [formControlName]="month['name'].toLowerCase()"
                 >
             </mat-form-field>
+
         </div>
     </mat-dialog-content>
     <mat-dialog-actions align="end">

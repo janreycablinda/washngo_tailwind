@@ -10,6 +10,8 @@ import { cloneDeep } from 'lodash';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
+let salesTargetsState: object;
+
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -30,6 +32,8 @@ export class DashboardComponent implements OnInit {
     yearSelected: number = new Date().getFullYear();
     targetSeriesData: object[] = [];
 
+    // salesTargetsState: object;
+
     constructor(
         private store: Store<fromApp.AppState>,
         private chartService: ChartService,
@@ -40,9 +44,12 @@ export class DashboardComponent implements OnInit {
     ngOnInit(): void {
 
         this.store.select("chart").subscribe((chartState: State) => {
-            console.log("chartState", chartState);
+            // console.log("chartState", chartState);
             this.chartService.getSalesChart(chartState)
             this.targetSeriesData = this.chartService.getTargetChart(chartState)
+            // console.log("this.targetSeriesData", this.targetSeriesData);
+            salesTargetsState = cloneDeep(chartState.chartTargetSeries)
+            console.log("salesTargetsState", salesTargetsState)
         });
 
         this.chartService.salesChart$.subscribe((salesChart: Partial<ChartOptions>) => {
@@ -72,10 +79,23 @@ export class DashboardComponent implements OnInit {
     selector: 'dialog-content-update-target',
     templateUrl: './dialog-content-update-target.html',
 })
-export class DialogContentUpdateTarget {
+export class DialogContentUpdateTarget implements OnInit {
     formFieldHelpers: string[] = [''];
 
-    salesTargetsForm: FormGroup;
+    salesTargetsForm: FormGroup = new FormGroup({
+            january : new FormControl('', [Validators.required]),
+            february : new FormControl('', [Validators.required]),
+            march : new FormControl('', [Validators.required]),
+            april : new FormControl('', [Validators.required]),
+            may : new FormControl('', [Validators.required]),
+            june : new FormControl('', [Validators.required]),
+            july : new FormControl('', [Validators.required]),
+            august : new FormControl('', [Validators.required]),
+            september : new FormControl('', [Validators.required]),
+            october : new FormControl('', [Validators.required]),
+            november : new FormControl('', [Validators.required]),
+            december : new FormControl('', [Validators.required]),
+        });
 
     constructor(
         private store: Store<fromApp.AppState>,
@@ -86,60 +106,61 @@ export class DialogContentUpdateTarget {
     ) {
 
         console.log("DialogContentUpdateTarget data", data);
-        this.initForm();
     }
 
-    private initForm() {
+    ngOnInit() {
+        console.log("DialogContentUpdateTarget data", this.data);
+        this.salesTargetsForm.patchValue({
+            january: this.data[0]["target"],
+            february: this.data[1]["target"],
+            march: this.data[2]["target"],
+            april: this.data[3]["target"],
+            may: this.data[4]["target"],
+            june: this.data[5]["target"],
+            july: this.data[6]["target"],
+            august: this.data[7]["target"],
+            september: this.data[8]["target"],
+            october: this.data[9]["target"],
+            november: this.data[10]["target"],
+            december: this.data[11]["target"],
+        })
+        // console.log("this.salesTargetsForm", this.salesTargetsForm)
 
-        let salesTargets: FormArray = new FormArray([]);
-        console.log("this.data", this.data)
-
-
-        if (this.data.length > 0) {
-            this.data.forEach((item) => {
-                salesTargets.push(
-                    new FormGroup({
-                        'month': new FormControl(item['name']),
-                        'target': new FormControl(item['target'], [Validators.required])
-                    })
-                );
-            });
-        }
-
-        console.log("salesTargets", salesTargets)
-
-        this.salesTargetsForm = new FormGroup({
-            'salesTargets': salesTargets
-        });
-
-        console.log("salesTargetsControls", this.salesTargetsControls)
-
-        // this.salesTargetssForm = new FormGroup({
-        //     january: new FormControl(this.data[0]['target']),
-        //     february: new FormControl(this.data[1]['target']),
-        //     march: new FormControl(this.data[2]['target']),
-        //     april: new FormControl(this.data[3]['target']),
-        //     may: new FormControl(this.data[4]['target']),
-        //     june: new FormControl(this.data[5]['target']),
-        //     july: new FormControl(this.data[6]['target']),
-        //     august: new FormControl(this.data[7]['target']),
-        //     september: new FormControl(this.data[8]['target']),
-        //     october: new FormControl(this.data[9]['target']),
-        //     november: new FormControl(this.data[10]['target']),
-        //     december: new FormControl(this.data[11]['target']),
-        // });
-        // console.log("initForm salesTargetsForm", this.salesTargetsForm)
-
-        //
     }
+
 
     onSubmit() {
         console.log("this.salesTargetsForm.value", this.salesTargetsForm.value);
-        this.dialogRef.close();
-    }
 
-    get salesTargetsControls() {
-        // console.log("salesTargetsControls", (this.salesTargetsForm.get("salesTargets") as FormArray).controls)
-        return (this.salesTargetsForm.get("salesTargets") as FormArray).controls;
+        const salesTargetsUpdateForm = {
+            "id": salesTargetsState["branch_id"],
+            "form": {
+                "id" : salesTargetsState["id"],
+                "branch_id" : salesTargetsState["branch_id"],
+                "january": this.salesTargetsForm.value.january,
+                "february": this.salesTargetsForm.value.february,
+                "march": this.salesTargetsForm.value.march,
+                "april": this.salesTargetsForm.value.april,
+                "may": this.salesTargetsForm.value.may,
+                "june": this.salesTargetsForm.value.june,
+                "july": this.salesTargetsForm.value.july,
+                "august": this.salesTargetsForm.value.august,
+                "september": this.salesTargetsForm.value.september,
+                "october": this.salesTargetsForm.value.october,
+                "november": this.salesTargetsForm.value.november,
+                "december": this.salesTargetsForm.value.december,
+                "date":  salesTargetsState["date"],
+                "created_at": salesTargetsState["created_at"],
+                "updated_at": salesTargetsState["updated_at"],
+            },
+
+        }
+        console.log("salesTargetsUpdateForm", salesTargetsUpdateForm)
+
+        this.store.dispatch(ChartActions.updateTargetChartRequestedAction({ payload: salesTargetsUpdateForm }));
+
+        this.dialogRef.close("test");
+
+
     }
 }

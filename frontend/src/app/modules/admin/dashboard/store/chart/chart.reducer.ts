@@ -28,4 +28,10 @@ export const chartReducer = createReducer(
             chartTargetSeries: payload
         }
     }),
+    on(ChartActions.updateTargetChartRequestedAction, (state: State, { payload }) => {
+        return {
+            ...state,
+            chartTargetSeries: payload["form"]
+        }
+    })
 );
