@@ -50,6 +50,7 @@ export class DashboardComponent implements OnInit {
             console.log("this.targetSeriesData", this.targetSeriesData);
             salesTargetsState = undefined
             salesTargetsState = cloneDeep(chartState.chartTargetSeries)
+
             console.log("salesTargetsState", salesTargetsState)
         });
 
