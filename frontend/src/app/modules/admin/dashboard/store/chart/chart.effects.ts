@@ -11,7 +11,7 @@ export class ChartEffects {
     loadSalesSeries$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ChartDataActions.loadSalesSeriesRequestedtAction),
-            mergeMap(payload =>
+            switchMap(payload =>
                 this.chartStoreService.getSalesSeries(payload.year).pipe(
                     switchMap(data => {
                         // console.log("effect data", data)
@@ -29,10 +29,10 @@ export class ChartEffects {
     loadTargetSalesSeries$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ChartDataActions.loadTargetSalesSeriesRequestedtAction),
-            mergeMap(payload =>
+            switchMap(payload =>
                 this.chartStoreService.getTargetSalesSeries(payload.branchId).pipe(
                     switchMap(data => {
-                        console.log("loadTargetSalesSeries effect data", data)
+                        // console.log("loadTargetSalesSeries effect data", data)
                         return [
                             ChartDataActions.loadTargetSalesSeriesSucceededAction({ payload: data })
                         ]

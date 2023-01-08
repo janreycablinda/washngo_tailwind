@@ -118,7 +118,7 @@ export class DashboardComponent implements OnInit {
                     color: '#DB520B',
                     data: this.chartService.remapSalesSeriesData(salesSeriesData)
                 }]),
-            withLatestFrom(
+            switchMap(salesSeriesData =>
                 this.store.pipe(select(salesTargetSeriesData)),
                 (salesSeriesData, salesTargetSeriesData) => [
                     {
