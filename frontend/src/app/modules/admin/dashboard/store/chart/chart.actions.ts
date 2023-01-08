@@ -1,36 +1,31 @@
 import { createAction, props } from '@ngrx/store';
 
-export const loadChartRequestedAction = createAction(
-    '[Chart] Load Chart Requested Action',
-    props<{ year: number }>()
+export const loadSalesSeriesRequestedtAction = createAction(
+    '[Chart] Load Sales Series Requested Action',
+    props<{ year: any }>()
 );
 
-export const loadChartSucceededAction = createAction(
-    '[Chart] Load Chart Succeeded Action',
+export const loadSalesSeriesSucceededAction = createAction(
+    '[Chart] Load Sales Series Succeeded Action',
     props<{ payload: any }>()
 );
 
-// export const chartChartsFailure = createAction(
-//   '[Chart] Chart Charts Failure',
-//   props<{ error: any }>()
-// );
+export const loadSalesSeriesFailedAction = createAction(
+    '[Chart] Load Sales Series Failed Action',
+    props<{ error: any }>()
+);
 
-export const loadTargetChartRequestedAction = createAction(
-    '[Chart] Load Target Chart Requested Action',
+export const loadTargetSalesSeriesRequestedtAction = createAction(
+    '[Chart] Load Target Sales Series Requested Action',
     props<{ branchId: any }>()
 );
 
-export const loadTargetChartSucceededAction = createAction(
-    '[Chart] Load Target Chart Succeeded Action',
+export const loadTargetSalesSeriesSucceededAction = createAction(
+    '[Chart] Load Target Sales Series Succeeded Action',
     props<{ payload: any }>()
 );
 
-export const updateTargetChartRequestedAction = createAction(
-    '[Chart] Update Target Chart Requested Action',
-    props<{ payload: any }>()
-);
-
-export const updateTargetChartSucceededAction = createAction(
-    '[Chart] Update Target Chart Succeeded Action',
-    props<{ payload: any }>()
+export const loadTargetSalesSeriesFailedAction = createAction(
+    '[Chart] Load Target Sales Series Failed Action',
+    props<{ error: any }>()
 );
