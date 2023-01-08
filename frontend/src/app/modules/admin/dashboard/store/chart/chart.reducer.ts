@@ -46,4 +46,14 @@ export const chartReducer = createReducer(
         }
     }),
 
+    //
+    on(ChartActions.updateTargetSalesSeriesRequestedtAction, (state: State, { payload }) => {
+        console.log('updateTargetSalesSeriesRequestedtAction', payload);
+        return {
+            ...state,
+            salesTargetSeries: payload["form"],
+            loading: true,
+        }
+    }),
+
 );

@@ -1,4 +1,4 @@
-<!-- <h2 mat-dialog-title>UPDATE TARGET</h2>
+<h2 mat-dialog-title>UPDATE TARGET</h2>
 <form
     [formGroup]="salesTargetsForm"
     (ngSubmit)="onSubmit()"
@@ -10,24 +10,24 @@
 
             <mat-form-field
                 [ngClass]="formFieldHelpers"
-                *ngFor="let month of data; let i = index"
+                *ngFor="let month of months; let i = index"
                 class="w-full"
             >
                 <mat-label>
-                    {{ month["name"] }}
+                    {{ month }}
                 </mat-label>
                 <input
                     matInput
                     type="number"
-                    [value]="month['target']"
-                    [formControlName]="month['name'].toLowerCase()"
+                    [value]="remappedData[i]"
+                    [formControlName]="month.toLowerCase()"
                 >
             </mat-form-field>
 
         </div>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close type="submit">Cancel</button>
-    <button mat-button  cdkFocusInitial>Update</button>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button cdkFocusInitial type="submit">Update</button>
     </mat-dialog-actions>
-</form> -->
+</form>

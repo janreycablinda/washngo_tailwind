@@ -44,6 +44,24 @@ export class ChartEffects {
             )
         ));
 
+    updateTargetSalesSeries$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ChartDataActions.updateTargetSalesSeriesRequestedtAction),
+            switchMap(payload =>
+                this.chartStoreService.updateTargetSalesSeries(payload.payload).pipe(
+                    switchMap(res => {
+                        console.log("updateTargetSalesSeriesRequestedtAction effect data", res)
+                        return [
+                            ChartDataActions.updateTargetSalesSeriesSucceededAction({ payload: res })
+                        ]
+                    }),
+                    catchError(error => of(
+                        NotificationAction.notificationResponse({ payload: { type: 'chartError', message: `Chart API Error! ${error}` } })
+                    ))
+                )
+            )
+        ));
+
     constructor(
         private actions$: Actions,
         private chartStoreService: ChartStoreService,
