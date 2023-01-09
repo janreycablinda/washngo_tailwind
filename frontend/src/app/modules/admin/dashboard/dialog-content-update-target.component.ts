@@ -107,7 +107,7 @@ export class DialogContentUpdateTargetComponent implements OnInit {
                 "updated_at": this.salesTargetSeriesData["updated_at"],
             },
         }
-        console.log("salesTargetsUpdateForm", salesTargetsUpdateForm)
+        // console.log("salesTargetsUpdateForm", salesTargetsUpdateForm)
 
         this.store.dispatch(ChartActions.updateTargetSalesSeriesRequestedtAction({ payload: salesTargetsUpdateForm }));
 
