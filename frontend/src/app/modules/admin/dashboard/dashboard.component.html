@@ -23,7 +23,8 @@
                                 <mat-icon
                                     class="icon-size-5"
                                     svgIcon="mat_outline:arrow_drop_down"
-                                ></mat-icon>
+                                >
+                                </mat-icon>
                             </button>
                             <mat-menu #yearsMenu="matMenu">
                                 <button
@@ -150,12 +151,19 @@
                             class="h-6 min-h-6 px-2 rounded-full bg-hover"
                             mat-button
                             [matMenuTriggerFor]="salesMenu">
-                            <span class="font-medium text-sm text-secondary">Today</span>
+                            <span class="font-medium text-sm text-secondary">
+                                Today
+                            </span>
+                            <mat-icon
+                                class="icon-size-5"
+                                svgIcon="mat_outline:arrow_drop_down"
+                            >
+                            </mat-icon>
                         </button>
                         <mat-menu #salesMenu="matMenu">
                             <button mat-menu-item>Today</button>
                             <button mat-menu-item>Week</button>
-                            <button mat-menu-item>Months</button>
+                            <button mat-menu-item>Month</button>
                         </mat-menu>
                     </div>
                 </div>
@@ -176,11 +184,16 @@
                             mat-button
                             [matMenuTriggerFor]="expensesMenu">
                             <span class="font-medium text-sm text-secondary">Today</span>
+                            <mat-icon
+                                class="icon-size-5"
+                                svgIcon="mat_outline:arrow_drop_down"
+                            >
+                            </mat-icon>
                         </button>
                         <mat-menu #expensesMenu="matMenu">
                             <button mat-menu-item>Today</button>
                             <button mat-menu-item>Week</button>
-                            <button mat-menu-item>Months</button>
+                            <button mat-menu-item>Month</button>
                         </mat-menu>
                     </div>
                 </div>
@@ -201,12 +214,17 @@
                             mat-button
                             [matMenuTriggerFor]="membersMenu">
                             <span class="font-medium text-sm text-secondary">All</span>
+                            <mat-icon
+                                class="icon-size-5"
+                                svgIcon="mat_outline:arrow_drop_down"
+                            >
+                            </mat-icon>
                         </button>
                         <mat-menu #membersMenu="matMenu">
                             <button mat-menu-item>All</button>
                             <button mat-menu-item>Today</button>
                             <button mat-menu-item>Week</button>
-                            <button mat-menu-item>Months</button>
+                            <button mat-menu-item>Month</button>
                         </mat-menu>
                     </div>
                 </div>
