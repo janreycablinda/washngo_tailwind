@@ -128,7 +128,7 @@ class TransactionController extends Controller
                 $member->beneficiary_name = $request->form['beneficiary_name'];
                 $member->beneficiary_contact = $request->form['beneficiary_contact'];
                 $member->expiration_date = $request->form['expiration_date'];
-                $member->branch_id = $request->form['branch_id'];
+                $member->branch_id = auth()->user()->branch_id;
                 $member->status = 'Pending';
                 $member->user_id = auth()->user()->id;
                 $member->save();
@@ -142,11 +142,10 @@ class TransactionController extends Controller
                 $add = new Transaction;
                 $add->member_id = $member->id;
                 $add->work_order = $request->form['work_order'];
-                $add->user_id = $request->form['user_id'];
+                $add->user_id = auth()->user()->id;
                 $add->branch_id = auth()->user()->branch_id;
                 $add->vehicle_id = $request->form['vehicle_id']['value'];
                 $add->property_id = $property->id;
-                $add->temp_services_id = 0;
                 $add->name = $request->form['name'];
                 $add->contact_no = $request->form['contact_no'];
                 $add->plate_no = $request->form['plate_no'];
@@ -188,7 +187,6 @@ class TransactionController extends Controller
                 $add->work_order = $request->form['work_order'];
                 $add->user_id = $request->form['user_id'];
                 $add->branch_id = auth()->user()->branch_id;
-                $add->temp_services_id = 0;
                 $add->vehicle_id = $request->form['vehicle_id']['value'];
                 $add->name = $request->form['name'];
                 $add->contact_no = $request->form['contact_no'];
@@ -208,12 +206,11 @@ class TransactionController extends Controller
                 $payment->branch_id = auth()->user()->branch_id;
                 $payment->save();
 
-                $count = count($request->temp_trans);
-                for($i = 0; $i < $count ; $i++)
+                foreach ($request->temp_trans as $temp_tran) 
                 {
                     $temp = new Temp_tran;
                     $temp->transaction_id = $add->id;
-                    $temp->variation_id = $request->temp_trans[$i]['variation_id'];
+                    $temp->variation_id = $temp_tran['variation_id'];
                     $temp->save();
                 }
 

@@ -21,6 +21,8 @@ import { MatSelectFilterModule } from 'mat-select-filter';
 import { MatSelectModule } from '@angular/material/select';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatTableModule} from '@angular/material/table';
+import { SharedModule } from 'app/shared/shared.module';
 
 const salesRoutes: Route[] = [
   {
@@ -54,7 +56,9 @@ const salesRoutes: Route[] = [
     MatTooltipModule,
     MatDialogModule,
     RouterModule.forChild(salesRoutes),
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatTableModule,
+    SharedModule
   ]
 })
 export class SalesModule { }

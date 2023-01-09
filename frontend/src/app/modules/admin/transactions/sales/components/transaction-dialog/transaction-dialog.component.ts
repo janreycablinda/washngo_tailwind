@@ -1,12 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-transaction-dialog',
   templateUrl: './transaction-dialog.component.html',
   styleUrls: ['./transaction-dialog.component.scss']
 })
+
 export class TransactionDialogComponent implements OnInit {
   dialogForm: FormGroup;
   dialogHeader = 'Add Transaction';
@@ -15,6 +17,10 @@ export class TransactionDialogComponent implements OnInit {
   sub_total: number = 0;
   total: number = 0;
   temp_trans: Object[];
+  
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  dataSource: MatTableDataSource<any>;
+  
   constructor(
     @Inject(MAT_DIALOG_DATA) public editData: any,
     private formBuilder: FormBuilder,
@@ -26,6 +32,17 @@ export class TransactionDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.defaultEmptyForm();
+    this.dataSource = new MatTableDataSource([
+    {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
+    {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
+    {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
+    {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
+    {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
+    {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
+    {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
+    {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
+    {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
+    {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'}]);
   }
 
   toggleMember(event){
