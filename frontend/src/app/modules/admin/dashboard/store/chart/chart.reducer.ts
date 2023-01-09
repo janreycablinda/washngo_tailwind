@@ -5,21 +5,55 @@ import { ChartOptions } from 'app/models/chart-options';
 export const chartFeatureKey = 'chart';
 
 export interface State {
-    chartSalesSeries: Object[],
-    chartTargetSeries: Object[],
+    salesSeries: object[];
+    salesTargetSeries: object;
+
+    //
+    error: any;
+    loading: boolean;
 }
 
 export const initialState: State = {
-    chartSalesSeries: [],
-    chartTargetSeries: [],
+    salesSeries: [],
+    salesTargetSeries: null,
+
+    //
+    error: null,
+    loading: false,
 };
 
 export const chartReducer = createReducer(
     initialState,
-    on(ChartActions.loadChartSucceededAction, (state: State, { payload }) => {
+    on(ChartActions.loadSalesSeriesSucceededAction, (state: State, { payload }) => {
         return {
             ...state,
-            chartSalesSeries: payload
+            salesSeries: payload,
+            loading: false,
         }
     }),
+    on(ChartActions.loadSalesSeriesFailedAction, (state: State, { error }) => {
+        return {
+            ...state,
+            error: error,
+            loading: false,
+        }
+    }),
+    on(ChartActions.loadTargetSalesSeriesSucceededAction, (state: State, { payload }) => {
+        return {
+            ...state,
+            salesTargetSeries: payload,
+            loading: false,
+        }
+    }),
+
+    //
+    on(ChartActions.updateTargetSalesSeriesRequestedtAction, (state: State, { payload }) => {
+        console.log('updateTargetSalesSeriesRequestedtAction', payload);
+        return {
+            ...state,
+            salesTargetSeries: payload["form"],
+            loading: true,
+        }
+    }),
+
 );

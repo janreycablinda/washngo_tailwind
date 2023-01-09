@@ -1,34 +1,59 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import * as fromApp from 'app/store/app.reducer';
 import * as ChartActions from './chart.actions';
-import { switchMap, take } from 'rxjs';
+import { Observable, Subject, map, switchMap, take, takeUntil, withLatestFrom } from 'rxjs';
 import { Actions, ofType } from '@ngrx/effects';
+import { salesSeriesData, salesTargetSeriesData } from './chart.selectors';
+import { UserService } from 'app/core/user/user.service';
+import { User } from 'app/core/user/user.types';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ChartResolverService {
+export class SalesChartResolverService {
+
+    user: User;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     constructor(
         private store: Store<fromApp.AppState>,
-        private actions$: Actions
+        private actions$: Actions,
+        private _userService: UserService
     ) { }
 
+    // resolve() : Observable<any[]> {
     resolve() {
-        return this.store.select('chart').pipe(
+        return this.store.pipe(
+            select(salesSeriesData),
             take(1),
-            switchMap(chartState => {
-                if (chartState.chartSalesSeries.length === 0) {
-                    this.store.dispatch(ChartActions.loadChartRequestedAction({ year: 2022 }));
+            map(salesSeriesData => {
+                // console.log("salesSeriesData", salesSeriesData)
+                if (salesSeriesData.length === 0) {
+
+                    // get user branch id
+                    this._userService.user$
+                        .pipe(takeUntil(this._unsubscribeAll))
+                        .subscribe((user: User) => {
+                            this.user = user;
+                            console.log("this.user", this.user)
+                        });
+                    this._unsubscribeAll.next(null);
+                    this._unsubscribeAll.complete();
+
+                    this.store.dispatch(ChartActions.loadTargetSalesSeriesRequestedtAction({ branchId: parseInt(this.user["branch_id"]) }));
+                    this.store.dispatch(ChartActions.loadSalesSeriesRequestedtAction({ year: 2023 }));
+
                     return this.actions$.pipe(
-                        ofType(ChartActions.loadChartSucceededAction),
+                        ofType(ChartActions.loadSalesSeriesSucceededAction),
                         take(1)
                     );
+
                 } else {
-                    return chartState.chartSalesSeries;
+                    return salesSeriesData;
                 }
-            })
-        )
+            }),
+
+        );
     }
 }

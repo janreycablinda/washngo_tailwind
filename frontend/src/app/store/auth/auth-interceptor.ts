@@ -1,31 +1,54 @@
-import { HttpHandler, HttpHeaders, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
+import { HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { exhaustMap, map, take } from 'rxjs/operators';
-import * as fromApp  from './auth.reducer';
+import { exhaustMap, take, takeUntil } from 'rxjs/operators';
+import { AppState } from '../app.reducer';
+import { Subject } from 'rxjs';
+import { User } from 'app/core/user/user.types';
+import { UserService } from 'app/core/user/user.service';
+import * as AuthActions from './auth.actions';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(
-    private store: Store<any>
-  ) { }
+    user: User;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
-    return this.store.select("current_user").pipe(
-      take(1),  
-      exhaustMap(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          return next.handle(req);
-        }
-        const modifiedRequest = req.clone({
-          headers: new HttpHeaders({ 'Authorization': `Bearer ${token}` })
-        });
-        return next.handle(modifiedRequest);
-      })
-    );
-  }
+    constructor(
+        private store: Store<any>,
+        private _userService: UserService,
+        private router: Router
+    ) {}
+
+    intercept(req: HttpRequest<any>, next: HttpHandler) {
+
+        return this.store.select("auth").pipe(
+            take(1),
+            exhaustMap((authState: AppState["auth"]) => {
+                // console.log("AuthInterceptor authState", authState);
+                // console.log("AuthInterceptor this.router.url", this.router.url); // /dashboard
+
+                if (
+                    this.router.url === "/dashboard" &&
+                    !authState.user
+                ) {
+                    this._userService.user$
+                        .pipe(takeUntil(this._unsubscribeAll))
+                        .subscribe((user: User) => {
+                            this.user = user;
+                            // console.log("this.user", this.user);
+                            this.store.dispatch(AuthActions.getUserDataSucceededAction({ payload: user }));
+                        });
+                    this._unsubscribeAll.next(null);
+                    this._unsubscribeAll.complete();
+                    // console.log('intercepted', authState);
+                }
+                return next.handle(req);
+            })
+        );
+
+    }
 }

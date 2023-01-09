@@ -9,6 +9,9 @@ import { MatInputModule } from '@angular/material/input';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
+import {MatDialogModule} from '@angular/material/dialog';
+import {DialogModule} from '@angular/cdk/dialog';
+
 @NgModule({
     declarations: [
         DatatableComponent,
@@ -22,7 +25,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         MatFormFieldModule,
         MatPaginatorModule,
         MatInputModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatDialogModule,
+        DialogModule
     ],
     exports: [
         CommonModule,
@@ -33,9 +38,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         MatPaginatorModule,
         DatatableComponent,
         MatInputModule,
-        SnackbarComponent
+        SnackbarComponent,
+        MatDialogModule,
+        DialogModule
     ]
-    
+
 })
 export class SharedModule
 {

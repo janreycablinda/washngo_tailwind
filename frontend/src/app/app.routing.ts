@@ -3,7 +3,7 @@ import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
-import { ChartResolverService } from './modules/admin/dashboard/store/chart/chart-resolver.service';
+import { SalesChartResolverService } from './modules/admin/dashboard/store/chart/chart-resolver.service';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -78,10 +78,10 @@ export const appRoutes: Route[] = [
             {
                 path: 'dashboard',
                 loadChildren: () => import('app/modules/admin/dashboard/dashboard.module').then(m => m.DashboardModule),
-                // resolve    : {
-                //     chartData: ChartResolverService,
-                // }
-                resolve: [ChartResolverService]
+                resolve: [
+                    SalesChartResolverService,
+
+                ]
             },
             {
                 path: 'transactions/sales',

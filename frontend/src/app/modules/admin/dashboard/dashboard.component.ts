@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import * as fromApp from 'app/store/app.reducer';
-import { ChartComponent } from "ng-apexcharts";
-import { ChartOptions } from 'app/models/chart-options';
-import { State } from './store/chart/chart.reducer';
-import { ChartService } from './store/chart/chart.service';
 import * as ChartActions from './store/chart/chart.actions';
-import { cloneDeep } from 'lodash';
+import { ChartOptions } from 'app/models/chart-options';
+import { ChartService } from './store/chart/chart.service';
+import { MatDialog, } from '@angular/material/dialog';
+import { Observable, Subject, map, switchMap } from 'rxjs';
+import { salesSeriesData, salesTargetSeriesData } from './store/chart/chart.selectors';
+import { ChartComponent } from 'ng-apexcharts';
+import { DialogContentUpdateTargetComponent } from './dialog-content-update-target.component';
 
 @Component({
     selector: 'app-dashboard',
@@ -16,41 +18,122 @@ import { cloneDeep } from 'lodash';
 export class DashboardComponent implements OnInit {
     @ViewChild("chart", { static: false }) chart: ChartComponent;
 
-    salesChart: Partial<ChartOptions>;
-    yearsList: number[] = [2020, 2021, 2022, 2023, 2024, 2025];
-    // selectd year is previous year
-    yearSelected: number = new Date().getFullYear() - 1;
+    months: string[] = this.chartService.months;
+    chartOptions: Partial<ChartOptions> = {
+        series: [
+            {
+                name: "Target",
+                color: '#7f7f7f',
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            {
+                name: "Sales",
+                color: '#DB520B',
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            },
 
+        ],
+        chart: {
+            type: "bar",
+            height: 350
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: "55%",
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ["transparent"]
+        },
+        xaxis: {
+            categories: this.months,
+        },
+        yaxis: {
+            title: {
+                text: "Monthly Sales"
+            }
+        },
+        fill: {
+            opacity: 1,
+            colors: ['#DB520B', '#DB2777']
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return "₱ " + val;
+                }
+            }
+        }
+    }
+
+    //
+    yearsList: number[] = [
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+    ];
+    yearSelected: number = new Date().getFullYear();
+
+    chartData$: Observable<any[]>;
 
     constructor(
         private store: Store<fromApp.AppState>,
-        private chartService: ChartService
+        private chartService: ChartService,
+        public dialog: MatDialog,
     ) {
-        console.log("this.yearSelected", this.yearSelected)
     }
 
     ngOnInit(): void {
 
-        this.store.select("chart").subscribe((chartState: State) => {
-            console.log("chartState", chartState);
-            this.chartService.getSalesChart(chartState)
-        });
+        // NEW CODE
+        this.chartData$ = this.store.pipe(
+            // this.store.pipe(
+            select(salesSeriesData),
+            map(salesSeriesData => [
+                {
+                    name: 'Sales',
+                    color: '#DB520B',
+                    data: this.chartService.remapSalesSeriesData(salesSeriesData)
+                }]),
+            switchMap(() =>
+                this.store.pipe(select(salesTargetSeriesData)),
+                (salesSeriesData, salesTargetSeriesData) => [
+                    {
+                        name: 'Target',
+                        color: '#7f7f7f',
+                        data: salesTargetSeriesData ? this.chartService.remapSalesTargetSeriesData(salesTargetSeriesData) : []
+                    },
+                    ...salesSeriesData
+                ]
+            )
+        )
+        // .subscribe(chartData => {
+        //     console.log("chartData", chartData);
+        // });
 
-        this.chartService.salesChart$.subscribe((salesChart: Partial<ChartOptions>) => {
-            this.salesChart = cloneDeep(salesChart);
-            console.log("this.salesChart", this.salesChart);
-        });
 
     }
 
     onYearSelected(year: number) {
         this.yearSelected = year;
-        this.store.dispatch(ChartActions.loadChartRequestedAction({ year: this.yearSelected }));
-        // update chart series only
-        // this.salesChart.series = [{
-        //     data: [23, 44, 1, 22]
-        // }];
-        // this.salesChart.series = [...this.salesChart.series];
+        this.store.dispatch(ChartActions.loadSalesSeriesRequestedtAction({ year: this.yearSelected }));
     }
 
+    openDialog() {
+        const dialogRef = this.dialog.open(DialogContentUpdateTargetComponent, {
+        });
+        // dialogRef.afterClosed().subscribe(result => {
+        //     console.log(`Dialog result: ${result}`);
+        // });
+    }
 }
+

@@ -8,8 +8,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { StoreModule } from '@ngrx/store';
+import { SharedModule } from 'app/shared/shared.module';
 
 import { chartFeatureKey, chartReducer } from './store/chart/chart.reducer';
+import { DialogContentUpdateTargetComponent } from './dialog-content-update-target.component';
 
 const dashboardRoutes: Route[] = [
     {
@@ -20,10 +22,12 @@ const dashboardRoutes: Route[] = [
 
 @NgModule({
     declarations: [
-        DashboardComponent
+        DashboardComponent,
+        DialogContentUpdateTargetComponent,
     ],
     imports: [
         CommonModule,
+        SharedModule,
         NgApexchartsModule,
         MatIconModule,
         MatButtonModule,
@@ -31,6 +35,7 @@ const dashboardRoutes: Route[] = [
         FuseCardModule,
         RouterModule.forChild(dashboardRoutes),
         StoreModule.forFeature(chartFeatureKey, chartReducer),
+
     ]
 })
 export class DashboardModule { }
