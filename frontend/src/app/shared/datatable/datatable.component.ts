@@ -13,6 +13,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   @Input() productList = '';
   @Input() displayedColumns: string[] = [];
   @Input() dataSource: MatTableDataSource<any>;
+  @Input() withFilter: boolean = true;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 

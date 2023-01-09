@@ -75,6 +75,7 @@
                         </mat-slide-toggle>
                     </div>
                 </div>
+                <!-- {{vehicles}} -->
                 <div fxLayout="column" fxLayoutAlign="start start" class="mr-4">
                     <mat-form-field *ngIf="!dialogForm.value.member" class="w-full">
                         <label 
@@ -82,10 +83,21 @@
                             class="absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
                             Select Vehicle
                         </label>
-                        <mat-select formControlName="vehicle_id" placeholder="Select Vehicle">
-                          <mat-select-filter [array]="variables" [displayMember]="'name'" (filteredReturn)="filteredVariables = $event"></mat-select-filter>
-                          <mat-option [value]="variable.id" *ngFor="let variable of filteredVariables">
-                            {{variable.name}}
+                        <mat-select (openedChange)="openVehicle()" formControlName="vehicle_id" placeholder="Select Vehicle">
+                          <input 
+                            matInput 
+                            class="block sticky pl-4 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                            placeholder="Search Vehicle" 
+                            (keyup)="filterVehicles($event.target.value)"
+                            (keydown)="$event.stopPropagation()"
+                            />
+                          <mat-option [disabled]="true" *ngIf="vehicles.length == 0">
+                            <div class="flex">
+                              <span>Getting Data</span> <mat-spinner class="ml-1 mt-1" diameter="25" strokeWidth="5"></mat-spinner>
+                            </div>
+                          </mat-option>
+                          <mat-option [value]="variable" *ngFor="let variable of vehicleFilteredData">
+                            {{variable.vehicle_name}}
                           </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -146,12 +158,14 @@
                             class="absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
                             Birth Date
                         </label>
-                        <input 
+                        <div class="sticky top-0">
+                          <input 
                             [matDatepicker]="picker2" 
                             matInput 
                             formControlName="birthdate" 
                             class="block pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
                             placeholder=" " />
+                        </div>
                         <mat-datepicker-toggle
                             matSuffix
                             [for]="picker2"></mat-datepicker-toggle>
@@ -191,17 +205,127 @@
                 </div>
             </div>
             <div fxFlex="40">
-                <div class="border mt-2 p-2 rounded-md border-black border-b-2">
-                    <span class="block text-xl font-bold">Summary of Purchase</span>
-                    <span class="block"><b>SUB TOTAL: </b> ₱0 </span>
-                    <span class="block"><b>DISCOUNT: </b> ₱0</span>
-                    <span class="block text-lg"><b>TOTAL: ₱0</b> </span>
+              <div class="border mt-2 p-2 rounded-md border-black border-b-2">
+                <span class="block text-xl font-bold">Summary of Purchase</span>
+                <div fxLayout="row">
+                  <div fxFlex="50">
+                    <span class="block">SUB TOTAL: </span>
+                  </div>
+                  <div fxFlex="50">
+                    <span class="block">₱{{sub_total}}</span>
+                  </div>
                 </div>
+                <div fxLayout="row">
+                  <div fxFlex="50">
+                    <span class="block">DISCOUNT: </span>
+                  </div>
+                  <div fxFlex="50">
+                    <span class="block">₱{{discounted}}</span>
+                  </div>
+                </div>
+                <div fxLayout="row">
+                  <div fxFlex="50">
+                    <span class="block text-lg font-bold">TOTAL: </span>
+                  </div>
+                  <div fxFlex="50">
+                    <span class="block text-lg font-bold">₱{{total}}</span>
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
         <hr class="w-full border-orange-500 border-t mb-0">
             <h1 class="text-lg">SERVICES</h1>
-            <app-datatable class="w-full" mat-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-datatable>
+            <form class="mt-2" [formGroup]="dialogFormService" (ngSubmit)="submitFormService();">
+                <div fxLayoutGap="20" fxLayout="row">
+                    <div fxFlex="40">
+                        <mat-form-field class="w-full">
+                            <label 
+                                class="absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                                Select Service Type
+                            </label>
+                            <mat-select (openedChange)="openCategory()" [disabled]="dialogForm.value.member == false && !dialogForm.value.vehicle_id" formControlName="services_type"  placeholder="Select Services Type">
+                              <input 
+                                matInput 
+                                class="block sticky pl-4 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                                placeholder="Search Category" 
+                                (keyup)="filterCategory($event.target.value)"
+                                (keydown)="$event.stopPropagation()"
+                                />
+                              <mat-option [disabled]="true" *ngIf="category.length == 0">
+                                <div class="flex">
+                                  <span>Getting Data</span> <mat-spinner class="ml-1 mt-1" diameter="25" strokeWidth="5"></mat-spinner>
+                                </div>
+                              </mat-option>
+                              <mat-option [value]="variable.id" *ngFor="let variable of categoryFilteredData">
+                                {{variable.category_name}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="40">
+                        <mat-form-field class="w-full">
+                            <label 
+                                class="absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                                Select Services
+                            </label>
+                            <mat-select (openedChange)="openServices()" formControlName="services" [disabled]="!dialogFormService.value.services_type" placeholder="Select Services">
+                              <input 
+                                matInput 
+                                class="block sticky pl-4 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                                placeholder="Search Services" 
+                                (keyup)="filterServices($event.target.value)"
+                                (keydown)="$event.stopPropagation()"
+                                />
+                              <mat-option [disabled]="true" *ngIf="services.length == 0">
+                                <div class="flex">
+                                  <span>Getting Data</span> <mat-spinner class="ml-1 mt-1" diameter="25" strokeWidth="5"></mat-spinner>
+                                </div>
+                              </mat-option>
+                              <mat-option [value]="variable.id" *ngFor="let variable of servicesFilteredData">
+                                {{variable.services_name}} - ₱{{variable.variations[0].price}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="20">
+                        <button [disabled]="!dialogFormService.valid" mat-flat-button color="primary" class="mt-1">
+                            ADD
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <table class="w-full border text-lg">
+                        <thead class="text-center">
+                          <tr>
+                            <th width="45%" class="border">Services Name</th>
+                            <th width="45%" class="border">Services Charge</th>
+                            <th width="10%" class="border"></th>
+                          </tr>
+                        </thead>
+                        <tbody class="text-center" *ngIf="dialogForm.value.temp_trans.length != 0">
+                          <tr *ngFor="let temp_trans of dialogForm.value.temp_trans">
+                            <td class="border">{{temp_trans.services_name}}</td>
+                            <td class="border">₱{{temp_trans.price}}</td>
+                            <td class="border">
+                                <button
+                                class="fuse-mat-button-small mt-1"
+                                mat-icon-button
+                                (click)="deleteTempTrans(temp_trans.variation_id)"
+                                >
+                                <mat-icon class="text-red-500" svgIcon="heroicons_outline:trash"></mat-icon>
+                                </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                        <tbody class="text-center" *ngIf="dialogForm.value.temp_trans.length == 0">
+                          <tr *ngIf="dialogForm.value.temp_trans.length == 0">
+                            <td class="border" colspan="3"> NO SELECTED SERVICES</td>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
     </div>
     <div mat-dialog-actions [align]="'end'" class="m-b-5">
         <button mat-flat-button color="warn" mat-dialog-close>Close</button>

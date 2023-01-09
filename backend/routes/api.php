@@ -198,7 +198,7 @@ Route::group([
     Route::put('update_shift', 'App\Http\Controllers\ShiftController@update_shift');
     Route::delete('delete_shift/{id}', 'App\Http\Controllers\ShiftController@delete_shift');
 
-    Route::get('get_discount/{id}', 'App\Http\Controllers\DiscountController@get_discount');
+    Route::get('get_discount', 'App\Http\Controllers\DiscountController@get_discount');
     Route::post('add_discount', 'App\Http\Controllers\DiscountController@add_discount');
     Route::put('update_discount', 'App\Http\Controllers\DiscountController@update_discount');
     Route::delete('delete_discount/{id}', 'App\Http\Controllers\DiscountController@delete_discount');

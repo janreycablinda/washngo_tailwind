@@ -8,6 +8,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         MatFormFieldModule,
         MatPaginatorModule,
         MatInputModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatProgressSpinnerModule
     ],
     exports: [
         CommonModule,
@@ -33,7 +35,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         MatPaginatorModule,
         DatatableComponent,
         MatInputModule,
-        SnackbarComponent
+        SnackbarComponent,
+        MatProgressSpinnerModule
     ]
     
 })

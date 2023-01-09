@@ -7,7 +7,7 @@ use App\Models\Discount;
 
 class DiscountController extends Controller
 {
-    public function get_discount($id){
+    public function get_discount(){
         $get = Discount::with('services')->where('branch_id', auth()->user()->branch_id)->get();
         return response()->json($get);
     }
