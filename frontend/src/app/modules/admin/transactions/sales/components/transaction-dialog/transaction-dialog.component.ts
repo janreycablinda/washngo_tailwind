@@ -231,29 +231,29 @@ export class TransactionDialogComponent implements OnInit {
             }
           }
         } else if(discount.discount_type == 'First Wash Discount'){
-          if(this.is_first_trans || this.dialogForm.value.add_as_member){
-            console.log('First Wash Discount');
-            if(discount.services_id == item.services_id){
-              if(discount.percentage_type == '%'){
-                let divide = discount.discount_percentage / 100;
-                discounts += item.price * divide;
-              }else{
-                discounts += discount.discount_percentage;
-              }
-            }
-          }
+          // if(this.is_first_trans || this.dialogForm.value.add_as_member){
+          //   console.log('First Wash Discount');
+          //   if(discount.services_id == item.services_id){
+          //     if(discount.percentage_type == '%'){
+          //       let divide = discount.discount_percentage / 100;
+          //       discounts += item.price * divide;
+          //     }else{
+          //       discounts += discount.discount_percentage;
+          //     }
+          //   }
+          // }
         } else if(discount.discount_type == '10 points Discount'){
-          if(this.vehicle_redeem != ''){
-            console.log('10 points Discount');
-            if(discount.services_id == item.services_id){
-              if(discount.percentage_type == '%'){
-                let divide = discount.discount_percentage / 100;
-                discounts += item.price * divide;
-              }else{
-                discounts += discount.discount_percentage;
-              }
-            }
-          }
+          // if(this.vehicle_redeem != ''){
+          //   console.log('10 points Discount');
+          //   if(discount.services_id == item.services_id){
+          //     if(discount.percentage_type == '%'){
+          //       let divide = discount.discount_percentage / 100;
+          //       discounts += item.price * divide;
+          //     }else{
+          //       discounts += discount.discount_percentage;
+          //     }
+          //   }
+          // }
         }
         console.log(discounts);
       })
