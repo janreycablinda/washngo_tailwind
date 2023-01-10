@@ -11,6 +11,7 @@ import { Observable, of, switchMap, take } from 'rxjs';
 import * as fromApp from 'app/store/app.reducer';
 import { userData } from 'app/store/auth/auth.selectors';
 import * as ChartActions from './chart.actions';
+import { salesCountsData } from './chart.selectors';
 
 @Injectable({
     providedIn: 'root'
@@ -26,14 +27,16 @@ export class ChartCountsResolver implements Resolve<boolean> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
 
         return this.store.pipe(
-            select(userData),
+            select(salesCountsData),
             take(1),
-            switchMap((user) => {
+            switchMap((salesCounts) => {
 
-                // console.log("ChartCountsResolver user", user);
-                this.store.dispatch(ChartActions.loadSalesRequestedtAction({
-                    payload: { data: "Today" }
-                }));
+                // console.log("ChartCountsResolver salesCounts", salesCounts);
+                if (!salesCounts["today"]) {
+                    this.store.dispatch(ChartActions.loadSalesRequestedtAction({
+                        payload: { data: "Today" }
+                    }));
+                }
 
                 return of(true);
             })
