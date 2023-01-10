@@ -11,11 +11,11 @@ export const initialState: State = {
 };
 
 export const AuthReducer = createReducer(
-  initialState,
-  on(AuthActions.getUserDataSucceededAction, (state: State, { payload }) => {
-    return {
-      ...state,
-      user: payload
-    }
-  })
+    initialState,
+    on(AuthActions.getUserDataSucceededAction, (state: State, { payload }) => {
+        return {
+            ...state,
+            user: payload
+        }
+    })
 );

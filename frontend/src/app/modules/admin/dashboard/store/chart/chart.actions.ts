@@ -44,3 +44,18 @@ export const updateTargetSalesSeriesSucceededAction = createAction(
 //     '[Chart] Update Target Sales Series Failed Action',
 //     props<{ error: any }>()
 // );
+
+export const loadSalesRequestedtAction = createAction(
+    '[Chart] Load Sales Requested Action',
+    props<{ payload: any }>()
+);
+
+export const loadSalesSucceededAction = createAction(
+    '[Chart] Load Sales Succeeded Action',
+    props<{ payload: any }>()
+);
+
+export const loadSalesFailedAction = createAction(
+    '[Chart] Load Sales Failed Action',
+    props<{ error: any }>()
+);

@@ -8,6 +8,12 @@ export interface State {
     salesSeries: object[];
     salesTargetSeries: object;
 
+    salesCounts: {
+        "today": number;
+        "week": number;
+        "month": number;
+    };
+
     //
     error: any;
     loading: boolean;
@@ -16,6 +22,12 @@ export interface State {
 export const initialState: State = {
     salesSeries: [],
     salesTargetSeries: null,
+
+    salesCounts: {
+        "today": null,
+        "week": null,
+        "month": null,
+    },
 
     //
     error: null,
@@ -53,6 +65,101 @@ export const chartReducer = createReducer(
             ...state,
             salesTargetSeries: payload["form"],
             loading: true,
+        }
+    }),
+
+    on(ChartActions.loadSalesSucceededAction, (state: State, { payload }) => {
+
+        // console.log('loadSalesSucceededAction', payload);
+        // console.log('loadSalesSucceededAction', payload["payload"]["data"]);
+
+        switch (payload["payload"]["data"]) {
+            case "Today":
+
+                console.log("switch Today state count today", state["salesCounts"]["today"]);
+                console.log("switch Today", payload["payload"]["data"]);
+
+                if (state["salesCounts"]["today"] !== null) {
+                    break;
+                }
+
+                const todaySum = payload["data"].reduce((total, item) => {
+                    if (item.payment) {
+                        return total + parseFloat(item.payment.total);
+                    } else {
+                        return total;
+                    }
+                }, 0);
+                // console.log("todaySum", todaySum);
+
+                return {
+                    ...state,
+                    salesCounts: {
+                        ...state.salesCounts,
+                        today: todaySum
+                    },
+                };
+
+            case "Week":
+
+                console.log("switch Week state count week", state["salesCounts"]["week"]);
+                console.log("switch Week", payload["data"]);
+
+                if (state["salesCounts"]["week"] !== null) {
+                    console.log(`state["salesCounts"]["week"] === null`)
+                    break;
+                }
+
+                const weekSum = payload["data"].reduce((total, item) => {
+                    if (item.payment) {
+                        return total + parseFloat(item.payment.total);
+                    } else {
+                        return total;
+                    }
+                }, 0);
+                // console.log("weekSum", weekSum);
+
+                return {
+                    ...state,
+                    salesCounts: {
+                        ...state.salesCounts,
+                        week: weekSum
+                    },
+                }
+
+            case "Month":
+
+                console.log("switch Month state count month", state["salesCounts"]["month"]);
+                console.log("switch Month", payload["data"]);
+
+                if (state["salesCounts"]["month"] !== null) {
+                    console.log(`state["salesCounts"]["month"] === null`)
+                    break;
+                }
+
+                const monthSum = payload["data"].reduce((total, item) => {
+                    if (item.payment) {
+                        return total + parseFloat(item.payment.total);
+                    } else {
+                        return total;
+                    }
+                }, 0);
+                // console.log("monthSum", monthSum);
+
+                return {
+                    ...state,
+                    salesCounts: {
+                        ...state.salesCounts,
+                        month: monthSum
+                    },
+                }
+
+            default:
+                break;
+        }
+
+        return {
+            ...state,
         }
     }),
 

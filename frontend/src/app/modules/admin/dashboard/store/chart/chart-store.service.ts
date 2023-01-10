@@ -25,4 +25,9 @@ export class ChartStoreService {
         return this.http.post<any>(environment.backend_url + targetChartUrl, payload);
     }
 
+    getSales(payload: any) {
+        const salesCountUrl = `/api/action/get_sales`;
+        return this.http.post<any>(environment.backend_url + salesCountUrl, payload);
+    }
+
 }
