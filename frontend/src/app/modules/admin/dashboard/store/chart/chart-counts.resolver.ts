@@ -32,7 +32,7 @@ export class ChartCountsResolver implements Resolve<boolean> {
             switchMap((salesCounts) => {
 
                 // console.log("ChartCountsResolver salesCounts", salesCounts);
-                if (!salesCounts["today"]) {
+                if (salesCounts["today"] === null) {
                     this.store.dispatch(ChartActions.loadSalesRequestedtAction({
                         payload: { data: "Today" }
                     }));
