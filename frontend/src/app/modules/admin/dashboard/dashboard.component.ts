@@ -6,7 +6,7 @@ import { ChartOptions } from 'app/models/chart-options';
 import { ChartService } from './store/chart/chart.service';
 import { MatDialog, } from '@angular/material/dialog';
 import { Observable, Subject, map, switchMap } from 'rxjs';
-import { salesSeriesData, salesTargetSeriesData } from './store/chart/chart.selectors';
+import { salesCountsData, salesSeriesData, salesTargetSeriesData } from './store/chart/chart.selectors';
 import { ChartComponent } from 'ng-apexcharts';
 import { DialogContentUpdateTargetComponent } from './dialog-content-update-target.component';
 
@@ -85,6 +85,10 @@ export class DashboardComponent implements OnInit {
 
     chartData$: Observable<any[]>;
 
+    salesCounts$: Observable<object> = this.store.pipe(
+        select(salesCountsData));
+    salesCountSelected: string = "Today";
+
     constructor(
         private store: Store<fromApp.AppState>,
         private chartService: ChartService,
@@ -120,7 +124,6 @@ export class DashboardComponent implements OnInit {
         //     console.log("chartData", chartData);
         // });
 
-
     }
 
     onYearSelected(year: number) {
@@ -135,5 +138,14 @@ export class DashboardComponent implements OnInit {
         //     console.log(`Dialog result: ${result}`);
         // });
     }
+
+    onSalesCountSelect(duration: string) {
+        console.log("onSalesCountSelected duration", duration);
+        this.salesCountSelected = duration;
+        this.store.dispatch(ChartActions.loadSalesRequestedtAction({
+            payload: { data: duration }
+        }));
+    }
+
 }
 

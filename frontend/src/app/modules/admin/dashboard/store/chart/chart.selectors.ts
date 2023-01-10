@@ -12,3 +12,8 @@ export const salesTargetSeriesData = createSelector(
     selectChartsState,
     (chart) => chart.salesTargetSeries
 );
+
+export const salesCountsData = createSelector(
+    selectChartsState,
+    (chart) => chart.salesCounts
+);

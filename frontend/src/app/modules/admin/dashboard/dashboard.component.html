@@ -152,7 +152,7 @@
                             mat-button
                             [matMenuTriggerFor]="salesMenu">
                             <span class="font-medium text-sm text-secondary">
-                                Today
+                                {{ salesCountSelected }}
                             </span>
                             <mat-icon
                                 class="icon-size-5"
@@ -161,14 +161,19 @@
                             </mat-icon>
                         </button>
                         <mat-menu #salesMenu="matMenu">
-                            <button mat-menu-item>Today</button>
-                            <button mat-menu-item>Week</button>
-                            <button mat-menu-item>Month</button>
+                            <button mat-menu-item (click)="onSalesCountSelect('Today')">Today</button>
+                            <button mat-menu-item (click)="onSalesCountSelect('Week')">Week</button>
+                            <button mat-menu-item (click)="onSalesCountSelect('Month')">Month</button>
                         </mat-menu>
                     </div>
                 </div>
                 <div class="flex flex-col lg:flex-row lg:items-center mx-6 mt-3 mb-6">
-                    <div class="text-7xl font-bold tracking-tighter leading-tight">₱{{100000 | number:'1.0-0'}}</div>
+
+                    <div class="text-7xl font-bold tracking-tighter leading-tight">₱
+                        <span *ngIf="salesCountSelected === 'Today'">{{ (salesCounts$ | async).today | number:'1.0-0'}}</span>
+                        <span *ngIf="salesCountSelected === 'Week'">{{ (salesCounts$ | async).week | number:'1.0-0'}}</span>
+                        <span *ngIf="salesCountSelected === 'Month'">{{ (salesCounts$ | async).month | number:'1.0-0'}}</span>
+                    </div>
                 </div>
             </div>
 
@@ -198,7 +203,7 @@
                     </div>
                 </div>
                 <div class="flex flex-col lg:flex-row lg:items-center mx-6 mt-3 mb-6">
-                    <div class="text-7xl font-bold tracking-tighter leading-tight">₱{{100000 | number:'1.0-0'}}</div>
+                    <div class="text-7xl font-bold tracking-tighter leading-tight">₱{{0 | number:'1.0-0'}}</div>
                 </div>
             </div>
 
@@ -229,7 +234,7 @@
                     </div>
                 </div>
                 <div class="flex flex-col lg:flex-row lg:items-center mx-6 mt-3 mb-6">
-                    <div class="text-7xl font-bold tracking-tighter leading-tight">{{ 1000 }}</div>
+                    <div class="text-7xl font-bold tracking-tighter leading-tight">{{ 0 }}</div>
                 </div>
             </div>
 

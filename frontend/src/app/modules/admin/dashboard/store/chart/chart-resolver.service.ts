@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import * as fromApp from 'app/store/app.reducer';
 import * as ChartActions from './chart.actions';
+import * as AuthActions from 'app/store/auth/auth.actions';
 import { Observable, Subject, map, switchMap, take, takeUntil, withLatestFrom } from 'rxjs';
 import { Actions, ofType } from '@ngrx/effects';
 import { salesSeriesData, salesTargetSeriesData } from './chart.selectors';
@@ -41,6 +42,7 @@ export class SalesChartResolverService {
                     this._unsubscribeAll.next(null);
                     this._unsubscribeAll.complete();
 
+                    this.store.dispatch(AuthActions.getUserDataSucceededAction({ payload: this.user }));
                     this.store.dispatch(ChartActions.loadTargetSalesSeriesRequestedtAction({ branchId: parseInt(this.user["branch_id"]) }));
                     this.store.dispatch(ChartActions.loadSalesSeriesRequestedtAction({ year: 2023 }));
 
