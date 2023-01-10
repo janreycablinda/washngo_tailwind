@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthService } from 'app/core/auth/auth.service';
 import { AuthInterceptor } from 'app/core/auth/auth.interceptor';
+import { AuthInterceptor as AuthInterceptor2 } from 'app/store/auth/auth-interceptor';
 
 @NgModule({
     imports  : [
@@ -12,6 +13,11 @@ import { AuthInterceptor } from 'app/core/auth/auth.interceptor';
         {
             provide : HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
+            multi   : true
+        },
+        {
+            provide : HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor2,
             multi   : true
         }
     ]

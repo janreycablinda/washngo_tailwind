@@ -5,11 +5,11 @@ import { AuthInterceptor } from './store/auth/auth-interceptor';
 
 @NgModule({
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptor,
+    //   multi: true,
+    // },
   ]
 })
 export class InterceptorModule { }

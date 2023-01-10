@@ -1,125 +1,139 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import * as fromApp from 'app/store/app.reducer';
-import { Subscription } from 'rxjs';
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ChartComponent,
-  ApexDataLabels,
-  ApexPlotOptions,
-  ApexYAxis,
-  ApexLegend,
-  ApexStroke,
-  ApexXAxis,
-  ApexFill,
-  ApexTooltip
-} from "ng-apexcharts";
-
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  dataLabels: ApexDataLabels;
-  plotOptions: ApexPlotOptions;
-  yaxis: ApexYAxis;
-  xaxis: ApexXAxis;
-  fill: ApexFill;
-  tooltip: ApexTooltip;
-  stroke: ApexStroke;
-  legend: ApexLegend;
-  colors: any;
-};
+import * as ChartActions from './store/chart/chart.actions';
+import { ChartOptions } from 'app/models/chart-options';
+import { ChartService } from './store/chart/chart.service';
+import { MatDialog, } from '@angular/material/dialog';
+import { Observable, Subject, map, switchMap } from 'rxjs';
+import { salesSeriesData, salesTargetSeriesData } from './store/chart/chart.selectors';
+import { ChartComponent } from 'ng-apexcharts';
+import { DialogContentUpdateTargetComponent } from './dialog-content-update-target.component';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild("chart") chart: ChartComponent;
-  wedgit$: Subscription;
-  public chartOptions: Partial<ChartOptions>;
-  constructor(private store:Store<fromApp.AppState>) {
-    this.chartOptions = {
-      series: [
-        {
-          name: "Sales",
-          color: '#DB520B',
-          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1000]
+    @ViewChild("chart", { static: false }) chart: ChartComponent;
+
+    months: string[] = this.chartService.months;
+    chartOptions: Partial<ChartOptions> = {
+        series: [
+            {
+                name: "Target",
+                color: '#7f7f7f',
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            {
+                name: "Sales",
+                color: '#DB520B',
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            },
+
+        ],
+        chart: {
+            type: "bar",
+            height: 350
         },
-        {
-          name: "Expenses",
-          color: '#DB2777',
-          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 660]
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: "55%",
+            }
         },
-      ],
-      chart: {
-        type: "bar",
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: "55%",
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ["transparent"]
+        },
+        xaxis: {
+            categories: this.months,
+        },
+        yaxis: {
+            title: {
+                text: "Monthly Sales"
+            }
+        },
+        fill: {
+            opacity: 1,
+            colors: ['#DB520B', '#DB2777']
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return "₱ " + val;
+                }
+            }
         }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ["transparent"]
-      },
-      xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec"
-        ]
-      },
-      yaxis: {
-        title: {
-          text: "Yearly Sales"
-        }
-      },
-      fill: {
-        opacity: 1,
-        colors: ['#DB520B', '#DB2777']
-      },
-      tooltip: {
-        y: {
-          formatter: function(val) {
-            return "₱ " + val;
-          }
-        }
-      }
-    };
-   }
+    }
 
-  ngOnInit(): void {
-    this.wedgit$ = this.store.select('chart').subscribe((data) => {
-      const chartData:number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0];
-      data.chart.forEach((item) => {
-        const getIndexByMonth = item['month']-1;
-        chartData[getIndexByMonth] = parseInt(item['data']);
-      })
-      console.log(chartData);
-      console.log(this.chartOptions.series[0].data);
-      this.chartOptions.series[0].data = chartData;
+    //
+    yearsList: number[] = [
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+    ];
+    yearSelected: number = new Date().getFullYear();
 
-      console.log(this.chartOptions);
-      this.chart.render();
-    });
-  }
+    chartData$: Observable<any[]>;
 
+    constructor(
+        private store: Store<fromApp.AppState>,
+        private chartService: ChartService,
+        public dialog: MatDialog,
+    ) {
+    }
+
+    ngOnInit(): void {
+
+        // NEW CODE
+        this.chartData$ = this.store.pipe(
+            // this.store.pipe(
+            select(salesSeriesData),
+            map(salesSeriesData => [
+                {
+                    name: 'Sales',
+                    color: '#DB520B',
+                    data: this.chartService.remapSalesSeriesData(salesSeriesData)
+                }]),
+            switchMap(() =>
+                this.store.pipe(select(salesTargetSeriesData)),
+                (salesSeriesData, salesTargetSeriesData) => [
+                    {
+                        name: 'Target',
+                        color: '#7f7f7f',
+                        data: salesTargetSeriesData ? this.chartService.remapSalesTargetSeriesData(salesTargetSeriesData) : []
+                    },
+                    ...salesSeriesData
+                ]
+            )
+        )
+        // .subscribe(chartData => {
+        //     console.log("chartData", chartData);
+        // });
+
+
+    }
+
+    onYearSelected(year: number) {
+        this.yearSelected = year;
+        this.store.dispatch(ChartActions.loadSalesSeriesRequestedtAction({ year: this.yearSelected }));
+    }
+
+    openDialog() {
+        const dialogRef = this.dialog.open(DialogContentUpdateTargetComponent, {
+        });
+        // dialogRef.afterClosed().subscribe(result => {
+        //     console.log(`Dialog result: ${result}`);
+        // });
+    }
 }
+

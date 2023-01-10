@@ -17,10 +17,12 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/auth/auth.effects';
 import * as fromApp from './store/app.reducer'
 import { AppEffects } from './store/app.effects';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { environment } from 'environments/environment';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 
 const routerConfig: ExtraOptions = {
-    preloadingStrategy       : PreloadAllModules,
+    preloadingStrategy: PreloadAllModules,
     scrollPositionRestoration: 'enabled'
 };
 
@@ -28,7 +30,7 @@ const routerConfig: ExtraOptions = {
     declarations: [
         AppComponent
     ],
-    imports     : [
+    imports: [
         BrowserModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes, routerConfig),
@@ -36,7 +38,6 @@ const routerConfig: ExtraOptions = {
         FuseModule,
         FuseConfigModule.forRoot(appConfig),
         FuseMockApiModule.forRoot(mockApiServices),
-        FlexLayoutModule,
         // Core module of your application
         CoreModule,
 
@@ -47,13 +48,15 @@ const routerConfig: ExtraOptions = {
         MarkdownModule.forRoot({}),
 
         StoreModule.forRoot(fromApp.appReducer),
-
         EffectsModule.forRoot(AppEffects),
+        !environment.production ? StoreDevtoolsModule.instrument() : [],
+
+        // MatDialogModule
     ],
-    bootstrap   : [
+
+    bootstrap: [
         AppComponent
     ]
 })
-export class AppModule
-{
+export class AppModule {
 }

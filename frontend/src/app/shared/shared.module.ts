@@ -10,6 +10,9 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
+import {MatDialogModule} from '@angular/material/dialog';
+import {DialogModule} from '@angular/cdk/dialog';
+
 @NgModule({
     declarations: [
         DatatableComponent,
@@ -24,21 +27,15 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
         MatPaginatorModule,
         MatInputModule,
         MatSnackBarModule,
-        MatProgressSpinnerModule
-    ],
-    exports: [
-        CommonModule,
         FormsModule,
-        ReactiveFormsModule,
-        MatTableModule,
-        MatFormFieldModule,
-        MatPaginatorModule,
         DatatableComponent,
         MatInputModule,
         SnackbarComponent,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatDialogModule,
+        DialogModule
     ]
-    
+
 })
 export class SharedModule
 {
