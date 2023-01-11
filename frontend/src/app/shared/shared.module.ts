@@ -23,17 +23,17 @@ import {DialogModule} from '@angular/cdk/dialog';
         FormsModule,
         ReactiveFormsModule,
         MatTableModule,
-        MatFormFieldModule,
+        MatFormFieldModule, 
         MatPaginatorModule,
         MatInputModule,
         MatSnackBarModule,
-        FormsModule,
-        DatatableComponent,
-        MatInputModule,
-        SnackbarComponent,
         MatProgressSpinnerModule,
         MatDialogModule,
         DialogModule
+    ],
+    exports: [
+        MatDialogModule,
+        CommonModule
     ]
 
 })

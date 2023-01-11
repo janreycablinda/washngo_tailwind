@@ -12,6 +12,7 @@ import { SharedModule } from 'app/shared/shared.module';
 
 import { chartFeatureKey, chartReducer } from './store/chart/chart.reducer';
 import { DialogContentUpdateTargetComponent } from './dialog-content-update-target.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const dashboardRoutes: Route[] = [
     {
@@ -30,6 +31,7 @@ const dashboardRoutes: Route[] = [
         SharedModule,
         NgApexchartsModule,
         MatIconModule,
+        ReactiveFormsModule,
         MatButtonModule,
         MatMenuModule,
         FuseCardModule,
