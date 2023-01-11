@@ -82,7 +82,7 @@ export class AuthService
                 NotificationAction.notificationResponse({payload: { type: 'authError', message: 'Username or Password is incorrect!' }})
                 // Set the authenticated flag to true
                 this._authenticated = true;
-
+                console.log(response);
                 // Store the user on the user service
                 this._userService.user = response.user;
 
@@ -115,7 +115,7 @@ export class AuthService
 
                 // Set the authenticated flag to true
                 this._authenticated = true;
-
+                console.log(user);
                 // Store the user on the user service
                 this._userService.user = user;
 

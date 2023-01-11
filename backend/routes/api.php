@@ -108,7 +108,7 @@ Route::group([
     
     Route::post('find_property', 'App\Http\Controllers\MemberController@find_property');
 
-    Route::get('get_waiting/{id}', 'App\Http\Controllers\TransactionController@get_waiting');
+    Route::get('transactions', 'App\Http\Controllers\TransactionController@transactions');
     Route::get('restore_transaction/{id}', 'App\Http\Controllers\TransactionController@restore_transaction');
     Route::get('get_completed', 'App\Http\Controllers\TransactionController@get_completed');
     Route::get('check_first_trans/{id}', 'App\Http\Controllers\TransactionController@check_first_trans');

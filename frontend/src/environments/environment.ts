@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    backend_url: 'https://backend.washngoservices.com'
+    backend_url: 'http://127.0.0.1:8000'
 };
 
 /*

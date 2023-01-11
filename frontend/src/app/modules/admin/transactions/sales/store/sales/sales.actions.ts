@@ -1,12 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 
-export const salesSaless = createAction(
-  '[Sales] Sales Saless'
+export const loadSalesRequestedAction = createAction(
+  '[Sales] Load Sales Requested Action'
 );
 
-export const salesSalessSuccess = createAction(
-  '[Sales] Sales Saless Success',
-  props<{ data: any }>()
+export const loadSalesSucceededAction = createAction(
+  '[Sales] Load Sales Succeeded Action',
+  props<{ payload: any }>()
 );
 
 export const salesSalessFailure = createAction(

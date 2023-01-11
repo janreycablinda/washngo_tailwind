@@ -10,8 +10,8 @@ export class SalesStoreService {
 
   constructor(private http: HttpClient) { }
 
-  getAllTransactions(): Observable<any> {
-    const transactionUrl = '/api/action/get_discount';
+  getAllSales(): Observable<any> {
+    const transactionUrl = '/api/action/transactions';
     return this.http.get<any>(environment.backend_url + transactionUrl);
   }
 }

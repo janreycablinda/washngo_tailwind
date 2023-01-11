@@ -102,7 +102,7 @@ export class AuthSignInComponent implements OnInit
                     // Set the alert
                     this.alert = {
                         type   : 'error',
-                        message: 'Wrong email or password'
+                        message: 'Wrong username or password'
                     };
 
                     // Show the alert

@@ -15,7 +15,7 @@ use App\Models\Variation;
 
 class TransactionController extends Controller
 {
-    public function get_waiting($id)
+    public function transactions()
     {
         $get = Transaction::with('property','vehicle', 'property.vehicle', 'member', 'payment', 'temp_trans', 'temp_trans.services', 'temp_trans.variation', 'temp_trans.variation.services', 'labors', 'labors.washboy')->where('status', '!=', 'completed')->where('branch_id', auth()->user()->branch_id)->get();
 

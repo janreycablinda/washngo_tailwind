@@ -6,6 +6,7 @@ import * as fromVehicle from 'app/store/vehicles/vehicles.reducer';
 import * as fromCategory from 'app/store/category/category.reducer';
 import * as fromServices from 'app/store/services/services.reducer';
 import * as fromDiscounts from 'app/modules/admin/transactions/sales/store/discounts/discounts.reducer';
+import * as fromSales from 'app/modules/admin/transactions/sales/store/sales/sales.reducer';
 
 export interface AppState {
   auth: fromAuth.State,
@@ -14,7 +15,8 @@ export interface AppState {
   vehicles: fromVehicle.State,
   categories: fromCategory.State,
   services: fromServices.State,
-  discounts: fromDiscounts.State
+  discounts: fromDiscounts.State,
+  sales: fromSales.State
 }
 
 export const appReducer: ActionReducerMap<AppState> = {
@@ -24,5 +26,6 @@ export const appReducer: ActionReducerMap<AppState> = {
   vehicles: fromVehicle.reducer,
   categories: fromCategory.reducer,
   services: fromServices.reducer,
-  discounts: fromDiscounts.reducer
+  discounts: fromDiscounts.reducer,
+  sales: fromSales.reducer
 };
