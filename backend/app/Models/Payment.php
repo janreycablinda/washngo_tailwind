@@ -9,4 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Payment extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $casts = [ 
+        'discounted' => 'integer',
+        'changed' => 'integer',
+        'sub_total' => 'integer',
+        'total' => 'integer',
+        'amount' => 'integer',
+    ];
 }

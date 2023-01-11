@@ -22,6 +22,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatTableModule} from '@angular/material/table';
 import { SharedModule } from 'app/shared/shared.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const salesRoutes: Route[] = [
   {
@@ -56,6 +57,7 @@ const salesRoutes: Route[] = [
     RouterModule.forChild(salesRoutes),
     FlexLayoutModule,
     MatTableModule,
+    MatProgressSpinnerModule,
     SharedModule
   ]
 })

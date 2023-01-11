@@ -67,14 +67,13 @@ export class TransactionDialogComponent implements OnInit {
       this.categoryFilteredData = categories.categories;
     });
     this.services$ = this.store.select('services').subscribe((services) => {
+      console.log(services.selected_services);
       this.services = services.selected_services;
       this.servicesFilteredData = services.selected_services;
-      console.log(services.selected_services);
     });
     this.store.dispatch(DiscountActions.loadDiscountRequestedAction());
     this.discounts$ = this.store.select('discounts').subscribe((discounts) => {
       this.discounts = discounts.discounts;
-      console.log(discounts.discounts);
     });
   }
 
@@ -205,58 +204,58 @@ export class TransactionDialogComponent implements OnInit {
     this.dialogForm.value.temp_trans.forEach((item:TempTransDTO) => {
       console.log(item);
       sub_total += item.price;
-      this.discounts.forEach((discount) => {
-        if(this.dialogForm.value.add_as_member){
-          if(discount.discount_type == 'Regular Membership Discount'){
-            if(item.services_id == discount.services_id){
-              if(discount.percentage_type == '%'){
-                let divide = discount.discount_percentage / 100;
-                discounts += item.price * divide;
-              }else{
-                discounts += discount.discount_percentage;
-              }
-            }
-          }
-        }
-        if(discount.discount_type == 'Regular Membership Discount'){
-          if(this.dialogForm.value.member_id){
-            console.log('Regular Membership Discount');
-            if(discount.services_id == item.services_id){
-              if(discount.percentage_type == '%'){
-                let divide = discount.discount_percentage / 100;
-                discounts += item.price * divide;
-              }else{
-                discounts += discount.discount_percentage;
-              }
-            }
-          }
-        } else if(discount.discount_type == 'First Wash Discount'){
-          // if(this.is_first_trans || this.dialogForm.value.add_as_member){
-          //   console.log('First Wash Discount');
-          //   if(discount.services_id == item.services_id){
-          //     if(discount.percentage_type == '%'){
-          //       let divide = discount.discount_percentage / 100;
-          //       discounts += item.price * divide;
-          //     }else{
-          //       discounts += discount.discount_percentage;
-          //     }
-          //   }
-          // }
-        } else if(discount.discount_type == '10 points Discount'){
-          // if(this.vehicle_redeem != ''){
-          //   console.log('10 points Discount');
-          //   if(discount.services_id == item.services_id){
-          //     if(discount.percentage_type == '%'){
-          //       let divide = discount.discount_percentage / 100;
-          //       discounts += item.price * divide;
-          //     }else{
-          //       discounts += discount.discount_percentage;
-          //     }
-          //   }
-          // }
-        }
-        console.log(discounts);
-      })
+      // this.discounts.forEach((discount) => {
+      //   if(this.dialogForm.value.add_as_member){
+      //     if(discount.discount_type == 'Regular Membership Discount'){
+      //       if(item.services_id == discount.services_id){
+      //         if(discount.percentage_type == '%'){
+      //           let divide = discount.discount_percentage / 100;
+      //           discounts += item.price * divide;
+      //         }else{
+      //           discounts += discount.discount_percentage;
+      //         }
+      //       }
+      //     }
+      //   }
+      //   if(discount.discount_type == 'Regular Membership Discount'){
+      //     if(this.dialogForm.value.member_id){
+      //       console.log('Regular Membership Discount');
+      //       if(discount.services_id == item.services_id){
+      //         if(discount.percentage_type == '%'){
+      //           let divide = discount.discount_percentage / 100;
+      //           discounts += item.price * divide;
+      //         }else{
+      //           discounts += discount.discount_percentage;
+      //         }
+      //       }
+      //     }
+      //   } else if(discount.discount_type == 'First Wash Discount'){
+      //     // if(this.is_first_trans || this.dialogForm.value.add_as_member){
+      //     //   console.log('First Wash Discount');
+      //     //   if(discount.services_id == item.services_id){
+      //     //     if(discount.percentage_type == '%'){
+      //     //       let divide = discount.discount_percentage / 100;
+      //     //       discounts += item.price * divide;
+      //     //     }else{
+      //     //       discounts += discount.discount_percentage;
+      //     //     }
+      //     //   }
+      //     // }
+      //   } else if(discount.discount_type == '10 points Discount'){
+      //     // if(this.vehicle_redeem != ''){
+      //     //   console.log('10 points Discount');
+      //     //   if(discount.services_id == item.services_id){
+      //     //     if(discount.percentage_type == '%'){
+      //     //       let divide = discount.discount_percentage / 100;
+      //     //       discounts += item.price * divide;
+      //     //     }else{
+      //     //       discounts += discount.discount_percentage;
+      //     //     }
+      //     //   }
+      //     // }
+      //   }
+      //   console.log(discounts);
+      // })
     });
     this.discounted = discounts;
     this.sub_total = sub_total;
@@ -275,6 +274,8 @@ export class TransactionDialogComponent implements OnInit {
         }
         const temp_trans = [...this.dialogForm.value.temp_trans, data];
         this.dialogForm.controls['temp_trans'].setValue(temp_trans);
+        this.dialogFormService.controls['services'].setValue('');
+        this.dialogFormService.controls['services'].setErrors(null);
         this.calculateTempTrans();
         }
       }
@@ -283,6 +284,7 @@ export class TransactionDialogComponent implements OnInit {
   deleteTempTrans(id:number){
     let newData = this.dialogForm.value.temp_trans.filter(item => item.variation_id !== id);
     this.dialogForm.controls['temp_trans'].setValue(newData);
+    this.calculateTempTrans();
   }
 
   resetServiceForm(){

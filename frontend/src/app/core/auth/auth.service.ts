@@ -130,7 +130,7 @@ export class AuthService
      */
     signOut(): Observable<any>
     {
-        return this._httpClient.post(environment.backend_url + '/api/auth/logout', {test:'test'}).pipe(
+        return this._httpClient.post(environment.backend_url + '/api/auth/logout', {}).pipe(
             catchError(() =>
                 // Return false
                 of(false)

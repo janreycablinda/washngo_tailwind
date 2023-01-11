@@ -59,7 +59,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         children: [
             {
                 id   : 'example',
-                title: 'Franchisees',
+                title: 'Franchises',
                 type : 'basic',
                 link : '/example',
             },
