@@ -13,6 +13,8 @@ import { SharedModule } from 'app/shared/shared.module';
 import { chartFeatureKey, chartReducer } from './store/chart/chart.reducer';
 import { DialogContentUpdateTargetComponent } from './dialog-content-update-target.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 const dashboardRoutes: Route[] = [
     {
@@ -33,6 +35,8 @@ const dashboardRoutes: Route[] = [
         MatIconModule,
         ReactiveFormsModule,
         MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
         MatMenuModule,
         FuseCardModule,
         RouterModule.forChild(dashboardRoutes),
