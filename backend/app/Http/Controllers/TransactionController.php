@@ -12,6 +12,7 @@ use App\Models\Temp_tran;
 use DB;
 use App\Models\Labor;
 use App\Models\Variation;
+use App\Models\Branch;
 
 class TransactionController extends Controller
 {
@@ -115,11 +116,9 @@ class TransactionController extends Controller
 
     public function add_transaction(Request $request)
     {
-        $split = explode('/', $request->form['date']);
-        $date = $split[2] . '-' . $split[0] . '-' . $split[1];
 
-        if($request->form['member'] == false){
-            if($request->form['add_as_member'] == true){
+        if($request->member == false){
+            if($request->add_as_member == true){
                 $member = new Member;
                 $member->card_no = $request->form['card_no'];
                 $member->name = $request->form['name'];
@@ -135,7 +134,7 @@ class TransactionController extends Controller
 
                 $property = new Property;
                 $property->member_id = $member->id;
-                $property->vehicle_id = $request->form['vehicle_id']['value'];
+                $property->vehicle_id = $request->form['vehicle_id']['id'];
                 $property->plate_no = $request->form['plate_no'];
                 $property->save();
 
@@ -144,7 +143,7 @@ class TransactionController extends Controller
                 $add->work_order = $request->form['work_order'];
                 $add->user_id = auth()->user()->id;
                 $add->branch_id = auth()->user()->branch_id;
-                $add->vehicle_id = $request->form['vehicle_id']['value'];
+                $add->vehicle_id = $request->form['vehicle_id']['id'];
                 $add->property_id = $property->id;
                 $add->name = $request->form['name'];
                 $add->contact_no = $request->form['contact_no'];
@@ -184,27 +183,27 @@ class TransactionController extends Controller
 
                 $add = new Transaction;
                 $add->member_id = 0;
-                $add->work_order = $request->form['work_order'];
-                $add->user_id = $request->form['user_id'];
+                $add->work_order = $request->work_order;
+                $add->user_id = auth()->user()->id;
                 $add->branch_id = auth()->user()->branch_id;
-                $add->vehicle_id = $request->form['vehicle_id']['value'];
-                $add->name = $request->form['name'];
-                $add->contact_no = $request->form['contact_no'];
-                $add->plate_no = $request->form['plate_no'];
-                $add->odo = $request->form['odo'];
+                $add->vehicle_id = $request->vehicle_id['id'];
+                $add->name = $request->name;
+                $add->contact_no = $request->contact_no;
+                $add->plate_no = $request->plate_no;
+                $add->odo = $request->odo;
                 $add->transaction_type = 'nonmember';
-                $add->transaction_date = $date;
+                $add->transaction_date = Carbon::parse($request->transaction_date)->format('Y-m-d');
                 $add->status = 'waiting';
                 $add->save();
 
-                $payment = new Payment;
-                $payment->transaction_id = $add->id;
-                $payment->discounted = $request->payment['discount'];
-                $payment->sub_total = $request->payment['subtotal'];
-                $payment->total = $request->payment['total'];
-                $payment->payment_status = 'unpaid';
-                $payment->branch_id = auth()->user()->branch_id;
-                $payment->save();
+                // $payment = new Payment;
+                // $payment->transaction_id = $add->id;
+                // $payment->discounted = $request->payment['discount'];
+                // $payment->sub_total = $request->payment['subtotal'];
+                // $payment->total = $request->payment['total'];
+                // $payment->payment_status = 'unpaid';
+                // $payment->branch_id = auth()->user()->branch_id;
+                // $payment->save();
 
                 foreach ($request->temp_trans as $temp_tran) 
                 {
@@ -368,6 +367,7 @@ class TransactionController extends Controller
     public function get_transaction_last()
     {
         $last = Transaction::where('work_order', '!=', null)->orderBy('id', 'DESC')->where('branch_id', auth()->user()->branch_id)->first();
+        $prefix = Branch::find(auth()->user()->branch_id)->prefix;
         if($last){
             $split = explode('-', $last->work_order);
             $add = (int)$split[1]+1;
@@ -383,11 +383,11 @@ class TransactionController extends Controller
                 $count = $add;
             }
 
-            $last_id = Carbon::now()->year . '-' . $count;
+            $last_id = $prefix. '-' .Carbon::now()->year . '-' . $count;
         }else{
-            $last_id = Carbon::now()->year . '-000' . 1;
+            $last_id = $prefix. '-' .Carbon::now()->year . '-000' . 1;
         }
-        return $last_id;
+        return response()->json($last_id);
     }
 
     public function add_edit_services(Request $request)

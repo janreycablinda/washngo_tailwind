@@ -9,6 +9,25 @@ export const loadSalesSucceededAction = createAction(
   props<{ payload: any }>()
 );
 
+export const addSaleRequestedAction = createAction(
+  '[Sales] Add Sale Requested Action',
+  props<{ payload: any }>()
+);
+
+export const addSaleSucceededAction = createAction(
+  '[Sales] Add Sale Succeeded Action',
+  props<{ payload: any }>()
+);
+
+export const loadWorkOrderRequestedAction = createAction(
+  '[Sales] Load Work Order Requested Action'
+);
+
+export const loadWorkOrderSucceededAction = createAction(
+  '[Sales] Load Work Order Succeeded Action',
+  props<{ payload: any }>()
+);
+
 export const salesSalessFailure = createAction(
   '[Sales] Sales Saless Failure',
   props<{ error: any }>()

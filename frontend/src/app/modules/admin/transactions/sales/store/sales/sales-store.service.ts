@@ -14,4 +14,14 @@ export class SalesStoreService {
     const transactionUrl = '/api/action/transactions';
     return this.http.get<any>(environment.backend_url + transactionUrl);
   }
+
+  getWorkOrder(): Observable<any> {
+    const workOrderUrl = '/api/action/get_transaction_last';
+    return this.http.get<any>(environment.backend_url + workOrderUrl);
+  }
+
+  addSale(payload): Observable<any>{
+    const transactionUrl = '/api/action/add_transaction';
+    return this.http.post<any>(environment.backend_url + transactionUrl, payload);
+  } 
 }

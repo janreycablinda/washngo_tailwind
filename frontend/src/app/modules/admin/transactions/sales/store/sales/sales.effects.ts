@@ -27,4 +27,41 @@ export class SalesEffects {
       }
     )
   ));
+
+  addTransactionEffect$: Observable<Action> = createEffect(() => this.actions$.pipe(
+    ofType(SalesActions.addSaleRequestedAction),
+    mergeMap((payload) =>{
+      console.log(payload);
+      return this.salesStoreService.addSale(payload.payload).pipe(
+          switchMap((data: any) => {
+            console.log(data);
+            return [
+              SalesActions.addSaleSucceededAction({ payload: data })
+            ]
+          }),
+          // catchError((error: Error) => {
+          //   return of(NotificationAction.notificationResponse({payload: { type: 'error', message: 'Ops, something went wrong!' }}));
+          // })
+        )
+      }
+    )
+  ));
+
+  getWorkOrderEffect$: Observable<Action> = createEffect(() => this.actions$.pipe(
+    ofType(SalesActions.loadWorkOrderRequestedAction),
+    mergeMap(() =>{
+      return this.salesStoreService.getWorkOrder().pipe(
+          switchMap((data: any) => {
+            console.log(data);
+            return [
+              SalesActions.loadWorkOrderSucceededAction({ payload: data })
+            ]
+          }),
+          // catchError((error: Error) => {
+          //   return of(NotificationAction.notificationResponse({payload: { type: 'error', message: 'Ops, something went wrong!' }}));
+          // })
+        )
+      }
+    )
+  ));
 }

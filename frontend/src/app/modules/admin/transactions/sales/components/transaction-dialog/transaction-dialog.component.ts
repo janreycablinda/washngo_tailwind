@@ -14,6 +14,8 @@ import * as ServicesActions from 'app/store/services/services.actions';
 import { TempTransDTO } from 'app/models/transactions';
 import { DiscountDTO } from 'app/models/discounts';
 import * as DiscountActions from '../../store/discounts/discounts.actions';
+import * as SalesActions from '../../store/sales/sales.actions';
+
 
 @Component({
   selector: 'app-transaction-dialog',
@@ -41,6 +43,9 @@ export class TransactionDialogComponent implements OnInit {
   vehicleFilteredData: VehicleDTO[] = [];
   categoryFilteredData: CategoryDTO[] = [];
   servicesFilteredData: ServiceDTO[] = [];
+  workOrder$: Subscription;
+  workOrder: any = '';
+
   
   displayedColumns: string[] = ['services_name', 'services_charge', 'action'];
   dataSource: MatTableDataSource<any>;
@@ -48,7 +53,8 @@ export class TransactionDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public editData: any,
     private formBuilder: FormBuilder,
-    private store: Store<fromApp.AppState>
+    private store: Store<fromApp.AppState>,
+    private dialog: MatDialogRef<TransactionDialogComponent>
   ) { }
 
   public variables = [{ id: 1, name: 'One' }, { id: 2, name: 'Two' }];
@@ -71,9 +77,12 @@ export class TransactionDialogComponent implements OnInit {
       this.services = services.selected_services;
       this.servicesFilteredData = services.selected_services;
     });
-    this.store.dispatch(DiscountActions.loadDiscountRequestedAction());
     this.discounts$ = this.store.select('discounts').subscribe((discounts) => {
       this.discounts = discounts.discounts;
+    });
+    this.workOrder$ = this.store.select('sales').subscribe((sales) => {
+      this.workOrder = sales.work_order;
+      this.dialogForm.controls['work_order'].setValue(sales.work_order);
     });
   }
 
@@ -104,7 +113,7 @@ export class TransactionDialogComponent implements OnInit {
     this.dialogForm = this.formBuilder.group({
       id: [''],
       transaction_date: [new Date(), Validators.required],
-      work_order: ['', Validators.required],
+      work_order: [this.workOrder, Validators.required],
       member: [true],
       member_id: ['', Validators.required],
       property_id: ['', Validators.required],
@@ -117,7 +126,7 @@ export class TransactionDialogComponent implements OnInit {
     this.dialogForm = this.formBuilder.group({
       id: [''],
       transaction_date: [new Date(), Validators.required],
-      work_order: [this.dialogForm.value.work_order, Validators.required],
+      work_order: [this.workOrder, Validators.required],
       member: [false],
       card_no: ['', Validators.required],
       name: [this.dialogForm.value.name, Validators.required],
@@ -140,7 +149,7 @@ export class TransactionDialogComponent implements OnInit {
     this.dialogForm = this.formBuilder.group({
       id: [''],
       transaction_date: [new Date(), Validators.required],
-      work_order: ['', Validators.required],
+      work_order: [this.workOrder, Validators.required],
       member: [false],
       name: ['', Validators.required],
       contact_no: ['', Validators.required],
@@ -148,7 +157,7 @@ export class TransactionDialogComponent implements OnInit {
       plate_no: ['', Validators.required],
       odo: ['', Validators.required],
       add_as_member: [false, Validators.required],
-      temp_trans: [[], Validators.required],
+      temp_trans: [[], Validators.required]
     });
   }
 
@@ -194,7 +203,8 @@ export class TransactionDialogComponent implements OnInit {
 
   submitForm(){
     if(this.dialogForm.valid){
-
+      this.store.dispatch(SalesActions.addSaleRequestedAction({payload: this.dialogForm.value}));
+      this.dialog.close();
     }
   }
 

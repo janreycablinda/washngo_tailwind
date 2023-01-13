@@ -4,6 +4,7 @@ import { TransactionDialogComponent } from './components/transaction-dialog/tran
 import * as fromApp from 'app/store/app.reducer';
 import { Store } from '@ngrx/store';
 import * as SalesActions from './store/sales/sales.actions';
+import * as DiscountActions from './store/discounts/discounts.actions';
 
 @Component({
   selector: 'app-sales',
@@ -21,6 +22,8 @@ export class SalesComponent implements OnInit {
   }
 
   addTransaction(){
+    this.store.dispatch(DiscountActions.loadDiscountRequestedAction());
+    this.store.dispatch(SalesActions.loadWorkOrderRequestedAction());
     this.dialog.open(TransactionDialogComponent, {
       disableClose: true,
       width: '800px'
