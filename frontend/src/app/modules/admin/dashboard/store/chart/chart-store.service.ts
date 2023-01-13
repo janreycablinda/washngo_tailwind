@@ -30,4 +30,9 @@ export class ChartStoreService {
         return this.http.post<any>(environment.backend_url + salesCountUrl, payload);
     }
 
+    getExpenses(payload: any) {
+        const expensesCountUrl = `/api/action/get_expenses_count`;
+        return this.http.post<any>(environment.backend_url + expensesCountUrl, payload);
+    }
+
 }

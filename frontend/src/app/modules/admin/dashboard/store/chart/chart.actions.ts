@@ -59,3 +59,13 @@ export const loadSalesFailedAction = createAction(
     '[Chart] Load Sales Failed Action',
     props<{ error: any }>()
 );
+
+export const loadExpensesRequestedtAction = createAction(
+    '[Chart] Load Expenses Requested Action',
+    props<{ payload: any }>()
+);
+
+export const loadExpensesSucceededAction = createAction(
+    '[Chart] Load Expenses Succeeded Action',
+    props<{ payload: any }>()
+);

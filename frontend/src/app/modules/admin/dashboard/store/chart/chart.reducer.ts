@@ -14,6 +14,12 @@ export interface State {
         "month": number;
     };
 
+    expensesCounts: {
+        "today": number;
+        "week": number;
+        "month": number;
+    };
+
     //
     error: any;
 }
@@ -28,6 +34,12 @@ export const initialState: State = {
         "month": null,
     },
 
+    expensesCounts: {
+        "today": null,
+        "week": null,
+        "month": null,
+    },
+
     //
     error: null,
 
@@ -35,6 +47,7 @@ export const initialState: State = {
 
 export const chartReducer = createReducer(
     initialState,
+
     on(ChartActions.loadSalesSeriesSucceededAction, (state: State, { payload }) => {
         return {
             ...state,
@@ -42,6 +55,7 @@ export const chartReducer = createReducer(
 
         }
     }),
+
     on(ChartActions.loadSalesSeriesFailedAction, (state: State, { error }) => {
         return {
             ...state,
@@ -49,6 +63,7 @@ export const chartReducer = createReducer(
 
         }
     }),
+
     on(ChartActions.loadTargetSalesSeriesSucceededAction, (state: State, { payload }) => {
         return {
             ...state,
@@ -57,7 +72,6 @@ export const chartReducer = createReducer(
         }
     }),
 
-    //
     on(ChartActions.updateTargetSalesSeriesRequestedtAction, (state: State, { payload }) => {
         // console.log('updateTargetSalesSeriesRequestedtAction', payload);
         return {
@@ -167,6 +181,21 @@ export const chartReducer = createReducer(
 
         return {
             ...state,
+        }
+    }),
+
+    on(ChartActions.loadExpensesRequestedtAction, (state: State, { payload }) => {
+        console.log('loadExpensesRequestedtAction payload', payload)
+        return {
+            ...state,
+        }
+    }),
+
+    on(ChartActions.loadExpensesSucceededAction, (state: State, { payload }) => {
+        console.log('loadExpensesSucceededAction payload', payload)
+        return {
+            ...state,
+
         }
     }),
 

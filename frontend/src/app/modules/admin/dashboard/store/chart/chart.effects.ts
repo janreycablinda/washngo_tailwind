@@ -5,7 +5,7 @@ import { ChartStoreService } from './chart-store.service';
 import * as NotificationAction from '../../../../../shared/snackbar/store/snackbar.actions'
 import * as ChartDataActions from './chart.actions';
 import * as fromApp from 'app/store/app.reducer';
-import { salesCountsData } from './chart.selectors';
+import { expensesCountsData, salesCountsData } from './chart.selectors';
 import { Store } from '@ngrx/store';
 
 @Injectable()
@@ -98,6 +98,54 @@ export class ChartEffects {
                         // console.log("loadSalesRequestedtAction effect data", data)
                         return [
                             ChartDataActions.loadSalesSucceededAction({
+                                payload: {
+                                    payload: payload.payload,
+                                    data: data,
+                                }
+                            })
+                        ]
+                    }),
+                    catchError(error => of(
+                        NotificationAction.notificationResponse({ payload: { type: 'chartError', message: `Chart API Error! ${error}` } })
+                    ))
+                )
+            )
+        )
+    );
+
+    loadExpenses$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ChartDataActions.loadExpensesRequestedtAction),
+            withLatestFrom(this.store.select(expensesCountsData)),
+            filter(([action, data]) => {
+
+                // console.log("loadExpensesRequestedtAction effect action", action)
+                // console.log("loadExpensesRequestedtAction effect action.payload.data", action["payload"]["data"]);
+                // console.log("loadExpensesRequestedtAction effect data", data)
+
+                if (
+                    action["payload"]["data"] === "Today" &&
+                    data["today"] === null
+                    ||
+                    action["payload"]["data"] === "Week" &&
+                    data["week"] === null
+                    ||
+                    action["payload"]["data"] === "Month" &&
+                    data["month"] === null
+                ) {
+                    console.log(`loadExpensesRequestedtAction ${action["payload"]["data"]}`, data["month"])
+                    return true
+                }
+
+                return false
+            }),
+            // switchMap(([payload, data]) =>
+            switchMap(([payload]) =>
+                this.chartStoreService.getExpenses(payload.payload).pipe(
+                    switchMap(data => {
+                        // console.log("loadExpensesRequestedtAction effect data", data)
+                        return [
+                            ChartDataActions.loadExpensesSucceededAction({
                                 payload: {
                                     payload: payload.payload,
                                     data: data,
