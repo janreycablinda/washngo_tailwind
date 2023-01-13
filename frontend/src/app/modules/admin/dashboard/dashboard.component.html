@@ -1,10 +1,10 @@
 <div class="flex flex-col flex-auto w-full">
-    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+    <div class="flex flex-wrap w-full mx-auto p-6 md:p-8">
 
         <!-- Title and action buttons -->
         <div class="flex items-center justify-between w-full">
             <div>
-                <div class="text-3xl font-semibold tracking-tight leading-8">Dashboard</div>
+                <div class="text-3xl font-semibold tracking-tight leading-8">Dashboard {{ isLoading$ | async }}</div>
                 <div class="font-medium tracking-tight text-secondary">Monitor sales, check reports, add notes and review performance</div>
             </div>
         </div>
@@ -12,7 +12,15 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full mt-8">
 
             <!-- chart -->
-            <div class="sm:col-span-2 lg:col-span-2 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-5">
+            <div class="sm:col-span-2 lg:col-span-2 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-5" *ngIf="(isLoading$ | async)">
+                <div class="flex flex-col sm:flex-row items-start justify-between">
+                    <div class="my-3 sm:mt-0 sm:ml-2 h-6 min-h-6 px-2 py-4 rounded-full animate-pulse bg-gray-200 min-w-30"></div>
+                    <div class="my-3 sm:mt-0 sm:ml-2 h-6 min-h-6 px-2 py-4 rounded-full animate-pulse bg-gray-200 min-w-40"></div>
+                </div>
+                <div class="bg-gray-200 h-20 w-full mb-4 rounded-lg animate-pulse min-h-90"></div>
+            </div>
+
+            <div class="sm:col-span-2 lg:col-span-2 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-5" *ngIf="!(isLoading$ | async)">
                 <div class="flex flex-col sm:flex-row items-start justify-between">
                         <div class="my-3 sm:mt-0 sm:ml-2">
                             <button
@@ -141,7 +149,12 @@
             </div>
 
             <!-- sales -->
-            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden">
+            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="(isLoading$ | async)">
+                <div class="bg-white rounded-lg p-6">
+                    <div class="bg-gray-200 rounded-lg min-h-30 w-full animate-pulse"></div>
+                </div>
+            </div>
+            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="!(isLoading$ | async)">
                 <div class="flex items-start justify-between m-6 mb-0">
                     <div class="text-lg font-medium tracking-tight leading-6 truncate">
                         Sales
@@ -178,7 +191,12 @@
             </div>
 
             <!-- expenses -->
-            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden">
+            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="(isLoading$ | async)">
+                <div class="bg-white rounded-lg p-6">
+                    <div class="bg-gray-200 rounded-lg min-h-30 w-full animate-pulse"></div>
+                </div>
+            </div>
+            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="!(isLoading$ | async)">
                 <div class="flex items-start justify-between m-6 mb-0">
                     <div class="text-lg font-medium tracking-tight leading-6 truncate">
                         Expenses
@@ -208,7 +226,12 @@
             </div>
 
             <!-- members -->
-            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden">
+            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="(isLoading$ | async)">
+                <div class="bg-white rounded-lg p-6">
+                    <div class="bg-gray-200 rounded-lg min-h-30 w-full animate-pulse"></div>
+                </div>
+            </div>
+            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="!(isLoading$ | async)">
                 <div class="flex items-start justify-between m-6 mb-0">
                     <div class="text-lg font-medium tracking-tight leading-6 truncate">
                         Members
@@ -218,7 +241,9 @@
                             class="h-6 min-h-6 px-2 rounded-full bg-hover"
                             mat-button
                             [matMenuTriggerFor]="membersMenu">
-                            <span class="font-medium text-sm text-secondary">All</span>
+                            <span class="font-medium text-sm text-secondary">
+                                {{ membersCountSelected }}
+                            </span>
                             <mat-icon
                                 class="icon-size-5"
                                 svgIcon="mat_outline:arrow_drop_down"
@@ -226,18 +251,22 @@
                             </mat-icon>
                         </button>
                         <mat-menu #membersMenu="matMenu">
-                            <button mat-menu-item>All</button>
-                            <button mat-menu-item>Today</button>
-                            <button mat-menu-item>Week</button>
-                            <button mat-menu-item>Month</button>
+                            <button mat-menu-item (click)="onMembersCountSelect('All')">All</button>
+                            <button mat-menu-item (click)="onMembersCountSelect('Today')">Today</button>
+                            <button mat-menu-item (click)="onMembersCountSelect('Week')">Week</button>
+                            <button mat-menu-item (click)="onMembersCountSelect('Month')">Month</button>
                         </mat-menu>
                     </div>
                 </div>
                 <div class="flex flex-col lg:flex-row lg:items-center mx-6 mt-3 mb-6">
-                    <div class="text-7xl font-bold tracking-tighter leading-tight">{{ 0 }}</div>
+                    <div class="text-7xl font-bold tracking-tighter leading-tight">
+                        <span *ngIf="membersCountSelected === 'All'">{{ (membersCounts$ | async).all }}</span>
+                        <span *ngIf="membersCountSelected === 'Today'">{{ (membersCounts$ | async).today }}</span>
+                        <span *ngIf="membersCountSelected === 'Week'">{{ (membersCounts$ | async).week }}</span>
+                        <span *ngIf="membersCountSelected === 'Month'">{{ (membersCounts$ | async).month }}</span>
+                    </div>
                 </div>
             </div>
-
 
         </div>
 </div>
