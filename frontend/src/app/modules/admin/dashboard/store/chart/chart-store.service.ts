@@ -35,4 +35,9 @@ export class ChartStoreService {
         return this.http.post<any>(environment.backend_url + expensesCountUrl, payload);
     }
 
+    getMembers(payload: any) {
+        const membersCountUrl = `/api/action/get_members_count`;
+        return this.http.post<any>(environment.backend_url + membersCountUrl, payload);
+    }
+
 }

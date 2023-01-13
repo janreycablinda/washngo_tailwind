@@ -154,7 +154,6 @@
                     <div class="bg-gray-200 rounded-lg min-h-30 w-full animate-pulse"></div>
                 </div>
             </div>
-
             <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="!(isLoading$ | async)">
                 <div class="flex items-start justify-between m-6 mb-0">
                     <div class="text-lg font-medium tracking-tight leading-6 truncate">
@@ -192,7 +191,12 @@
             </div>
 
             <!-- expenses -->
-            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden">
+            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="(isLoading$ | async)">
+                <div class="bg-white rounded-lg p-6">
+                    <div class="bg-gray-200 rounded-lg min-h-30 w-full animate-pulse"></div>
+                </div>
+            </div>
+            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="!(isLoading$ | async)">
                 <div class="flex items-start justify-between m-6 mb-0">
                     <div class="text-lg font-medium tracking-tight leading-6 truncate">
                         Expenses
@@ -222,7 +226,12 @@
             </div>
 
             <!-- members -->
-            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden">
+            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="(isLoading$ | async)">
+                <div class="bg-white rounded-lg p-6">
+                    <div class="bg-gray-200 rounded-lg min-h-30 w-full animate-pulse"></div>
+                </div>
+            </div>
+            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="!(isLoading$ | async)">
                 <div class="flex items-start justify-between m-6 mb-0">
                     <div class="text-lg font-medium tracking-tight leading-6 truncate">
                         Members
@@ -232,7 +241,9 @@
                             class="h-6 min-h-6 px-2 rounded-full bg-hover"
                             mat-button
                             [matMenuTriggerFor]="membersMenu">
-                            <span class="font-medium text-sm text-secondary">All</span>
+                            <span class="font-medium text-sm text-secondary">
+                                {{ membersCountSelected }}
+                            </span>
                             <mat-icon
                                 class="icon-size-5"
                                 svgIcon="mat_outline:arrow_drop_down"
@@ -240,18 +251,22 @@
                             </mat-icon>
                         </button>
                         <mat-menu #membersMenu="matMenu">
-                            <button mat-menu-item>All</button>
-                            <button mat-menu-item>Today</button>
-                            <button mat-menu-item>Week</button>
-                            <button mat-menu-item>Month</button>
+                            <button mat-menu-item (click)="onMembersCountSelect('All')">All</button>
+                            <button mat-menu-item (click)="onMembersCountSelect('Today')">Today</button>
+                            <button mat-menu-item (click)="onMembersCountSelect('Week')">Week</button>
+                            <button mat-menu-item (click)="onMembersCountSelect('Month')">Month</button>
                         </mat-menu>
                     </div>
                 </div>
                 <div class="flex flex-col lg:flex-row lg:items-center mx-6 mt-3 mb-6">
-                    <div class="text-7xl font-bold tracking-tighter leading-tight">{{ 0 }}</div>
+                    <div class="text-7xl font-bold tracking-tighter leading-tight">
+                        <span *ngIf="membersCountSelected === 'All'">{{ (membersCounts$ | async).all }}</span>
+                        <span *ngIf="membersCountSelected === 'Today'">{{ (membersCounts$ | async).today }}</span>
+                        <span *ngIf="membersCountSelected === 'Week'">{{ (membersCounts$ | async).week }}</span>
+                        <span *ngIf="membersCountSelected === 'Month'">{{ (membersCounts$ | async).month }}</span>
+                    </div>
                 </div>
             </div>
-
 
         </div>
 </div>

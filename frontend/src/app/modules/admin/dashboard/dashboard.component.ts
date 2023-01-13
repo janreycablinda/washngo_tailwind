@@ -5,11 +5,13 @@ import * as ChartActions from './store/chart/chart.actions';
 import { ChartOptions } from 'app/models/chart-options';
 import { ChartService } from './store/chart/chart.service';
 import { MatDialog, } from '@angular/material/dialog';
-import { Observable, map, switchMap } from 'rxjs';
-import { salesCountsData, salesSeriesData, salesTargetSeriesData } from './store/chart/chart.selectors';
+import { Observable, Subject, map, switchMap, take } from 'rxjs';
+import { membersCountsData, salesCountsData, salesSeriesData, salesTargetSeriesData } from './store/chart/chart.selectors';
 import { ChartComponent } from 'ng-apexcharts';
 import { DialogContentUpdateTargetComponent } from './dialog-content-update-target.component';
 import { FuseLoadingService } from '@fuse/services/loading';
+import { userData } from 'app/store/auth/auth.selectors';
+
 
 @Component({
     selector: 'app-dashboard',
@@ -20,6 +22,7 @@ export class DashboardComponent implements OnInit {
     @ViewChild("chart", { static: false }) chart: ChartComponent;
 
     isLoading$: Observable<boolean> = this._fuseLoadingService.show$;
+    private userData: object;
 
     months: string[] = this.chartService.months;
     chartOptions: Partial<ChartOptions> = {
@@ -92,6 +95,10 @@ export class DashboardComponent implements OnInit {
         select(salesCountsData));
     salesCountSelected: string = "Today";
 
+    membersCounts$: Observable<object> = this.store.pipe(
+        select(membersCountsData));
+    membersCountSelected: string = "All";
+
     constructor(
         private store: Store<fromApp.AppState>,
         private chartService: ChartService,
@@ -128,6 +135,13 @@ export class DashboardComponent implements OnInit {
         //     console.log("chartData", chartData);
         // });
 
+        this.store.pipe(
+            select(userData),
+            take(1),
+        ).subscribe(userData => {
+            this.userData = userData;
+        });
+
     }
 
     onYearSelected(year: number) {
@@ -148,6 +162,17 @@ export class DashboardComponent implements OnInit {
         this.salesCountSelected = duration;
         this.store.dispatch(ChartActions.loadSalesRequestedtAction({
             payload: { data: duration }
+        }));
+    }
+
+    onMembersCountSelect(duration: string) {
+        console.log("onMembersCountSelect duration", duration);
+        this.membersCountSelected = duration;
+        this.store.dispatch(ChartActions.loadMembersRequestedtAction({
+            payload: {
+                data: duration ,
+                branch_id: this.userData['branch_id'],
+            }
         }));
     }
 

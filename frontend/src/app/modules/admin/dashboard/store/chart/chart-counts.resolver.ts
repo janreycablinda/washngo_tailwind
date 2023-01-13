@@ -30,7 +30,7 @@ export class ChartCountsResolver implements Resolve<boolean> {
             withLatestFrom(this.store.pipe(select(userData))),
             switchMap(([chartState, userData]) => {
 
-                console.log(`ChartCountsResolver chartState`, chartState);
+                // console.log(`ChartCountsResolver chartState`, chartState);
                 // console.log(`ChartCountsResolver userData`, userData);
 
                 // console.log(`ChartCountsResolver chartState["salesCounts"]`, chartState["salesCounts"]);
@@ -44,6 +44,13 @@ export class ChartCountsResolver implements Resolve<boolean> {
                 if (chartState["expensesCounts"]["today"] === null) {
                     this.store.dispatch(ChartActions.loadExpensesRequestedtAction({
                         payload: {data: "Today", branch_id: userData["branch_id"]}
+                    }));
+                }
+
+                console.log(`ChartCountsResolver chartState["membersCounts"]`, chartState["membersCounts"]);
+                if (chartState["membersCounts"]["all"] === null) {
+                    this.store.dispatch(ChartActions.loadMembersRequestedtAction({
+                        payload: {data: "All", branch_id: userData["branch_id"]}
                     }));
                 }
 

@@ -27,3 +27,8 @@ export const expensesCountsData = createSelector(
     selectChartsState,
     (chart) => chart.expensesCounts
 );
+
+export const membersCountsData = createSelector(
+    selectChartsState,
+    (chart) => chart.membersCounts
+);
