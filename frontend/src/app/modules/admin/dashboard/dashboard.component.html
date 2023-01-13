@@ -4,7 +4,7 @@
         <!-- Title and action buttons -->
         <div class="flex items-center justify-between w-full">
             <div>
-                <div class="text-3xl font-semibold tracking-tight leading-8">Dashboard</div>
+                <div class="text-3xl font-semibold tracking-tight leading-8">Dashboard {{ isLoading$ | async }}</div>
                 <div class="font-medium tracking-tight text-secondary">Monitor sales, check reports, add notes and review performance</div>
             </div>
         </div>
@@ -12,7 +12,15 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full mt-8">
 
             <!-- chart -->
-            <div class="sm:col-span-2 lg:col-span-2 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-5">
+            <div class="sm:col-span-2 lg:col-span-2 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-5" *ngIf="(isLoading$ | async)">
+                <div class="flex flex-col sm:flex-row items-start justify-between">
+                    <div class="my-3 sm:mt-0 sm:ml-2 h-6 min-h-6 px-2 py-4 rounded-full animate-pulse bg-gray-200 min-w-30"></div>
+                    <div class="my-3 sm:mt-0 sm:ml-2 h-6 min-h-6 px-2 py-4 rounded-full animate-pulse bg-gray-200 min-w-40"></div>
+                </div>
+                <div class="bg-gray-200 h-20 w-full mb-4 rounded-lg animate-pulse min-h-90"></div>
+            </div>
+
+            <div class="sm:col-span-2 lg:col-span-2 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-5" *ngIf="!(isLoading$ | async)">
                 <div class="flex flex-col sm:flex-row items-start justify-between">
                         <div class="my-3 sm:mt-0 sm:ml-2">
                             <button
@@ -141,7 +149,13 @@
             </div>
 
             <!-- sales -->
-            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden">
+            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="(isLoading$ | async)">
+                <div class="bg-white rounded-lg p-6">
+                    <div class="bg-gray-200 rounded-lg min-h-30 w-full animate-pulse"></div>
+                </div>
+            </div>
+
+            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="!(isLoading$ | async)">
                 <div class="flex items-start justify-between m-6 mb-0">
                     <div class="text-lg font-medium tracking-tight leading-6 truncate">
                         Sales

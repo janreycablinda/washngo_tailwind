@@ -5,10 +5,11 @@ import * as ChartActions from './store/chart/chart.actions';
 import { ChartOptions } from 'app/models/chart-options';
 import { ChartService } from './store/chart/chart.service';
 import { MatDialog, } from '@angular/material/dialog';
-import { Observable, Subject, map, switchMap } from 'rxjs';
+import { Observable, map, switchMap } from 'rxjs';
 import { salesCountsData, salesSeriesData, salesTargetSeriesData } from './store/chart/chart.selectors';
 import { ChartComponent } from 'ng-apexcharts';
 import { DialogContentUpdateTargetComponent } from './dialog-content-update-target.component';
+import { FuseLoadingService } from '@fuse/services/loading';
 
 @Component({
     selector: 'app-dashboard',
@@ -17,6 +18,8 @@ import { DialogContentUpdateTargetComponent } from './dialog-content-update-targ
 })
 export class DashboardComponent implements OnInit {
     @ViewChild("chart", { static: false }) chart: ChartComponent;
+
+    isLoading$: Observable<boolean> = this._fuseLoadingService.show$;
 
     months: string[] = this.chartService.months;
     chartOptions: Partial<ChartOptions> = {
@@ -93,6 +96,7 @@ export class DashboardComponent implements OnInit {
         private store: Store<fromApp.AppState>,
         private chartService: ChartService,
         public dialog: MatDialog,
+        private _fuseLoadingService: FuseLoadingService,
     ) {
     }
 

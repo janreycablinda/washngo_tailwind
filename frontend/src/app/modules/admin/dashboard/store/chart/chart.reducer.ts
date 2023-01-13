@@ -16,7 +16,6 @@ export interface State {
 
     //
     error: any;
-    loading: boolean;
 }
 
 export const initialState: State = {
@@ -31,7 +30,7 @@ export const initialState: State = {
 
     //
     error: null,
-    loading: false,
+
 };
 
 export const chartReducer = createReducer(
@@ -40,37 +39,42 @@ export const chartReducer = createReducer(
         return {
             ...state,
             salesSeries: payload,
-            loading: false,
+
         }
     }),
     on(ChartActions.loadSalesSeriesFailedAction, (state: State, { error }) => {
         return {
             ...state,
             error: error,
-            loading: false,
+
         }
     }),
     on(ChartActions.loadTargetSalesSeriesSucceededAction, (state: State, { payload }) => {
         return {
             ...state,
             salesTargetSeries: payload,
-            loading: false,
+
         }
     }),
 
     //
     on(ChartActions.updateTargetSalesSeriesRequestedtAction, (state: State, { payload }) => {
-        console.log('updateTargetSalesSeriesRequestedtAction', payload);
+        // console.log('updateTargetSalesSeriesRequestedtAction', payload);
         return {
             ...state,
             salesTargetSeries: payload["form"],
-            loading: true,
+        }
+    }),
+
+    on(ChartActions.loadSalesRequestedtAction, (state: State, { payload }) => {
+        return {
+            ...state,
         }
     }),
 
     on(ChartActions.loadSalesSucceededAction, (state: State, { payload }) => {
 
-        // console.log('loadSalesSucceededAction', payload);
+        console.log('loadSalesSucceededAction', payload);
         // console.log('loadSalesSucceededAction', payload["payload"]["data"]);
 
         switch (payload["payload"]["data"]) {
@@ -96,7 +100,8 @@ export const chartReducer = createReducer(
                     ...state,
                     salesCounts: {
                         ...state.salesCounts,
-                        today: todaySum
+                        today: todaySum,
+
                     },
                 };
 
@@ -123,7 +128,8 @@ export const chartReducer = createReducer(
                     ...state,
                     salesCounts: {
                         ...state.salesCounts,
-                        week: weekSum
+                        week: weekSum,
+
                     },
                 }
 
@@ -150,7 +156,8 @@ export const chartReducer = createReducer(
                     ...state,
                     salesCounts: {
                         ...state.salesCounts,
-                        month: monthSum
+                        month: monthSum,
+
                     },
                 }
 
