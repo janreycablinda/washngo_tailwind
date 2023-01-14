@@ -40,14 +40,14 @@ export class ChartCountsResolver implements Resolve<boolean> {
                     }));
                 }
 
-                console.log(`ChartCountsResolver chartState["expensesCounts"]`, chartState["expensesCounts"]);
+                // console.log(`ChartCountsResolver chartState["expensesCounts"]`, chartState["expensesCounts"]);
                 if (chartState["expensesCounts"]["today"] === null) {
                     this.store.dispatch(ChartActions.loadExpensesRequestedtAction({
                         payload: {data: "Today", branch_id: userData["branch_id"]}
                     }));
                 }
 
-                console.log(`ChartCountsResolver chartState["membersCounts"]`, chartState["membersCounts"]);
+                // console.log(`ChartCountsResolver chartState["membersCounts"]`, chartState["membersCounts"]);
                 if (chartState["membersCounts"]["all"] === null) {
                     this.store.dispatch(ChartActions.loadMembersRequestedtAction({
                         payload: {data: "All", branch_id: userData["branch_id"]}

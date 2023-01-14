@@ -184,7 +184,7 @@ export class ChartEffects {
                     action["payload"]["data"] === "Month" &&
                     data["month"] === null
                 ) {
-                    console.log(`loadMembersRequestedtAction ${action["payload"]["data"]}`, data)
+                    // console.log(`loadMembersRequestedtAction ${action["payload"]["data"]}`, data)
                     return true
                 }
 
