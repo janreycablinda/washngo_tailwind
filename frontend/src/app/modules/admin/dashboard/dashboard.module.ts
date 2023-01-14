@@ -12,6 +12,7 @@ import { SharedModule } from 'app/shared/shared.module';
 
 import { chartFeatureKey, chartReducer } from './store/chart/chart.reducer';
 import { DialogContentUpdateTargetComponent } from './dialog-content-update-target.component';
+import { notesFeatureKey, notesReducer } from './store/notes/notes.reducer';
 
 const dashboardRoutes: Route[] = [
     {
@@ -35,6 +36,7 @@ const dashboardRoutes: Route[] = [
         FuseCardModule,
         RouterModule.forChild(dashboardRoutes),
         StoreModule.forFeature(chartFeatureKey, chartReducer),
+        StoreModule.forFeature(notesFeatureKey, notesReducer),
 
     ]
 })

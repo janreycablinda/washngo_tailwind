@@ -11,6 +11,8 @@ import { ChartComponent } from 'ng-apexcharts';
 import { DialogContentUpdateTargetComponent } from './dialog-content-update-target.component';
 import { FuseLoadingService } from '@fuse/services/loading';
 import { userData } from 'app/store/auth/auth.selectors';
+import { NoteDTO } from 'app/models/note';
+import { selectNotes } from './store/notes/notes.selectors';
 
 
 @Component({
@@ -78,7 +80,6 @@ export class DashboardComponent implements OnInit {
         }
     }
 
-    //
     yearsList: number[] = [
         2020,
         2021,
@@ -90,7 +91,6 @@ export class DashboardComponent implements OnInit {
     yearSelected: number = new Date().getFullYear();
 
     chartData$: Observable<any[]>;
-
     salesCounts$: Observable<object> = this.store.pipe(
         select(salesCountsData));
     salesCountSelected: string = "Today";
@@ -98,6 +98,9 @@ export class DashboardComponent implements OnInit {
     membersCounts$: Observable<object> = this.store.pipe(
         select(membersCountsData));
     membersCountSelected: string = "All";
+
+    notes$: Observable<NoteDTO[]> = this.store.pipe(
+        select(selectNotes));
 
     constructor(
         private store: Store<fromApp.AppState>,
@@ -170,7 +173,7 @@ export class DashboardComponent implements OnInit {
         this.membersCountSelected = duration;
         this.store.dispatch(ChartActions.loadMembersRequestedtAction({
             payload: {
-                data: duration ,
+                data: duration,
                 branch_id: this.userData['branch_id'],
             }
         }));

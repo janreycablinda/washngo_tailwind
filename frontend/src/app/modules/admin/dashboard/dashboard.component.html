@@ -5,7 +5,7 @@
         <div class="flex items-center justify-between w-full">
             <div>
                 <div class="text-3xl font-semibold tracking-tight leading-8">Dashboard</div>
-                <div class="font-medium tracking-tight text-secondary">Monitor sales, check reports, add notes and review performance</div>
+                <!-- <div class="font-medium tracking-tight text-secondary">Monitor sales, check reports, add notes and review performance</div> -->
             </div>
         </div>
 
@@ -102,12 +102,14 @@
                 </div>
                 <div class="flex flex-col mt-2 divide-y overflow-y-auto max-h-80 h-80" cdkScrollable>
 
-                    <ng-container>
+                    <!-- {{ notes$ | async | json }} -->
+
+                    <ng-container *ngFor="let note of notes$ | async; index as i">
                         <div
-                            class="flex flex-row items-center justify-between py-1 px-0.5 border-b"
+                            class="flex flex-row items-center justify-between py-1 px-0.5 pb-2 border-b"
                         >
                             <div class="flex flex-col">
-                                <div class="font-medium">TITLE</div>
+                                <div class="font-medium">{{ note["message"] }}</div>
                                 <div
                                     class="flex flex-col sm:flex-row sm:items-center -ml-0.5 mt-2 sm:mt-1 space-y-1 sm:space-y-0 sm:space-x-3"
                                 >
@@ -122,7 +124,7 @@
                                             <div
                                                 class="ml-1.5 text-md text-secondary"
                                             >
-                                                1:00
+                                                {{ note["datetime"] }}
                                             </div>
                                         </div>
                                     </ng-container>

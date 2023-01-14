@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-// import * as NotesActions from './notes.actions';
+import * as NotesActions from './notes.actions';
 import { NoteDTO } from 'app/models/note';
 
 export const notesFeatureKey = 'notes';
@@ -15,12 +15,19 @@ export const initialState: State = {
 export const notesReducer = createReducer(
     initialState,
 
-    // on(NotesActions.loadNotesSucceededAction, (state: State, { payload }) => {
+    // on(NotesActions.loadNotes, (state: State, { userId }) => {
+    //     console.log(`NotesActions.loadNotes ${userId}`);
     //     return {
     //         ...state,
-    //         notes: payload,
-
     //     }
     // }),
+
+    on(NotesActions.loadNotesSuccess, (state: State, { notes }) => {
+        return {
+            ...state,
+            notes: notes
+        }
+    }),
+
 
 );
