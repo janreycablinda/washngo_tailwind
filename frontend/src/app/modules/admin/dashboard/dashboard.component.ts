@@ -8,7 +8,7 @@ import { MatDialog, } from '@angular/material/dialog';
 import { Observable, Subject, map, switchMap, take } from 'rxjs';
 import { membersCountsData, salesCountsData, salesSeriesData, salesTargetSeriesData } from './store/chart/chart.selectors';
 import { ChartComponent } from 'ng-apexcharts';
-import { DialogContentUpdateTargetComponent } from './dialog-content-update-target.component';
+import { UpdateTargetDialogComponent } from './update-target-dialog/update-target-dialog.component';
 import { FuseLoadingService } from '@fuse/services/loading';
 import { userData } from 'app/store/auth/auth.selectors';
 import { NoteDTO } from 'app/models/note';
@@ -25,6 +25,17 @@ export class DashboardComponent implements OnInit {
 
     isLoading$: Observable<boolean> = this._fuseLoadingService.show$;
     private userData: object;
+
+    notesDrawerName = 'notesDrawer';
+    notesDrawerMode = 'over';
+    notesDrawerPosition = 'right';
+    notesDrawerOpened = true;
+    date:Date;
+    // startDate:Date;
+    // minDate:Date;
+    // maxDate:Date;
+    // dateFormats:string;
+
 
     months: string[] = this.chartService.months;
     chartOptions: Partial<ChartOptions> = {
@@ -153,7 +164,7 @@ export class DashboardComponent implements OnInit {
     }
 
     openDialog() {
-        const dialogRef = this.dialog.open(DialogContentUpdateTargetComponent, {
+        const dialogRef = this.dialog.open(UpdateTargetDialogComponent, {
         });
         // dialogRef.afterClosed().subscribe(result => {
         //     console.log(`Dialog result: ${result}`);

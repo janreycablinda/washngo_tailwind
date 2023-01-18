@@ -1,4 +1,106 @@
-<div class="flex flex-col flex-auto w-full">
+<div class="flex flex-col flex-auto w-full relative overflow-x-hidden">
+
+    <fuse-drawer
+        class="w-screen min-w-screen sm:w-100 sm:min-w-100 z-999"
+        fixed
+        [name]="notesDrawerName"
+        [opened]="notesDrawerOpened"
+        [position]="notesDrawerPosition"
+        [mode]="notesDrawerMode"
+        #notesDrawer
+    >
+        <div class="flex flex-col w-full justify-between">
+
+            <div class="flex flex-col w-full overflow-auto bg-card">
+
+                <div class="flex flex-row items-center px-6 h-20 min-h-20 text-white bg-primary">
+                    <mat-icon
+                        class="icon-size-7 text-current"
+                        [svgIcon]="'heroicons_solid:pencil-alt'"></mat-icon>
+                    <div class="ml-3 text-2xl font-semibold tracking-tight">Add New Note</div>
+                    <button
+                        class="ml-auto"
+                        mat-icon-button
+                        (click)="notesDrawer.close()"
+                        >
+                        <mat-icon
+                            class="text-current"
+                            [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                    </button>
+                </div>
+
+                <div class="flex flex-col">
+
+                    <div class="flex flex-col p-6">
+
+                        <!-- add note -->
+                        <!-- <div class="text-md font-semibold text-secondary">
+                            Note
+                        </div> -->
+                        <div class="justify-items-start" fxLayoutGap="10" fxLayout="row">
+
+                            <mat-form-field class="w-full mt-2 no-x-padding">
+                                <label
+                                    class="absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                                    Title
+                                </label>
+                                <input
+                                    class="block pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    placeholder=" "
+                                    matInput
+                                />
+                            </mat-form-field>
+
+                            <mat-form-field class="w-full mt-2 no-x-padding">
+
+                                <label
+                                    class="absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                                    Date/Time
+                                </label>
+                                <input matInput [matDatepicker]="picker" [(ngModel)]="date" placeholder="Choose a date"
+                                    class="block pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                >
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+
+                            </mat-form-field>
+
+                        </div>
+                        <!-- <hr class="my-8"> -->
+
+                        <!-- date/time -->
+                        <!-- <div class="text-md font-semibold text-secondary">
+                            Date/Time
+                        </div>
+                        <div class="grid grid-cols-3 gap-3 justify-items-start mt-6">
+                        </div>
+                        <hr class="my-8"> -->
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flex items-center justify-end border-t px-8 py-5 bg-gray-50 dark:bg-gray-700">
+                <button
+                    mat-button
+                    (click)="notesDrawer.close()"
+                >
+                    Cancel
+                </button>
+                <button
+                    class="px-6 ml-3"
+                    mat-flat-button
+                    [color]="'primary'">
+                    Save
+                </button>
+            </div>
+        </div>
+
+    </fuse-drawer>
+
+
     <div class="flex flex-wrap w-full mx-auto p-6 md:p-8">
 
         <!-- Title and action buttons -->
@@ -91,6 +193,7 @@
                                 class="fuse-mat-button-small w-full"
                                 mat-flat-button
                                 [color]="'primary'"
+                                (click)="notesDrawer.toggle()"
                             >
                                 <mat-icon
                                     class="icon-size-5"

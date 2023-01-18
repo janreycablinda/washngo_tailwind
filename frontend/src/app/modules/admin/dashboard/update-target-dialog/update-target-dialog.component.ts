@@ -1,18 +1,18 @@
 import { Component, OnInit } from "@angular/core";
 import { Store, select } from "@ngrx/store";
 import * as fromApp from 'app/store/app.reducer';
-import { ChartService } from "./store/chart/chart.service";
+import { ChartService } from "../store/chart/chart.service";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Subject, takeUntil } from "rxjs";
-import { salesTargetSeriesData } from "./store/chart/chart.selectors";
-import * as ChartActions from './store/chart/chart.actions';
+import { salesTargetSeriesData } from "../store/chart/chart.selectors";
+import * as ChartActions from '../store/chart/chart.actions';
 
 @Component({
-    selector: 'app-dialog-content-update-target',
-    templateUrl: './dialog-content-update-target.component.html',
+    selector: 'app-update-target-dialog',
+    templateUrl: './update-target-dialog.component.html',
 })
-export class DialogContentUpdateTargetComponent implements OnInit {
+export class UpdateTargetDialogComponent implements OnInit {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -39,7 +39,7 @@ export class DialogContentUpdateTargetComponent implements OnInit {
 
     constructor(
         private store: Store<fromApp.AppState>,
-        public dialogRef: MatDialogRef<DialogContentUpdateTargetComponent>,
+        public dialogRef: MatDialogRef<UpdateTargetDialogComponent>,
         // @Inject(MAT_DIALOG_DATA) public data$: object[],
         private chartService: ChartService,
     ) {
