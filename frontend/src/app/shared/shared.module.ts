@@ -8,9 +8,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
-import {MatDialogModule} from '@angular/material/dialog';
-import {DialogModule} from '@angular/cdk/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogModule } from '@angular/cdk/dialog';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import {DialogModule} from '@angular/cdk/dialog';
         MatInputModule,
         MatSnackBarModule,
         MatDialogModule,
+        MatButtonToggleModule,
         DialogModule
     ],
     exports: [
@@ -40,10 +42,10 @@ import {DialogModule} from '@angular/cdk/dialog';
         MatInputModule,
         SnackbarComponent,
         MatDialogModule,
+        MatButtonToggleModule,
         DialogModule
     ]
 
 })
-export class SharedModule
-{
+export class SharedModule {
 }
