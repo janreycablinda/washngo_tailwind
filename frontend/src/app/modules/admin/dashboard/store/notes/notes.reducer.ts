@@ -29,5 +29,28 @@ export const notesReducer = createReducer(
         }
     }),
 
+    on(NotesActions.deleteNote, (state: State, { noteId }) => {
+        // console.log(`NotesActions.deleteNote ${noteId}`);
+
+        // const updatedNotes = state.notes.filter(n => n.id !== noteId);
+        return {
+            ...state,
+            // notes: updatedNotes,
+        }
+
+    }),
+
+    //
+    on(NotesActions.deleteNoteSuccess, (state: State, { noteId }) => {
+        console.log(`NotesActions.deleteNoteSuccess ${noteId}`);
+
+        const updatedNotes = state.notes.filter(n => n.id !== noteId);
+        return {
+            ...state,
+            notes: updatedNotes,
+        }
+
+    }),
+
 
 );

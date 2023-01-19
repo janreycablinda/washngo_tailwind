@@ -24,6 +24,20 @@ export class NotesEffects {
         )
     );
 
+    // deleteNote$ = createEffect(() =>
+    //     this.actions$.pipe(
+    //         ofType(NotesActions.loadNotes),
+    //         switchMap(({ userId }) => this.notesStoreService.getNotes(userId).pipe(
+    //             switchMap((notes: NoteDTO[]) => [
+    //                 NotesActions.loadNotesSuccess({ notes })
+    //             ]),
+    //             catchError(error => of(
+    //                 NotificationAction.notificationResponse({ payload: { type: 'chartError', message: `Chart API Error! ${error}` } })
+    //             ))
+    //         ))
+    //     )
+    // );
+
     constructor(
         private actions$: Actions,
         private notesStoreService: NotesStoreService
