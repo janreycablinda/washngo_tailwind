@@ -8,10 +8,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
-import {MatDialogModule} from '@angular/material/dialog';
-import {DialogModule} from '@angular/cdk/dialog';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogModule } from '@angular/cdk/dialog';
 
 @NgModule({
     declarations: [
@@ -23,20 +23,22 @@ import {DialogModule} from '@angular/cdk/dialog';
         FormsModule,
         ReactiveFormsModule,
         MatTableModule,
-        MatFormFieldModule, 
+        MatFormFieldModule,
         MatPaginatorModule,
         MatInputModule,
         MatSnackBarModule,
         MatProgressSpinnerModule,
         MatDialogModule,
+        MatButtonToggleModule,
         DialogModule
     ],
     exports: [
         MatDialogModule,
-        CommonModule
+        MatButtonToggleModule,
+        DialogModule,
+        CommonModule,
     ]
 
 })
-export class SharedModule
-{
+export class SharedModule {
 }

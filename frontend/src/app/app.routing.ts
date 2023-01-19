@@ -5,6 +5,7 @@ import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
 import { SalesChartResolverService } from './modules/admin/dashboard/store/chart/chart-resolver.service';
 import { ChartCountsResolver } from './modules/admin/dashboard/store/chart/chart-counts.resolver';
+import { NotesResolver } from './modules/admin/dashboard/store/notes/notes-resolver.resolver';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -82,6 +83,7 @@ export const appRoutes: Route[] = [
                 resolve: [
                     SalesChartResolverService,
                     ChartCountsResolver,
+                    NotesResolver,
                 ]
             },
             {

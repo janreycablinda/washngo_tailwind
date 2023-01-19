@@ -1,11 +1,212 @@
-<div class="flex flex-col flex-auto w-full">
+<div class="flex flex-col flex-auto w-full relative overflow-x-hidden">
+
+    <!-- setupTargetDrawer - start -->
+    <fuse-drawer
+        class="w-screen min-w-screen sm:w-100 sm:min-w-100 z-999"
+        fixed
+        [name]="setupTargetDrawerName"
+        [opened]="setupTargetDrawerOpened"
+        [position]="setupTargetDrawerPosition"
+        [mode]="setupTargetDrawerMode"
+        #setupTargetDrawer
+    >
+        <form
+            class="flex flex-col w-full justify-between"
+            form
+            [formGroup]="salesTargetsForm"
+            (ngSubmit)="onSubmit()"
+        >
+
+            <div class="flex flex-col w-full overflow-auto bg-card">
+
+                <div class="flex flex-row items-center px-6 h-20 min-h-20 text-white bg-primary">
+                    <mat-icon
+                        class="icon-size-7 text-current"
+                        [svgIcon]="'heroicons_solid:cog'"></mat-icon>
+                    <div class="ml-3 text-2xl font-semibold tracking-tight">Setup Target Sales</div>
+                    <button
+                        class="ml-auto"
+                        mat-icon-button
+                        (click)="setupTargetDrawer.close()"
+                        type="button"
+                    >
+                        <mat-icon
+                            class="text-current"
+                            [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                    </button>
+                </div>
+
+                <div
+                    class="flex flex-col"
+                >
+
+                    <div class="flex flex-col p-6">
+
+                        <!-- <div class="text-md font-semibold text-secondary">
+                            Note
+                        </div> -->
+                        <div class="justify-items-start" fxLayoutGap="10" fxLayout="row">
+
+                            <mat-form-field
+                                class="w-full mt-2 no-x-padding"
+                                [ngClass]="formFieldHelpers"
+                                *ngFor="let month of months; let i = index"
+                            >
+                                <label
+                                    class="absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                                    {{ month }}
+                                </label>
+                                <input
+                                    class="block pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    placeholder=" "
+                                    matInput
+                                    type="number"
+                                    [value]="remappedData[i]"
+                                    [formControlName]="month.toLowerCase()"
+                                />
+                            </mat-form-field>
+
+                        </div>
+                        <!-- <hr class="my-8"> -->
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flex items-center justify-end border-t px-8 py-5 bg-gray-50 dark:bg-gray-700">
+                <button
+                    mat-button
+                    (click)="setupTargetDrawer.close()"
+                    type="button"
+                >
+                    Cancel
+                </button>
+                <button
+                    class="px-6 ml-3"
+                    mat-flat-button
+                    [color]="'primary'"
+                    type="submit"
+                    [disabled]="salesTargetsForm.invalid || salesTargetsForm.pristine || salesTargetsForm.untouched || !salesTargetsForm.dirty"
+                >
+                    Update
+                </button>
+            </div>
+        </form>
+
+    </fuse-drawer>
+    <!-- setupTargetDrawer - end -->
+
+    <!-- notesDrawer - start -->
+    <fuse-drawer
+        class="w-screen min-w-screen sm:w-100 sm:min-w-100 z-999"
+        fixed
+        [name]="notesDrawerName"
+        [opened]="notesDrawerOpened"
+        [position]="notesDrawerPosition"
+        [mode]="notesDrawerMode"
+        #notesDrawer
+    >
+        <div class="flex flex-col w-full justify-between">
+
+            <div class="flex flex-col w-full overflow-auto bg-card">
+
+                <div class="flex flex-row items-center px-6 h-20 min-h-20 text-white bg-primary">
+                    <mat-icon
+                        class="icon-size-7 text-current"
+                        [svgIcon]="'heroicons_solid:pencil-alt'"></mat-icon>
+                    <div class="ml-3 text-2xl font-semibold tracking-tight">Add New Note</div>
+                    <button
+                        class="ml-auto"
+                        mat-icon-button
+                        (click)="notesDrawer.close()"
+                        >
+                        <mat-icon
+                            class="text-current"
+                            [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                    </button>
+                </div>
+
+                <div class="flex flex-col">
+
+                    <div class="flex flex-col p-6">
+
+                        <!-- add note -->
+                        <!-- <div class="text-md font-semibold text-secondary">
+                            Note
+                        </div> -->
+                        <div class="justify-items-start" fxLayoutGap="10" fxLayout="row">
+
+                            <mat-form-field class="w-full mt-2 no-x-padding">
+                                <label
+                                    class="absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                                    Title
+                                </label>
+                                <input
+                                    class="block pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    placeholder=" "
+                                    matInput
+                                />
+                            </mat-form-field>
+
+                            <mat-form-field class="w-full mt-2 no-x-padding">
+
+                                <label
+                                    class="absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                                    Date/Time
+                                </label>
+                                <!-- <input matInput [matDatepicker]="picker" [(ngModel)]="date" placeholder="Choose a date"
+                                    class="block pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                >
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker> -->
+
+                            </mat-form-field>
+
+                        </div>
+                        <!-- <hr class="my-8"> -->
+
+                        <!-- date/time -->
+                        <!-- <div class="text-md font-semibold text-secondary">
+                            Date/Time
+                        </div>
+                        <div class="grid grid-cols-3 gap-3 justify-items-start mt-6">
+                        </div>
+                        <hr class="my-8"> -->
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flex items-center justify-end border-t px-8 py-5 bg-gray-50 dark:bg-gray-700">
+                <button
+                    mat-button
+                    (click)="notesDrawer.close()"
+                >
+                    Cancel
+                </button>
+                <button
+                    class="px-6 ml-3"
+                    mat-flat-button
+                    [color]="'primary'">
+                    Save
+                </button>
+            </div>
+        </div>
+
+    </fuse-drawer>
+    <!-- notesDrawer - end -->
+
     <div class="flex flex-wrap w-full mx-auto p-6 md:p-8">
 
         <!-- Title and action buttons -->
         <div class="flex items-center justify-between w-full">
             <div>
-                <div class="text-3xl font-semibold tracking-tight leading-8">Dashboard {{ isLoading$ | async }}</div>
-                <div class="font-medium tracking-tight text-secondary">Monitor sales, check reports, add notes and review performance</div>
+                <div class="text-3xl font-semibold tracking-tight leading-8">Dashboard</div>
+                <!-- <div class="font-medium tracking-tight text-secondary">Monitor sales, check reports, add notes and review performance</div> -->
             </div>
         </div>
 
@@ -13,15 +214,15 @@
 
             <!-- chart -->
             <div class="sm:col-span-2 lg:col-span-2 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-5" *ngIf="(isLoading$ | async)">
-                <div class="flex flex-col sm:flex-row items-start justify-between">
+                <div class="flex items-center justify-between">
                     <div class="my-3 sm:mt-0 sm:ml-2 h-6 min-h-6 px-2 py-4 rounded-full animate-pulse bg-gray-200 min-w-30"></div>
                     <div class="my-3 sm:mt-0 sm:ml-2 h-6 min-h-6 px-2 py-4 rounded-full animate-pulse bg-gray-200 min-w-40"></div>
                 </div>
-                <div class="bg-gray-200 h-20 w-full mb-4 rounded-lg animate-pulse min-h-90"></div>
+                <div class="bg-gray-200 h-20 w-full mb-4 rounded-lg animate-pulse min-h-90 mt-5"></div>
             </div>
 
             <div class="sm:col-span-2 lg:col-span-2 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-5" *ngIf="!(isLoading$ | async)">
-                <div class="flex flex-col sm:flex-row items-start justify-between">
+                <div class="flex items-center justify-between">
                         <div class="my-3 sm:mt-0 sm:ml-2">
                             <button
                                 class="h-6 min-h-6 px-2 py-4 rounded-full bg-hover"
@@ -50,7 +251,7 @@
                                 class="fuse-mat-button-small w-full py-4"
                                 mat-flat-button
                                 [color]="'primary'"
-                                (click)="openDialog()"
+                                (click)="setupTargetDrawer.toggle()"
                             >
                                 <mat-icon
                                     class="icon-size-5"
@@ -72,6 +273,7 @@
                     [stroke]="chartOptions.stroke"
                     [tooltip]="chartOptions.tooltip"
                     [xaxis]="chartOptions.xaxis"
+                    class="mt-5"
                 >
                 </apx-chart>
             </div>
@@ -79,18 +281,19 @@
             <!-- notes -->
             <div class="sm:col-span-2 lg:col-span-1 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6">
                 <div
-                    class="flex flex-col sm:flex-row items-start justify-between"
+                    class="flex items-center justify-between"
                 >
                         <div
                             class="text-lg font-medium tracking-tight leading-6 truncate"
                         >
-                            Note
+                            Notes
                         </div>
                         <div class="mt-3 sm:mt-0 sm:ml-2">
                             <button
                                 class="fuse-mat-button-small w-full"
                                 mat-flat-button
                                 [color]="'primary'"
+                                (click)="notesDrawer.toggle()"
                             >
                                 <mat-icon
                                     class="icon-size-5"
@@ -100,16 +303,18 @@
                             </button>
                         </div>
                 </div>
-                <div class="flex flex-col mt-2 divide-y overflow-y-auto max-h-80 h-80" cdkScrollable>
+                <div class="flex flex-col mt-2 divide-y overflow-y-auto max-h-100" cdkScrollable>
 
-                    <ng-container>
+                    <!-- {{ notes$ | async | json }} -->
+
+                    <ng-container *ngFor="let note of notes$ | async; index as i">
                         <div
-                            class="flex flex-row items-center justify-between py-1 px-0.5 border-b"
+                            class="flex flex-row items-center justify-between py-3 px-0.5"
                         >
                             <div class="flex flex-col">
-                                <div class="font-medium">TITLE</div>
+                                <div class="font-medium">{{ note["message"] }}</div>
                                 <div
-                                    class="flex flex-col sm:flex-row sm:items-center -ml-0.5 mt-2 sm:mt-1 space-y-1 sm:space-y-0 sm:space-x-3"
+                                    class="flex flex-col flex justify-between  sm:flex-row sm:items-center -ml-0.5 mt-2 sm:mt-1 space-y-1 sm:space-y-0 sm:space-x-3"
                                 >
                                     <ng-container>
                                         <div class="flex items-center">
@@ -122,26 +327,31 @@
                                             <div
                                                 class="ml-1.5 text-md text-secondary"
                                             >
-                                                1:00
+                                                {{ note["datetime"] }}
                                             </div>
                                         </div>
                                     </ng-container>
-                                    <!-- <ng-container>
+                                    <ng-container>
                                         <div class="flex items-center">
                                             <mat-icon
                                                 class="icon-size-5 text-hint"
                                                 [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
-                                            <div class="ml-1.5 text-md text-secondary">Location</div>
+                                            <div class="ml-1.5 text-md text-secondary">{{ note["location"] }}</div>
                                         </div>
-                                    </ng-container> -->
+                                    </ng-container>
                                 </div>
                             </div>
-                            <button mat-icon-button>
-                                <mat-icon
-                                    svgIcon="heroicons_outline:dots-vertical"
-                                >
-                                </mat-icon>
+                            <button
+                                mat-icon-button
+                                [matMenuTriggerFor]="noteOptionssMenu">
+                                <mat-icon [svgIcon]="'heroicons_outline:dots-vertical'"></mat-icon>
                             </button>
+                            <mat-menu #noteOptionssMenu="matMenu">
+                                <button mat-menu-item>
+                                    <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                                    Delete Note
+                                </button>
+                            </mat-menu>
                         </div>
                     </ng-container>
 
@@ -191,7 +401,7 @@
             </div>
 
             <!-- expenses -->
-            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="(isLoading$ | async)">
+            <!-- <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="(isLoading$ | async)">
                 <div class="bg-white rounded-lg p-6">
                     <div class="bg-gray-200 rounded-lg min-h-30 w-full animate-pulse"></div>
                 </div>
@@ -223,7 +433,7 @@
                 <div class="flex flex-col lg:flex-row lg:items-center mx-6 mt-3 mb-6">
                     <div class="text-7xl font-bold tracking-tighter leading-tight">₱{{0 | number:'1.0-0'}}</div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- members -->
             <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden" *ngIf="(isLoading$ | async)">

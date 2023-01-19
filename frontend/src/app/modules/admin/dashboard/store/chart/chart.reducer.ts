@@ -102,14 +102,14 @@ export const chartReducer = createReducer(
 
     on(ChartActions.loadSalesSucceededAction, (state: State, { payload }) => {
 
-        console.log('loadSalesSucceededAction', payload);
+        // console.log('loadSalesSucceededAction', payload);
         // console.log('loadSalesSucceededAction', payload["payload"]["data"]);
 
         switch (payload["payload"]["data"]) {
             case "Today":
 
-                console.log("switch Today state count today", state["salesCounts"]["today"]);
-                console.log("switch Today", payload["payload"]["data"]);
+                // console.log("switch Today state count today", state["salesCounts"]["today"]);
+                // console.log("switch Today", payload["payload"]["data"]);
 
                 if (state["salesCounts"]["today"] !== null) {
                     break;
@@ -214,29 +214,29 @@ export const chartReducer = createReducer(
     }),
 
     on(ChartActions.loadMembersRequestedtAction, (state: State, { payload }) => {
-        console.log('loadMembersRequestedtAction payload', payload)
+        // console.log('loadMembersRequestedtAction payload', payload)
         return {
             ...state,
         }
     }),
 
     on(ChartActions.loadMembersSucceededAction, (state: State, { payload }) => {
-        console.log('loadMembersSucceededAction payload', payload)
+        // console.log('loadMembersSucceededAction payload', payload)
 
-        console.log('loadMembersSucceededAction', payload["payload"]["data"]);
+        // console.log('loadMembersSucceededAction', payload["payload"]["data"]);
 
         switch (payload["payload"]["data"]) {
             case "All":
 
-                console.log("switch membersCounts state count all", state["membersCounts"]["all"]);
-                console.log("switch All", payload["payload"]["data"]);
+                // console.log("switch membersCounts state count all", state["membersCounts"]["all"]);
+                // console.log("switch All", payload["payload"]["data"]);
 
                 if (state["membersCounts"]["all"] !== null) {
                     break;
                 }
 
                 const allSum : number = payload["data"].length > 0 ? payload["data"].length : 0;
-                console.log("allSum", allSum);
+                // console.log("allSum", allSum);
 
                 return {
                     ...state,

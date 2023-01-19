@@ -1,16 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import * as fromApp from 'app/store/app.reducer';
 import * as ChartActions from './store/chart/chart.actions';
 import { ChartOptions } from 'app/models/chart-options';
 import { ChartService } from './store/chart/chart.service';
 import { MatDialog, } from '@angular/material/dialog';
-import { Observable, Subject, map, switchMap, take } from 'rxjs';
+import { Observable, Subject, map, switchMap, take, takeUntil } from 'rxjs';
 import { membersCountsData, salesCountsData, salesSeriesData, salesTargetSeriesData } from './store/chart/chart.selectors';
 import { ChartComponent } from 'ng-apexcharts';
-import { DialogContentUpdateTargetComponent } from './dialog-content-update-target.component';
+import { UpdateTargetDialogComponent } from './update-target-dialog/update-target-dialog.component';
 import { FuseLoadingService } from '@fuse/services/loading';
 import { userData } from 'app/store/auth/auth.selectors';
+import { NoteDTO } from 'app/models/note';
+import { selectNotes } from './store/notes/notes.selectors';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -18,11 +21,49 @@ import { userData } from 'app/store/auth/auth.selectors';
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
     @ViewChild("chart", { static: false }) chart: ChartComponent;
+      @ViewChild('setupTargetDrawer', { static: true }) setupTargetDrawerHandle: any;
+
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     isLoading$: Observable<boolean> = this._fuseLoadingService.show$;
     private userData: object;
+
+    setupTargetDrawerName = 'setupTargetDrawer';
+    setupTargetDrawerMode = 'over';
+    setupTargetDrawerPosition = 'right';
+    setupTargetDrawerOpened = false;
+
+    formFieldHelpers: string[] = [''];
+    salesTargetSeriesData: object;
+    salesTargetsForm: FormGroup = new FormGroup({
+        january: new FormControl('', [Validators.required]),
+        february: new FormControl('', [Validators.required]),
+        march: new FormControl('', [Validators.required]),
+        april: new FormControl('', [Validators.required]),
+        may: new FormControl('', [Validators.required]),
+        june: new FormControl('', [Validators.required]),
+        july: new FormControl('', [Validators.required]),
+        august: new FormControl('', [Validators.required]),
+        september: new FormControl('', [Validators.required]),
+        october: new FormControl('', [Validators.required]),
+        november: new FormControl('', [Validators.required]),
+        december: new FormControl('', [Validators.required]),
+    });
+    remappedData: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+
+    notesDrawerName = 'notesDrawer';
+    notesDrawerMode = 'over';
+    notesDrawerPosition = 'right';
+    notesDrawerOpened = false;
+    date: Date;
+    // startDate:Date;
+    // minDate:Date;
+    // maxDate:Date;
+    // dateFormats:string;
+
 
     months: string[] = this.chartService.months;
     chartOptions: Partial<ChartOptions> = {
@@ -78,7 +119,6 @@ export class DashboardComponent implements OnInit {
         }
     }
 
-    //
     yearsList: number[] = [
         2020,
         2021,
@@ -90,7 +130,6 @@ export class DashboardComponent implements OnInit {
     yearSelected: number = new Date().getFullYear();
 
     chartData$: Observable<any[]>;
-
     salesCounts$: Observable<object> = this.store.pipe(
         select(salesCountsData));
     salesCountSelected: string = "Today";
@@ -98,6 +137,9 @@ export class DashboardComponent implements OnInit {
     membersCounts$: Observable<object> = this.store.pipe(
         select(membersCountsData));
     membersCountSelected: string = "All";
+
+    notes$: Observable<NoteDTO[]> = this.store.pipe(
+        select(selectNotes));
 
     constructor(
         private store: Store<fromApp.AppState>,
@@ -142,6 +184,32 @@ export class DashboardComponent implements OnInit {
             this.userData = userData;
         });
 
+        this.store.pipe(
+            takeUntil(this._unsubscribeAll),
+            select(salesTargetSeriesData)).subscribe(data => {
+                if (data) {
+                    this.salesTargetSeriesData = data;
+                    console.log("salesTargetSeriesData", this.salesTargetSeriesData)
+                    this.remappedData = this.chartService.remapSalesTargetSeriesData(data)
+                    console.log("remappedData", this.remappedData)
+
+                    this.salesTargetsForm.patchValue({
+                        january: this.remappedData[0],
+                        february: this.remappedData[1],
+                        march: this.remappedData[2],
+                        april: this.remappedData[3],
+                        may: this.remappedData[4],
+                        june: this.remappedData[5],
+                        july: this.remappedData[6],
+                        august: this.remappedData[7],
+                        september: this.remappedData[8],
+                        october: this.remappedData[9],
+                        november: this.remappedData[10],
+                        december: this.remappedData[11],
+                    })
+                }
+            });
+
     }
 
     onYearSelected(year: number) {
@@ -150,7 +218,7 @@ export class DashboardComponent implements OnInit {
     }
 
     openDialog() {
-        const dialogRef = this.dialog.open(DialogContentUpdateTargetComponent, {
+        const dialogRef = this.dialog.open(UpdateTargetDialogComponent, {
         });
         // dialogRef.afterClosed().subscribe(result => {
         //     console.log(`Dialog result: ${result}`);
@@ -170,10 +238,54 @@ export class DashboardComponent implements OnInit {
         this.membersCountSelected = duration;
         this.store.dispatch(ChartActions.loadMembersRequestedtAction({
             payload: {
-                data: duration ,
+                data: duration,
                 branch_id: this.userData['branch_id'],
             }
         }));
+    }
+
+    onSubmit() {
+        console.log("this.salesTargetsForm.value", this.salesTargetsForm.value);
+
+        if (this.salesTargetsForm.dirty) {
+
+            const salesTargetsUpdateForm = {
+                "id": this.salesTargetSeriesData["branch_id"],
+                "form": {
+                    "id": this.salesTargetSeriesData["id"],
+                    "branch_id": this.salesTargetSeriesData["branch_id"],
+                    "january": String(this.salesTargetsForm.value.january),
+                    "february": String(this.salesTargetsForm.value.february),
+                    "march": String(this.salesTargetsForm.value.march),
+                    "april": String(this.salesTargetsForm.value.april),
+                    "may": String(this.salesTargetsForm.value.may),
+                    "june": String(this.salesTargetsForm.value.june),
+                    "july": String(this.salesTargetsForm.value.july),
+                    "august": String(this.salesTargetsForm.value.august),
+                    "september": String(this.salesTargetsForm.value.september),
+                    "october": String(this.salesTargetsForm.value.october),
+                    "november": String(this.salesTargetsForm.value.november),
+                    "december": String(this.salesTargetsForm.value.december),
+                    "date": this.salesTargetSeriesData["date"],
+                    "created_at": this.salesTargetSeriesData["created_at"],
+                    "updated_at": this.salesTargetSeriesData["updated_at"],
+                },
+            }
+            console.log("salesTargetsUpdateForm", salesTargetsUpdateForm)
+
+            this.store.dispatch(ChartActions.updateTargetSalesSeriesRequestedtAction({ payload: salesTargetsUpdateForm }));
+
+            this.salesTargetsForm.markAsPristine();
+
+            this.setupTargetDrawerHandle.close();
+
+        }
+    }
+
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
     }
 
 }
