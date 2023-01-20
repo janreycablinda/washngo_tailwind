@@ -18,25 +18,26 @@ export class NotesEffects {
                     NotesActions.loadNotesSuccess({ notes })
                 ]),
                 catchError(error => of(
-                    NotificationAction.notificationResponse({ payload: { type: 'chartError', message: `Chart API Error! ${error}` } })
+                    NotificationAction.notificationResponse({ payload: { type: 'chartnotesErrorrror', message: `Notes API Error! ${error}` } })
                 ))
             ))
         )
     );
 
-    // deleteNote$ = createEffect(() =>
-    //     this.actions$.pipe(
-    //         ofType(NotesActions.loadNotes),
-    //         switchMap(({ userId }) => this.notesStoreService.getNotes(userId).pipe(
-    //             switchMap((notes: NoteDTO[]) => [
-    //                 NotesActions.loadNotesSuccess({ notes })
-    //             ]),
-    //             catchError(error => of(
-    //                 NotificationAction.notificationResponse({ payload: { type: 'chartError', message: `Chart API Error! ${error}` } })
-    //             ))
-    //         ))
-    //     )
-    // );
+    deleteNote$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(NotesActions.deleteNote),
+            switchMap((payload) => this.notesStoreService.deleteNote(payload.payload).pipe(
+                switchMap((response: any) => [
+                    NotesActions.deleteNoteSuccess(response),
+                    NotificationAction.notificationResponse({ payload: { type: 'success', message: `Note Deleted Successfully` } })
+                ]),
+                catchError(error => of(
+                    NotificationAction.notificationResponse({ payload: { type: 'notesError', message: `Notes API Error! ${error}` } })
+                ))
+            ))
+        )
+    );
 
     constructor(
         private actions$: Actions,

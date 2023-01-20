@@ -29,25 +29,24 @@ export const notesReducer = createReducer(
         }
     }),
 
-    on(NotesActions.deleteNote, (state: State, { noteId }) => {
-        // console.log(`NotesActions.deleteNote ${noteId}`);
+    on(NotesActions.deleteNote, (state: State, { payload }) => {
+        console.log(`NotesActions.deleteNote`, payload);
 
-        // const updatedNotes = state.notes.filter(n => n.id !== noteId);
+        const updatedNotes = state.notes.filter(n => n.id !== payload["id"]);
         return {
             ...state,
-            // notes: updatedNotes,
+            notes: updatedNotes,
         }
 
     }),
 
     //
-    on(NotesActions.deleteNoteSuccess, (state: State, { noteId }) => {
-        console.log(`NotesActions.deleteNoteSuccess ${noteId}`);
-
-        const updatedNotes = state.notes.filter(n => n.id !== noteId);
+    on(NotesActions.deleteNoteSuccess, (state: State, { payload }) => {
+        // console.log(`NotesActions.deleteNoteSuccess ${noteId}`);
+        // const updatedNotes = state.notes.filter(n => n.id !== noteId);
         return {
             ...state,
-            notes: updatedNotes,
+            // notes: updatedNotes,
         }
 
     }),

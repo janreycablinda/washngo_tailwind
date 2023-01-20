@@ -313,8 +313,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 // this.closeDetails();
                 // });
 
-                this.store.dispatch(NotesActions.deleteNote({ noteId }));
+                console.log("userData", this.userData);
                 console.log("noteId", noteId);
+
+                const payload = {
+                    "id": noteId,
+                    "user_id": this.userData['id'],
+                }
+
+                this.store.dispatch(NotesActions.deleteNote({ payload }));
+
             }
         });
     }
