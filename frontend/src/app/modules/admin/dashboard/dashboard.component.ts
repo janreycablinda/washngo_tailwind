@@ -14,6 +14,8 @@ import { userData } from 'app/store/auth/auth.selectors';
 import { NoteDTO } from 'app/models/note';
 import { selectNotes } from './store/notes/notes.selectors';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import * as NotesActions from './store/notes/notes.actions';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 
 @Component({
@@ -23,7 +25,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
     @ViewChild("chart", { static: false }) chart: ChartComponent;
-      @ViewChild('setupTargetDrawer', { static: true }) setupTargetDrawerHandle: any;
+    @ViewChild('setupTargetDrawer', { static: true }) setupTargetDrawerHandle: any;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -146,6 +148,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         private chartService: ChartService,
         public dialog: MatDialog,
         private _fuseLoadingService: FuseLoadingService,
+        private _fuseConfirmationService: FuseConfirmationService,
     ) {
     }
 
@@ -244,7 +247,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }));
     }
 
-    onSubmit() {
+    onSetupTargetFormSubmit() {
         console.log("this.salesTargetsForm.value", this.salesTargetsForm.value);
 
         if (this.salesTargetsForm.dirty) {
@@ -280,6 +283,48 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.setupTargetDrawerHandle.close();
 
         }
+    }
+
+    onDeleteNoteClicked(noteId: number): void {
+
+        // Open the confirmation dialog
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'Delete Note',
+            message: 'Are you sure you want to remove this note? This action cannot be undone!',
+            actions: {
+                confirm: {
+                    label: 'Delete'
+                }
+            }
+        });
+
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+
+            // If the confirm button pressed...
+            if (result === 'confirmed') {
+
+                // Get the product object
+                // const product = this.selectedProductForm.getRawValue();
+
+                // Delete the product on the server
+                // this._inventoryService.deleteProduct(product.id).subscribe(() => {
+                // Close the details
+                // this.closeDetails();
+                // });
+
+                console.log("userData", this.userData);
+                console.log("noteId", noteId);
+
+                const payload = {
+                    "id": noteId,
+                    "user_id": this.userData['id'],
+                }
+
+                this.store.dispatch(NotesActions.deleteNote({ payload }));
+
+            }
+        });
     }
 
     ngOnDestroy(): void {
