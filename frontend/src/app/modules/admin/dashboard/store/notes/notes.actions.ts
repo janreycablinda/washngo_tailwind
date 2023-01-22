@@ -10,3 +10,18 @@ export const loadNotesSuccess = createAction(
     '[Notes] Load Notes Success',
     props<{ notes: NoteDTO[] }>()
 );
+
+export const deleteNote = createAction(
+    '[Notes] Delete Note',
+    // props<{ noteId: number }>()
+    props<{ payload: object }>()
+);
+export const deleteNoteSuccess = createAction(
+    '[Notes] Delete Note Success',
+    // props<{ noteId: number }>()
+    props<{ payload: any }>()
+);
+export const deleteNoteFailure = createAction(
+    '[Notes] Delete Note Failure',
+    props<{ error: any }>()
+);

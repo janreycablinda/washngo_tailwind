@@ -11,8 +11,14 @@ export class NotesStoreService {
     constructor(private http: HttpClient) { }
 
     getNotes(userId: number): Observable<any> {
-        const notesUrl = `/api/action/get_note/${userId}`;
-        return this.http.get<any>(environment.backend_url + notesUrl);
+        const getNotesUrl = `/api/action/get_note/${userId}`;
+        return this.http.get<any>(environment.backend_url + getNotesUrl);
+    }
+
+    // deleteNote(payload: object): Observable<any> {
+    deleteNote(payload: object): Observable<any> {
+        const deleteNotesUrl = `/api/action/delete_note`;
+        return this.http.post<any>(environment.backend_url + deleteNotesUrl, payload);
     }
 
 }

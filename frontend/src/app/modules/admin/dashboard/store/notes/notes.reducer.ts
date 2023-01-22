@@ -29,5 +29,27 @@ export const notesReducer = createReducer(
         }
     }),
 
+    on(NotesActions.deleteNote, (state: State, { payload }) => {
+        console.log(`NotesActions.deleteNote`, payload);
+
+        const updatedNotes = state.notes.filter(n => n.id !== payload["id"]);
+        return {
+            ...state,
+            notes: updatedNotes,
+        }
+
+    }),
+
+    //
+    on(NotesActions.deleteNoteSuccess, (state: State, { payload }) => {
+        // console.log(`NotesActions.deleteNoteSuccess ${noteId}`);
+        // const updatedNotes = state.notes.filter(n => n.id !== noteId);
+        return {
+            ...state,
+            // notes: updatedNotes,
+        }
+
+    }),
+
 
 );
