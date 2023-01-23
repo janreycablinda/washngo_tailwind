@@ -4,7 +4,7 @@ import * as SalesActions from './sales.actions';
 export const salesFeatureKey = 'sales';
 
 export interface State {
-  transactions: [],
+  transactions: any,
   work_order: String,
 }
 
@@ -24,20 +24,19 @@ export const reducer = createReducer(
   }),
   on(SalesActions.loadWorkOrderSucceededAction, (state: State, { payload }) =>
   {
-    console.log(payload);
     return {
       ...state,
       work_order: payload
     }
   }),
-  // on(SalesActions.addSaleSucceededAction, (state: State, { payload }) =>
-  // {
-  //   console.log(payload);
-  //   return {
-  //     ...state,
-  //     transactions: [...state.transactions, payload]
-  //   }
-  // }),
+  on(SalesActions.addSaleSucceededAction, (state: State, { payload }) =>
+  {
+    console.log(payload);
+    return {
+      ...state,
+      transactions: [...state.transactions, payload]
+    }
+  }),
   //reference
   // on(UserActions.addUserSucceededAction, (state: State, { payload }) =>
   // {
@@ -56,13 +55,12 @@ export const reducer = createReducer(
   //     users: updateUser
   //   }
   // }),
-  // on(UserActions.deleteUserSucceededAction, (state: State, { id }) =>
-  // {
-  //   console.log(id);
-  //   let newData = state.users.filter(item => item.id !== id);
-  //   return {
-  //     ...state,
-  //     users: newData
-  //   }
-  // })
+  on(SalesActions.deleteSaleSucceededAction, (state: State, { id }) =>
+  {
+    let newData = state.transactions.filter(trans => trans.id !== id);
+    return {
+      ...state,
+      transactions: newData
+    }
+  })
 );

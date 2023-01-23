@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="flex flex-row">
-            <fuse-card class="basis-1/4 block h-screen rounded-sm">
+            <fuse-card class="basis-1/4 block h-screen rounded-sm pb-3 mb-3" fuseScrollbar>
                 <div class="flex justify-between py-2 px-4">
                     <div class="text-lg font-medium tracking-tight leading-6 truncate">WAITING LIST</div>
                     <div class="mt-1 sm:ml-2">
@@ -26,16 +26,16 @@
                         </button>
                     </div>
                 </div>
-                <div class="mt-2">
-                    <app-customer-card dataType="waiting"></app-customer-card>
+                <div class="mt-2" *ngFor="let sale of sales$ | async; let i = index;">
+                    <app-customer-card [Index]="i + 1" *ngIf="sale.status == 'waiting'" [TransactionData]="sale" dataType="waiting"></app-customer-card>
                 </div>
             </fuse-card>
             <fuse-card class="basis-3/4 block h-screen ml-2 rounded-sm">
                 <div class="flex justify-between py-2 px-4">
                     <div class="text-lg font-medium tracking-tight leading-6 truncate">ONPROGRESS</div>
                 </div>
-                <div class="mt-2">
-                    <app-customer-card dataType="onprogress"></app-customer-card>
+                <div class="mt-2" *ngFor="let sale of sales$ | async; let i = index">
+                    <app-customer-card *ngIf="sale.status == 'inprogress'" [TransactionData]="sale"></app-customer-card>
                 </div>
             </fuse-card>
         </div>

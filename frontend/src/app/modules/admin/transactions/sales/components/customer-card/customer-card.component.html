@@ -1,8 +1,8 @@
-<fuse-card matBadge="1" [matBadgeHidden]="dataType != 'waiting'" matBadgePosition="before" matBadgeColor="primary" class="bg-gray-700 mx-4 p-2 block rounded-sm">
-    <div class="flex justify-between" *ngIf="dataType == 'waiting'">
+<fuse-card [matBadge]="Index" *ngIf="TransactionData.status == 'waiting'" matBadgePosition="before" matBadgeColor="primary" class="bg-gray-700 mx-4 p-2 block rounded-sm">
+    <div class="flex justify-between">
         <span class="text-white text-lg">
             <mat-icon class="icon-size-5 text-orange-500 icon-align-middle" matTooltip="Customer Name" matTooltipPosition="above" svgIcon="heroicons_outline:user"></mat-icon>
-            Joyce lim
+            {{TransactionData.name}}
         </span>
         <button
         class="fuse-mat-button-small hover:bg-transparent w-auto"
@@ -23,24 +23,26 @@
                 <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
                 Edit
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="deleteTrans(TransactionData.id)">
                 <mat-icon svgIcon="heroicons_outline:trash"></mat-icon>
                 Delete
             </button>
         </mat-menu>
     </div>
-    <div *ngIf="dataType == 'waiting'">
-        
+    <div>
         <span class="text-white block">
             <mat-icon class="icon-size-5 text-orange-500 icon-align-middle" matTooltip="Vehicle" matTooltipPosition="above" svgIcon="mat_outline:directions_car"></mat-icon>
-            MOBILIO (HONDA)
+            <span *ngIf="TransactionData.transaction_type == 'member'"> {{TransactionData.property.vehicle.vehicle_name}}</span>
+            <span *ngIf="TransactionData.transaction_type == 'nonmember'"> {{TransactionData.vehicle.vehicle_name}}</span>
         </span>
         <span class="text-white text-sm leading-3">
             <mat-icon class="icon-size-5 text-orange-500 icon-align-middle" matTooltip="Time Waiting" matTooltipPosition="above" svgIcon="mat_outline:timelapse"></mat-icon>
-            {{ '10:00' }}
+            {{(timer | async)}}
         </span>
     </div>
-    <div *ngIf="dataType == 'onprogress'" class="flex flex-row text-white">
+</fuse-card>
+<fuse-card [matBadge]="Index" *ngIf="TransactionData.status == 'inprogress'" class="bg-gray-700 mx-4 p-2 block rounded-sm">
+    <div class="flex flex-row text-white">
         <div class="basis-1/2">
             <span class="block">
                 <b>Customer Name:</b>

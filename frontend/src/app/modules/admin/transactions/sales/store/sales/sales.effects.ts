@@ -47,6 +47,24 @@ export class SalesEffects {
     )
   ));
 
+  deleteTransactionEffect$: Observable<Action> = createEffect(() => this.actions$.pipe(
+    ofType(SalesActions.deleteSaleRequestedAction),
+    mergeMap((payload) =>{
+      console.log(payload);
+      return this.salesStoreService.deleteSale(payload.id).pipe(
+          switchMap((data: any) => {
+            return [
+              SalesActions.deleteSaleSucceededAction({ id: data.id })
+            ]
+          }),
+          // catchError((error: Error) => {
+          //   return of(NotificationAction.notificationResponse({payload: { type: 'error', message: 'Ops, something went wrong!' }}));
+          // })
+        )
+      }
+    )
+  ));
+
   getWorkOrderEffect$: Observable<Action> = createEffect(() => this.actions$.pipe(
     ofType(SalesActions.loadWorkOrderRequestedAction),
     mergeMap(() =>{

@@ -23,6 +23,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatTableModule} from '@angular/material/table';
 import { SharedModule } from 'app/shared/shared.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FuseScrollbarModule } from '@fuse/directives/scrollbar';
 
 const salesRoutes: Route[] = [
   {
@@ -58,7 +59,8 @@ const salesRoutes: Route[] = [
     FlexLayoutModule,
     MatTableModule,
     MatProgressSpinnerModule,
-    SharedModule
+    SharedModule,
+    FuseScrollbarModule
   ]
 })
 export class SalesModule { }

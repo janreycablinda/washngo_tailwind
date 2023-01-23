@@ -24,4 +24,9 @@ export class SalesStoreService {
     const transactionUrl = '/api/action/add_transaction';
     return this.http.post<any>(environment.backend_url + transactionUrl, payload);
   } 
+
+  deleteSale(id): Observable<any>{
+    const transactionUrl = `/api/action/delete_transaction/${id}`;
+    return this.http.delete<any>(environment.backend_url + transactionUrl);
+  } 
 }

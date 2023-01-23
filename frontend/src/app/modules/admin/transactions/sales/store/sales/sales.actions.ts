@@ -28,6 +28,16 @@ export const loadWorkOrderSucceededAction = createAction(
   props<{ payload: any }>()
 );
 
+export const deleteSaleRequestedAction = createAction(
+  '[Sales] Delete Sale Requested Action',
+  props<{ id: any }>()
+);
+
+export const deleteSaleSucceededAction = createAction(
+  '[Sales] Delete Sale Succeeded Action',
+  props<{ id: any }>()
+);
+
 export const salesSalessFailure = createAction(
   '[Sales] Sales Saless Failure',
   props<{ error: any }>()
