@@ -24,6 +24,24 @@ export class NotesEffects {
         )
     );
 
+    addNote$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(NotesActions.addNote),
+            switchMap((payload) => this.notesStoreService.addNote(payload.payload).pipe(
+                switchMap((userId: any) => {
+                    console.log("response", userId)
+                    return [
+                        NotesActions.loadNotes({ userId }),
+                        NotificationAction.notificationResponse({ payload: { type: 'success', message: `Note Added Successfully` } })
+                    ]
+                }),
+                catchError(error => of(
+                    NotificationAction.notificationResponse({ payload: { type: 'notesError', message: `Notes API Error! ${error}` } })
+                ))
+            ))
+        )
+    );
+
     deleteNote$ = createEffect(() =>
         this.actions$.pipe(
             ofType(NotesActions.deleteNote),

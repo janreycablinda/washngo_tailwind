@@ -34,6 +34,7 @@
     "highlight.js": "11.6.0",
     "lodash-es": "4.17.21",
     "luxon": "3.0.4",
+    "mat-timepicker": "^5.1.8",
     "ng-apexcharts": "1.7.1",
     "ngx-markdown": "13.1.0",
     "ngx-quill": "19.0.1",

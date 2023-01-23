@@ -15,7 +15,11 @@ export class NotesStoreService {
         return this.http.get<any>(environment.backend_url + getNotesUrl);
     }
 
-    // deleteNote(payload: object): Observable<any> {
+    addNote(payload: object): Observable<any> {
+        const deleteNotesUrl = `/api/action/add_note`;
+        return this.http.post<any>(environment.backend_url + deleteNotesUrl, payload);
+    }
+
     deleteNote(payload: object): Observable<any> {
         const deleteNotesUrl = `/api/action/delete_note`;
         return this.http.post<any>(environment.backend_url + deleteNotesUrl, payload);

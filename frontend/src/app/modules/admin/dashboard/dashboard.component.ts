@@ -8,7 +8,6 @@ import { MatDialog, } from '@angular/material/dialog';
 import { Observable, Subject, map, switchMap, take, takeUntil } from 'rxjs';
 import { membersCountsData, salesCountsData, salesSeriesData, salesTargetSeriesData } from './store/chart/chart.selectors';
 import { ChartComponent } from 'ng-apexcharts';
-import { UpdateTargetDialogComponent } from './update-target-dialog/update-target-dialog.component';
 import { FuseLoadingService } from '@fuse/services/loading';
 import { userData } from 'app/store/auth/auth.selectors';
 import { NoteDTO } from 'app/models/note';
@@ -26,18 +25,20 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 export class DashboardComponent implements OnInit, OnDestroy {
     @ViewChild("chart", { static: false }) chart: ChartComponent;
     @ViewChild('setupTargetDrawer', { static: true }) setupTargetDrawerHandle: any;
+    @ViewChild('notesDrawer', { static: true }) notesDrawerHandle: any;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     isLoading$: Observable<boolean> = this._fuseLoadingService.show$;
     private userData: object;
 
+    formFieldHelpers: string[] = [''];
+
     setupTargetDrawerName = 'setupTargetDrawer';
     setupTargetDrawerMode = 'over';
     setupTargetDrawerPosition = 'right';
     setupTargetDrawerOpened = false;
 
-    formFieldHelpers: string[] = [''];
     salesTargetSeriesData: object;
     salesTargetsForm: FormGroup = new FormGroup({
         january: new FormControl('', [Validators.required]),
@@ -60,12 +61,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
     notesDrawerMode = 'over';
     notesDrawerPosition = 'right';
     notesDrawerOpened = false;
-    date: Date;
-    // startDate:Date;
-    // minDate:Date;
-    // maxDate:Date;
-    // dateFormats:string;
 
+    // note form - start
+    noteForm: FormGroup = new FormGroup({
+        message: new FormControl('', [Validators.required]),
+        date: new FormControl('', [Validators.required]),
+        time: new FormControl('', [Validators.required]),
+    });
+    // note form - end
+
+    // note date/time picker - start
+    noteDateTime: Date = new Date();
+    customErrorStateMatcher = {
+        isErrorState: (control: FormControl) => control.invalid
+    };
+    // note date/time picker - end
 
     months: string[] = this.chartService.months;
     chartOptions: Partial<ChartOptions> = {
@@ -213,19 +223,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 }
             });
 
+        // this.noteForm = this.fb.group({
+        //     message: ['', Validators.required]
+        // });
+
     }
 
     onYearSelected(year: number) {
         this.yearSelected = year;
         this.store.dispatch(ChartActions.loadSalesSeriesRequestedtAction({ year: this.yearSelected }));
-    }
-
-    openDialog() {
-        const dialogRef = this.dialog.open(UpdateTargetDialogComponent, {
-        });
-        // dialogRef.afterClosed().subscribe(result => {
-        //     console.log(`Dialog result: ${result}`);
-        // });
     }
 
     onSalesCountSelect(duration: string) {
@@ -285,6 +291,47 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
     }
 
+    onNoteFormSubmit(): void {
+        // console.log("this.noteForm.value", this.noteForm.value);
+
+        if (this.noteForm.dirty) {
+
+            // get date time
+            const dataTimeString = this.noteDateTime;
+            const year = dataTimeString.getFullYear();
+            const month = ("0" + (dataTimeString.getMonth() + 1)).slice(-2);
+            const day = ("0" + dataTimeString.getDate()).slice(-2);
+            const hours = ("0" + dataTimeString.getHours()).slice(-2);
+            const minutes = ("0" + dataTimeString.getMinutes()).slice(-2);
+            const seconds = ("0" + dataTimeString.getSeconds()).slice(-2);
+            const dateString = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+
+            const payload = {
+                "id": this.userData["id"],
+                "message": this.noteForm["value"]["message"],
+                "date": dateString,
+                "location": "dashboard",
+            }
+            // console.log("noteForm payload", payload);
+
+            this.store.dispatch(NotesActions.addNote({ payload }));
+            this.noteForm.markAsPristine();
+            this.notesDrawerHandle.close();
+            this.noteForm.reset();
+            this.noteDateTime = new Date();
+
+        }
+
+    }
+
+    noteTimeChangeHandler(event: Date) {
+        console.log(event);
+    }
+
+    invalidNoteDateTimeInputHandler() {
+        console.log('Invalid Input');
+    }
+
     onDeleteNoteClicked(noteId: number): void {
 
         // Open the confirmation dialog
@@ -303,15 +350,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
             // If the confirm button pressed...
             if (result === 'confirmed') {
-
-                // Get the product object
-                // const product = this.selectedProductForm.getRawValue();
-
-                // Delete the product on the server
-                // this._inventoryService.deleteProduct(product.id).subscribe(() => {
-                // Close the details
-                // this.closeDetails();
-                // });
 
                 console.log("userData", this.userData);
                 console.log("noteId", noteId);
