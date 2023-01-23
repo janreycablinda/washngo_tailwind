@@ -23,9 +23,12 @@ export const notesReducer = createReducer(
     // }),
 
     on(NotesActions.loadNotesSuccess, (state: State, { notes }) => {
+
+        // console.log("NotesActions.loadNotesSuccess", notes);
+
         return {
             ...state,
-            notes: notes
+            notes: [...notes].reverse(),
         }
     }),
 
@@ -44,6 +47,15 @@ export const notesReducer = createReducer(
     on(NotesActions.deleteNoteSuccess, (state: State, { payload }) => {
         // console.log(`NotesActions.deleteNoteSuccess ${noteId}`);
         // const updatedNotes = state.notes.filter(n => n.id !== noteId);
+        return {
+            ...state,
+            // notes: updatedNotes,
+        }
+
+    }),
+
+    on(NotesActions.addNote, (state: State, { payload }) => {
+        console.log(`NotesActions.addNote`, payload);
         return {
             ...state,
             // notes: updatedNotes,

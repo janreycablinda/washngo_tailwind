@@ -25,3 +25,8 @@ export const deleteNoteFailure = createAction(
     '[Notes] Delete Note Failure',
     props<{ error: any }>()
 );
+
+export const addNote = createAction(
+    '[Notes] Add Note',
+    props<{ payload: object }>()
+);

@@ -45,7 +45,12 @@
                         <!-- <div class="text-md font-semibold text-secondary">
                             Note
                         </div> -->
-                        <div class="justify-items-start" fxLayoutGap="10" fxLayout="row">
+                        <div
+                            class="justify-items-start"
+                            fxLayoutGap="10"
+                            fxLayout="row"
+                            *ngIf="(months.length > 0)"
+                        >
 
                             <mat-form-field
                                 class="w-full mt-2 no-x-padding"
@@ -108,7 +113,12 @@
         [mode]="notesDrawerMode"
         #notesDrawer
     >
-        <div class="flex flex-col w-full justify-between">
+        <form
+            class="flex flex-col w-full justify-between"
+            form
+            [formGroup]="noteForm"
+            (ngSubmit)="onNoteFormSubmit()"
+        >
 
             <div class="flex flex-col w-full overflow-auto bg-card">
 
@@ -139,26 +149,67 @@
                         </div> -->
                         <div class="justify-items-start" fxLayoutGap="10" fxLayout="row">
 
-                            <!-- <mat-form-field class="w-full mt-2 no-x-padding">
+                            <mat-form-field
+                                class="w-full mt-2 no-x-padding"
+                                [ngClass]="formFieldHelpers"
+                            >
                                 <label
                                     class="absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
                                     Title
                                 </label>
                                 <input
                                     class="block pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    placeholder=" "
+                                    placeholder="Enter Note"
                                     matInput
+                                    [formControlName]="'message'"
                                 />
+                                <mat-error *ngIf="noteForm.get('message').hasError('required')">This field is required</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field class="w-full mt-2 no-x-padding">
+                                <label
+                                    class="absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                                    Date
+                                </label>
+                                <input
+                                    matInput
+                                    [matDatepicker]="noteDatePicker"
+                                    [(ngModel)]="noteDateTime"
+                                    placeholder="Pick a date"
+                                    [formControlName]="'date'"
+                                    class="block pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                >
+                                <mat-datepicker-toggle matSuffix [for]="noteDatePicker"></mat-datepicker-toggle>
+                                <mat-datepicker #noteDatePicker></mat-datepicker>
+
+                                <mat-error *ngIf="noteForm.get('date').hasError('required')">This field is required</mat-error>
+
                             </mat-form-field>
 
                             <mat-form-field class="w-full mt-2 no-x-padding">
 
                                 <label
                                     class="absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
-                                    Date/Time
+                                    Time
                                 </label>
+                                <input
+                                    [formControlName]="'time'"
+                                    matTimepicker
+                                    #t="matTimepicker"
+                                    [strict]="false"
+                                    mode="12h"
+                                    [ngModel]="noteDateTime"
+                                    placeholder="Pick a time"
+                                    [errorStateMatcher]="customErrorStateMatcher"
+                                    (timeChange)="noteTimeChangeHandler($event)"
+                                    (invalidInput)="invalidNoteDateTimeInputHandler()"
+                                    class="block pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                >
+                                <mat-icon matSuffix (click)="t.showDialog()">access_time</mat-icon>
+                                <mat-error  *ngIf="noteForm.get('time').hasError('required')">This field is required</mat-error>
 
-                            </mat-form-field> -->
+                            </mat-form-field>
+
 
                         </div>
                         <!-- <hr class="my-8"> -->
@@ -181,17 +232,21 @@
                 <button
                     mat-button
                     (click)="notesDrawer.close()"
+                    type="button"
                 >
                     Cancel
                 </button>
                 <button
                     class="px-6 ml-3"
                     mat-flat-button
-                    [color]="'primary'">
+                    [color]="'primary'"
+                    [disabled]="noteForm.invalid || noteForm.pristine || noteForm.untouched || !noteForm.dirty"
+                    type="submit"
+                >
                     Save
                 </button>
             </div>
-        </div>
+        </form>
 
     </fuse-drawer>
     <!-- notesDrawer - end -->
@@ -275,7 +330,26 @@
             </div>
 
             <!-- notes -->
-            <div class="sm:col-span-2 lg:col-span-1 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6">
+            <div
+                class="sm:col-span-2 lg:col-span-1 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6"
+                *ngIf="(isLoading$ | async)"
+            >
+
+                <div class="flex items-center justify-between">
+                    <div class="text-lg font-medium tracking-tight leading-6 truncate animate-pulse bg-gray-200 w-20 h-6 rounded-full"></div>
+                    <div class="mt-3 sm:mt-0 sm:ml-2 animate-pulse bg-gray-200 w-20 h-6 rounded-full"></div>
+                </div>
+
+                <div class="flex flex-col mt-4 divide-y overflow-y-auto max-h-100">
+                    <div class="flex flex-row items-center py-3 px-0.5 text-center justify-center text-bold animate-pulse bg-gray-200 h-100 rounded-md"></div>
+                </div>
+
+            </div>
+
+            <div
+                class="sm:col-span-2 lg:col-span-1 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6"
+                *ngIf="!(isLoading$ | async)"
+            >
                 <div
                     class="flex items-center justify-between"
                 >
@@ -295,15 +369,32 @@
                                     class="icon-size-5"
                                     svgIcon="mat_outline:add"
                                 ></mat-icon>
-                                <span> ADD </span>
+                                <span>ADD</span>
                             </button>
                         </div>
                 </div>
-                <div class="flex flex-col mt-2 divide-y overflow-y-auto max-h-100" cdkScrollable>
 
-                    <!-- {{ notes$ | async | json }} -->
+                <div
+                    class="flex flex-col mt-2 divide-y overflow-y-auto max-h-100"
+                    cdkScrollable
+                    *ngIf="(notes$ | async).length === 0"
+                >
+                    <div
+                        class="flex flex-row items-center py-3 px-0.5 text-center justify-center text-bold"
+                    >
+                        No Notes Available
+                    </div>
+                </div>
 
-                    <ng-container *ngFor="let note of notes$ | async; index as i">
+                <div
+                    *ngIf="(notes$ | async).length > 0"
+                    class="flex flex-col mt-2 divide-y overflow-y-auto max-h-100"
+                    cdkScrollable
+                >
+
+                    <ng-container
+                        *ngFor="let note of notes$ | async; index as i"
+                    >
                         <div
                             class="flex flex-row items-center justify-between py-3 px-0.5"
                         >
